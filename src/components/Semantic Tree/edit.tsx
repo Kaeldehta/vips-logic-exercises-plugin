@@ -1,13 +1,17 @@
+import {useState} from "react";
+
+import FormulaInput from "./FormulaInput";
 
 interface Props {
-    test: string
+    semantic_consequence: string,
+    statements: string[],
 }
 
-const EditComponent = ({test}: Props) => {
+const EditComponent = ({semantic_consequence, statements}: Props) => {
 
-    return <div>
-        {test}
-    </div>
+    return <>
+        <FormulaInput initial_formula={semantic_consequence} name="sem_cons"/>
+    </>
 }
 
 export default EditComponent;
