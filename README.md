@@ -15,3 +15,15 @@ npm i
 ```
  
 3. Register plugin in Studip server plugin settings
+
+## Install
+
+### Plugin Marketplace
+
+TODO
+
+### Manual
+1. Download one of the release archives
+2. Go to plugin settings of the Studip server
+3. Drag and drop plugin archive
+4. Profit
