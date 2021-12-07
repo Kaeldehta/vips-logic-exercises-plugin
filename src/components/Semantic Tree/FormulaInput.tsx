@@ -14,7 +14,7 @@ const FormulaInput = ({initial_formula, name}: Props) => {
         setFormula(e.target.value);
     }
 
-    return <input name={name} value={formula} onChange={handleChange}/>
+    return <input name={name} value={formula} onChange={handleChange} onPaste={e => e.preventDefault()}/>
 
 }
 
