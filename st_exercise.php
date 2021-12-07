@@ -3,6 +3,15 @@
 class st_exercise extends Exercise
 {
 
+    public function initFromRequest($request)
+    {
+        parent::initFromRequest($request);
+
+        $this->task["answers"] = [0 => [
+            "consequence" => $request["sem_cons"]
+        ]];
+    }
+
     public function evaluateItems($solution)
     {
         return [];
@@ -20,8 +29,10 @@ class st_exercise extends Exercise
 
     public function getEditTemplate($assignment)
     {
+
+        $props = $this->task["answers"][0];
         
-        $template = $this->getTemplate("edit", ["test" => "Hello"]);
+        $template = $this->getTemplate("edit", $props);
 
         return $template;
     }
