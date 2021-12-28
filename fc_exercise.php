@@ -1,6 +1,6 @@
 <?php
 
-class st_exercise extends Exercise
+class fc_exercise extends Exercise
 {
 
     public function initFromRequest($request)
@@ -9,8 +9,7 @@ class st_exercise extends Exercise
 
         $this->task = [
             "consequence" => $request["consequence"],
-            "statements" => $request["statements"] ?? [],
-            "holds" => (bool) $request["holds"],
+            "statements" => $request["statements"] ?? []
         ];
     }
 
@@ -31,7 +30,8 @@ class st_exercise extends Exercise
 
     public function responseFromRequest($request)
     {
-        $result = $request["root"];
+        $lines = json_decode($request["lines"]);
+        $result = ["lines" => $lines];
 
         return $result;
     }
@@ -55,7 +55,7 @@ class st_exercise extends Exercise
         
 
         if ($solution) {
-            $props["root"] = $solution->response;
+            $props["lines"] = $solution->response["lines"];
             //$template->results = $this->evaluateItems($solution);
         }
 

@@ -5,15 +5,20 @@ module.exports = {
   module: {
     rules: [
         {
-            test: /\.(js|jsx)$/,
-            exclude: /node_modules/,
-            use: ["babel-loader"],
+          test: /\.(js|jsx)$/,
+          exclude: /node_modules/,
+          use: ["babel-loader"],
         },
         {
-            test: /\.(ts|tsx)$/,
-            exclude: /node_modules/,
-            use: ["ts-loader"],
+          test: /\.(ts|tsx)$/,
+          exclude: /node_modules/,
+          use: ["ts-loader"],
         },
+        {
+          test: /\.css$/,
+          exclude: /node_modules/,
+          use: ["style-loader", "css-loader", "postcss-loader"]
+        }
     ],
   },
   resolve: {
