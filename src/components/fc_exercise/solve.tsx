@@ -5,6 +5,7 @@ import SubproofComponent from "./Subproof";
 import RuleLineComponent from "./RuleLine";
 import LineWrapper from "./LineWrapper";
 import { getSubProofLineCount } from "./utils";
+import Inserter from "./Inserter";
 
 export default ({lines: defaultLines, premises: defaultPremises}: Proof) => {
 
@@ -51,12 +52,13 @@ export default ({lines: defaultLines, premises: defaultPremises}: Proof) => {
         {premises.map((premise, index) => <LineWrapper key={index} height="h-12" indentationLevel={0} head={index + 1}>
             <PremiseComponent premise={premise} setPremise={(premise) => setPremise(index, premise)}/>
         </LineWrapper>)}
+        <Inserter indentationLevel={0} addPremise={addPremise} addAssumption={() => insertSubproof(0)}/>
         {lines.map((line, index) => {
             const lineNumber = offset + index + 1;
             
             if(isSubproof(line)) {
                 offset += getSubProofLineCount(line);
-                return <SubproofComponent {...line} indentationLevel={1}  assumptionLineNumber={lineNumber} setSubproof={(subProof) => setLine(index, subProof)}/>
+                return <SubproofComponent key={index} {...line} indentationLevel={1}  assumptionLineNumber={lineNumber} setSubproof={(subProof) => setLine(index, subProof)}/>
             }
             return <LineWrapper key={index} height="h-12" indentationLevel={0} head={lineNumber}>
                 <RuleLineComponent {...line} setRuleLine={(line) => setLine(index, line)} max={lineNumber - 1}/>
