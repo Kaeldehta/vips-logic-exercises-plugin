@@ -1,14 +1,17 @@
 import { ChangeEvent } from "react";
 import FormulaInput from "../FormulaInput";
 import LineInput from "../LineInput";
-import { useFormula, useRuleApplication } from "./context";
-import { Rule } from "./domain";
+import { RuleLine } from "./domain"
 
-interface Option {
-    value: Rule["rule"]
-    label: string
+type Props = RuleLine & {
+    setRuleLine: (line: RuleLine) => void,
+    max: number
 }
 
+interface Option {
+    value: RuleLine["rule"]
+    label: string
+}
 
 const options: Option[] = 
 [
@@ -30,23 +33,26 @@ const options: Option[] =
     },
 ]
 
-export default () => {
-
-    const {lineNumber, useLine1, useLine2, rule, setRule} = useRuleApplication();
+export default ({formula, rule, line1, line2, setRuleLine, max}: Props) => {
 
     const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-        setRule(e.target.value as Rule["rule"]);
+        setRuleLine({
+            formula: formula,
+            line1: line1,
+            line2: line2,
+            rule: e.target.value as RuleLine["rule"]
+        });
     }
 
     return <>
-    <FormulaInput useFormula={useFormula}/>
+    <FormulaInput formula={formula} setFormula={(formula) => setRuleLine({line1: line1, line2: line2, formula: formula, rule: rule})}/>
     <div className="w-32">
     <select required aria-required value={rule?? ''} onChange={handleChange} className="h-12">
     <option disabled hidden value=''></option>
     {options.map(({value, label}) => <option key={value} value={value}>{label}</option>)}
     </select>
     </div>
-    <LineInput max={lineNumber} useLineNumber={useLine1}/>
-    <LineInput max={lineNumber} useLineNumber={useLine2}/>
+    <LineInput max={max} lineNumber={line1} setLineNumber={(lineNumber) => setRuleLine({line1: lineNumber, line2: line2, formula: formula, rule: rule})}/>
+    <LineInput max={max} lineNumber={line2} setLineNumber={(lineNumber) => setRuleLine({line1: line1, line2: lineNumber, formula: formula, rule: rule})}/>
     </>;
 }

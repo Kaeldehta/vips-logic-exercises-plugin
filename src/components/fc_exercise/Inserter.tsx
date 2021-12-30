@@ -1,18 +1,25 @@
 import BorderRepeat from "./BorderRepeat"
 import LineWrapper from "./LineWrapper"
 
-import {FiPlusCircle} from "react-icons/fi";
+import {FiPlusCircle, FiArrowRightCircle, FiArrowLeftCircle, FiArrowDownCircle} from "react-icons/fi";
 
 interface Props {
     indentationLevel: number,
-    addLine?: () => void
+    addLine?: () => void,
+    addPremise?: () => void,
+    addAssumption?: () => void,
+    addAbsurdity?: () => void,
+    removeLastBorder?: boolean
 }
 
-export default ({indentationLevel, addLine}: Props) => {
+export default ({removeLastBorder, indentationLevel, addLine, addPremise, addAbsurdity, addAssumption}: Props) => {
 
-    return <LineWrapper height="h-8">
-        <BorderRepeat times={indentationLevel}/>
-        <div className="flex w-10 justify-center items-center"></div>
-        {addLine && <button type="button" onClick={addLine}><FiPlusCircle/></button>}
-    </LineWrapper>
+    return <LineWrapper height="h-8" indentationLevel={indentationLevel}>
+        <div className="flex w-52 justify-center items-center gap-4">
+        {addLine && <button className="group-hover:flex hidden" type="button" onClick={addLine}><FiArrowDownCircle/></button>}
+        {addAssumption && <button className="group-hover:flex hidden" type="button" onClick={addAssumption}><FiArrowRightCircle/></button>}
+        {addAbsurdity && <button className="group-hover:flex hidden" type="button" onClick={addAbsurdity}><FiArrowLeftCircle/></button>}
+        {addPremise && <button className="group-hover:flex hidden" type="button" onClick={addPremise}><FiPlusCircle/></button>}
+        </div>
+</LineWrapper>
 }

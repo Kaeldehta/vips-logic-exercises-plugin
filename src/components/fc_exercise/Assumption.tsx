@@ -1,8 +1,13 @@
 import FormulaInput from "../FormulaInput"
-import {useFormula} from "./context";
+import { Assumption } from "./domain";
 
-export default () => 
+type Props = {
+    assumption: Assumption
+    setAssumption: (assumption: Assumption) => void
+}
+
+export default ({assumption, setAssumption}: Props) => 
 <>
-    <FormulaInput useFormula={useFormula}/>
+    <FormulaInput formula={assumption} setFormula={setAssumption}/>
     <div className="flex items-center">Ass.</div>
 </>

@@ -1,8 +1,13 @@
 import FormulaInput from "../FormulaInput"
-import { useFormula } from "./context"
+import { Premise } from "./domain"
 
-export default () => 
+interface Props {
+    premise: Premise,
+    setPremise: (premise: Premise) => void,
+}
+
+export default ({premise, setPremise}: Props) => 
 <>
-    <FormulaInput useFormula={useFormula}/>
-    <div>Prem.</div>
+    <FormulaInput formula={premise} setFormula={setPremise}/>
+    <div className="flex items-center">Prem.</div>
 </>

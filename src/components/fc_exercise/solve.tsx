@@ -1,89 +1,67 @@
-import { useMemo, useState } from "react";
-import Line from "./Line"
-import {Line as LineType, isPremise, isAssumption, isAbsurdity} from "./domain"
-import Button from "../Button";
-import { LineContext } from "./context";
-import Inserter from "./Inserter";
-import Border from "./Border"
-import LineWrapper from "./LineWrapper"
+import { useState } from "react";
+import {isSubproof, Premise, Proof, ProofLine, RuleLine, Subproof} from "./domain"
+import PremiseComponent from "./Premise";
+import SubproofComponent from "./Subproof";
+import RuleLineComponent from "./RuleLine";
+import LineWrapper from "./LineWrapper";
+import { getSubProofLineCount } from "./utils";
 
-interface Props {
-    lines: Array<LineType>
-}
+export default ({lines: defaultLines, premises: defaultPremises}: Proof) => {
 
-export default ({lines: defaultLines}: Props) => {
+    const [premises, setPremises] = useState(defaultPremises);
 
-    const [lines, setLines] = useState(defaultLines ?? []);
+    const [lines, setLines] = useState(defaultLines);
 
-    const addLine = (newLine: LineType) => setLines(lines => [...lines, newLine]);
+    const addPremise = () => setPremises(premises => [...premises, ""]);
 
-    const setLine = (index: number, newLine: LineType) => setLines(lines => {
-        const copy = [...lines];
-        copy[index] = newLine;
+    const setPremise = (index: number, premise: Premise) => setPremises(premises => {
+        const copy = [...premises];
+        copy[index] = premise;
         return copy;
+    })
+
+    const removePremise = (index: number) => setPremises(premises => [...premises.slice(0, index), ...premises.slice(index + 1)]);
+
+    const removeLine = (index: number) => setLines(lines => [...lines.slice(0, index), ...lines.slice(index + 1)]);
+
+    const insertLine = (index: number, line: ProofLine) => setLines(lines => [...lines.slice(0, index), line, ...lines.slice(index)]);
+
+    const insertSubproof = (index: number) => insertLine(index, {
+        assumption: "",
+        lines: []
     });
 
-    const removeLine = (index: number) => setLines(lines => {
-        const copy = [...lines];
-        const line = copy[index];
-        let i = 1;
+    const insertRuleLine = (index: number) => insertLine(index, {
+        formula: ""
+    });
 
-        if(isAssumption(line)) {
-            while(i < copy.length - index) {
-                const {indentationLevel} = copy[index + i];
-                if(indentationLevel != line.indentationLevel) {
-                    break;
-                }
-                i++;
-            }
-        }
-        
-        copy.splice(index, i);
+    const setLine = (index: number, line: ProofLine) => setLines(lines => {
+        const copy = [...lines];
+        copy[index] = line;
         return copy;
     });
- 
-    const last = useMemo(() => lines.length - 1, [lines.length]);
-
-    const lastIndent = useMemo(() => lines[last]?.indentationLevel ?? 0, [last]);
+    
+    let offset = premises.length;
 
     return <div>
 
-        <Button reset onClick={() => setLines(defaultLines)}>Reset</Button>
-
+        <input type="hidden" name="premises" value={JSON.stringify(premises)} />
         <input type="hidden" name="lines" value={JSON.stringify(lines)} />
         
-        <LineWrapper height="h-4">
-            <Border addBottom/>
-        </LineWrapper>
-        <Inserter indentationLevel={0}/>
-        {lines.map((line, index) => <LineContext.Provider key={index} value={
-            {
-                line: line, 
-                lineNumber: 
-                index, 
-                setLine: (newLine) => setLine(index, newLine),
-                removeLine: () => removeLine(index)
-            }}>
-            <Line/>
-            </LineContext.Provider>)}
-        {(last <= 0 || isPremise(lines[last])) && 
-            <Button onClick={() => addLine({
-                indentationLevel: lastIndent, formula: "",
-                from: {
-                    rule: "prem",
-                }
-            })}>Add Premise</Button>
-        }
-        {last >= 0 && 
-            <Button onClick={() => addLine({indentationLevel: lastIndent, formula: "", from: {}})}>Add Line</Button>
-        }
-        <Button onClick={() => addLine({indentationLevel: lastIndent + 1, formula: "", from: {rule: "ass"}})}>Add Assumption</Button>
-        {lastIndent != 0 && !isAbsurdity(lines[last]) && 
-        <Button onClick={() => {
-            addLine({indentationLevel: lastIndent, from: {
-                rule: "abs"
-            }});
-            addLine({indentationLevel: lastIndent - 1, formula: "", from: {}});
-        }}>{"\u22A5"}</Button>}
+        {premises.map((premise, index) => <LineWrapper key={index} height="h-12" indentationLevel={0} head={index + 1}>
+            <PremiseComponent premise={premise} setPremise={(premise) => setPremise(index, premise)}/>
+        </LineWrapper>)}
+        {lines.map((line, index) => {
+            const lineNumber = offset + index + 1;
+            
+            if(isSubproof(line)) {
+                offset += getSubProofLineCount(line);
+                return <SubproofComponent {...line} indentationLevel={1}  assumptionLineNumber={lineNumber} setSubproof={(subProof) => setLine(index, subProof)}/>
+            }
+            return <LineWrapper key={index} height="h-12" indentationLevel={0} head={lineNumber}>
+                <RuleLineComponent {...line} setRuleLine={(line) => setLine(index, line)} max={lineNumber - 1}/>
+            </LineWrapper>
+        })}
+    
     </div>
 }

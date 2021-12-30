@@ -1,7 +1,8 @@
 import { ChangeEvent } from "react";
 
 interface Props {
-    useFormula: () => {formula: string, setFormula: (newFormula: string) => void}
+    formula: string, 
+    setFormula: (formula: string) => void
 }
 
 const replacementMap = {
@@ -17,9 +18,7 @@ const replacementMap = {
     ")": ")",
 }
 
-const FormulaInput = ({useFormula}: Props) => {
-
-    const {formula, setFormula} = useFormula();
+const FormulaInput = ({setFormula, formula}: Props) => {
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         

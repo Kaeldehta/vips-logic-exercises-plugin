@@ -1,11 +1,10 @@
 interface Props {
     max: number
-    useLineNumber: () => {lineNumber?: number, setLineNumber: (newLineNumber: number | undefined) => void}
+    lineNumber?: number,
+    setLineNumber: (lineNumber: number | undefined) => void
 }
 
-export default ({useLineNumber, max}: Props) => {
-
-    const {lineNumber, setLineNumber} = useLineNumber();
+export default ({lineNumber, setLineNumber, max}: Props) => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
