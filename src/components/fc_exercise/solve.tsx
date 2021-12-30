@@ -49,20 +49,60 @@ export default ({lines: defaultLines, premises: defaultPremises}: Proof) => {
         <input type="hidden" name="premises" value={JSON.stringify(premises)} />
         <input type="hidden" name="lines" value={JSON.stringify(lines)} />
         
-        {premises.map((premise, index) => <LineWrapper key={index} height="h-12" indentationLevel={0} head={index + 1}>
+        {premises.map((premise, index) => 
+        <LineWrapper 
+            key={index}
+            height="h-12"
+            indentationLevel={0}
+            head={index + 1}
+            remove={() => removePremise(index)}
+        >
             <PremiseComponent premise={premise} setPremise={(premise) => setPremise(index, premise)}/>
-        </LineWrapper>)}
-        <Inserter indentationLevel={0} addPremise={addPremise} addAssumption={() => insertSubproof(0)}/>
+        </LineWrapper>
+        )}
+        <Inserter 
+            indentationLevel={0}
+            addPremise={addPremise}
+            addSubproof={() => insertSubproof(0)}
+            addLine={() => insertRuleLine(0)}
+        />
         {lines.map((line, index) => {
             const lineNumber = offset + index + 1;
             
             if(isSubproof(line)) {
                 offset += getSubProofLineCount(line);
-                return <SubproofComponent key={index} {...line} indentationLevel={1}  assumptionLineNumber={lineNumber} setSubproof={(subProof) => setLine(index, subProof)}/>
+                return <>
+                    <SubproofComponent
+                        key={index}
+                        {...line}
+                        indentationLevel={1} 
+                        assumptionLineNumber={lineNumber}
+                        setSubproof={(subProof) => setLine(index, subProof)}
+                        removeSubproof={() => removeLine(index)}
+                    />
+                    <Inserter key={index}
+                        indentationLevel={0}
+                        addSubproof={() => insertSubproof(index + 1)}
+                        addLine={() => insertRuleLine(index + 1)}
+                    />
+                </>
             }
-            return <LineWrapper key={index} height="h-12" indentationLevel={0} head={lineNumber}>
+            return <>
+            <LineWrapper 
+                key={index} 
+                height="h-12" 
+                indentationLevel={0} 
+                head={lineNumber}
+                remove={() => removeLine(index)}
+            >
                 <RuleLineComponent {...line} setRuleLine={(line) => setLine(index, line)} max={lineNumber - 1}/>
             </LineWrapper>
+            <Inserter key={index}
+                indentationLevel={0}
+                addSubproof={() => insertSubproof(index + 1)}
+                addLine={() => insertRuleLine(index + 1)}
+            />
+            </>
         })}
     
     </div>
