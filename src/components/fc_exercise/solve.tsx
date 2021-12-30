@@ -6,6 +6,7 @@ import RuleLineComponent from "./RuleLine";
 import LineWrapper from "./LineWrapper";
 import { getSubProofLineCount } from "./utils";
 import Inserter from "./Inserter";
+import Border from "./Border";
 
 export default ({lines: defaultLines, premises: defaultPremises}: Proof) => {
 
@@ -48,24 +49,30 @@ export default ({lines: defaultLines, premises: defaultPremises}: Proof) => {
 
         <input type="hidden" name="premises" value={JSON.stringify(premises)} />
         <input type="hidden" name="lines" value={JSON.stringify(lines)} />
-        
+
         {premises.map((premise, index) => 
-        <LineWrapper 
+        <><LineWrapper 
             key={index}
             height="h-12"
             indentationLevel={0}
             head={index + 1}
             remove={() => removePremise(index)}
+            addBottom={index == premises.length - 1}
         >
             <PremiseComponent premise={premise} setPremise={(premise) => setPremise(index, premise)}/>
         </LineWrapper>
-        )}
+        {index == premises.length - 1 ? 
         <Inserter 
             indentationLevel={0}
             addPremise={addPremise}
             addSubproof={() => insertSubproof(0)}
             addLine={() => insertRuleLine(0)}
-        />
+        /> :
+        <Inserter indentationLevel={0}/>
+        }
+        </>
+        )}
+        
         {lines.map((line, index) => {
             const lineNumber = offset + index + 1;
             
