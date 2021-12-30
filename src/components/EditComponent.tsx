@@ -27,20 +27,18 @@ const EditComponent = ({consequence, statements, separator}: Props) => {
         {statementsState.map((statement, index) => 
             <FormulaInput 
                 key={index}
-                useFormula={() => ({
-                    formula: statement,
-                    setFormula: (newFormula) => setStatement(newFormula, index)
-                })}
+                formula={statement}
+                setFormula={(formula) => setStatement(formula, index)}
             />)}
         <button className="border-black border-2 px-3 hover:bg-gray-100" onClick={(event)=> {
             event.preventDefault();
             addNewStatement();
         }}>+</button>
         {separator}
-        <FormulaInput useFormula={() => ({
-            formula: consequenceState,
-            setFormula: setConsequenceState
-        })}/>
+        <FormulaInput
+            formula={consequenceState}
+            setFormula={setConsequenceState}
+        />
         </div>
     </>
 }
