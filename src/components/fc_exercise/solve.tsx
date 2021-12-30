@@ -8,9 +8,9 @@ import { getSubProofLineCount } from "./utils";
 
 export default ({lines: defaultLines, premises: defaultPremises}: Proof) => {
 
-    const [premises, setPremises] = useState(defaultPremises);
+    const [premises, setPremises] = useState(defaultPremises?? []);
 
-    const [lines, setLines] = useState(defaultLines);
+    const [lines, setLines] = useState(defaultLines?? []);
 
     const addPremise = () => setPremises(premises => [...premises, ""]);
 
@@ -40,7 +40,7 @@ export default ({lines: defaultLines, premises: defaultPremises}: Proof) => {
         copy[index] = line;
         return copy;
     });
-    
+
     let offset = premises.length;
 
     return <div>

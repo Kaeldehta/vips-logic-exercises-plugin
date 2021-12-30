@@ -30,8 +30,9 @@ class fc_exercise extends Exercise
 
     public function responseFromRequest($request)
     {
+        $premises = json_decode($request["premises"]);
         $lines = json_decode($request["lines"]);
-        $result = ["lines" => $lines];
+        $result = ["lines" => $lines, "premises" => $premises];
 
         return $result;
     }
@@ -55,7 +56,9 @@ class fc_exercise extends Exercise
         
 
         if ($solution) {
-            $props["lines"] = $solution->response["lines"];
+            $response = $solution->response;
+            $props["lines"] = $response["lines"];
+            $props["premises"] = $response["premises"];
             //$template->results = $this->evaluateItems($solution);
         }
 
