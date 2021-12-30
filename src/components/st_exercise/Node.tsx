@@ -26,7 +26,7 @@ const NodeComponent = (props: Node) => {
     return <div className="flex flex-col justify-start gap-2 self-start">
         <div className="self-center flex flex-row gap-2 items-center">
             <div>{props.line}</div>
-            <FormulaInput useFormula={() => ({formula: formula, setFormula: setFormula})}/>
+            <FormulaInput formula={formula} setFormula={setFormula}/>
             <RuleSelect {...props.from?? {}} form_prefix={props.form_prefix + "[from]"}/>
             <input type="hidden" value={props.line} name={props.form_prefix + '[line]'}/>
         </div>
