@@ -1,8 +1,8 @@
+import { State, useState } from "@hookstate/core";
 import { ChangeEvent } from "react";
 
 interface Props {
-    formula: string, 
-    setFormula: (formula: string) => void
+    state: State<string>
 }
 
 const replacementMap = {
@@ -18,7 +18,9 @@ const replacementMap = {
     ")": ")",
 }
 
-const FormulaInput = ({setFormula, formula}: Props) => {
+const FormulaInput = ({state: propState}: Props) => {
+
+    const state = useState(propState);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         
@@ -34,12 +36,12 @@ const FormulaInput = ({setFormula, formula}: Props) => {
 
         newFormula = newFormula.replaceAll(RegExp(remainingChars, "g"), "");
 
-        setFormula(newFormula);
+        state.set(newFormula);
 
         //e.target.setCustomValidity("I hate my life");
     }
 
-    return <input className="bg-gray-100 w-52 h-12" required aria-required value={formula} onChange={handleChange}/>
+    return <input className="bg-gray-100 w-52 h-12" required aria-required value={state.value} onChange={handleChange}/>
 
 }
 

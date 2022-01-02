@@ -1,37 +1,25 @@
-import Absurdity from "./Absurdity"
+import { none, State, useState } from "@hookstate/core"
+import AbsurdityComponent from "./Absurdity"
 import Assumption from "./Assumption"
-import { isRuleLine, isSubproof, Subproof, SubproofLine } from "./domain"
+import { isRuleLine, isSubproof, Subproof, SubproofLine, RuleLine, Absurdity } from "./domain"
 import Inserter from "./Inserter"
 import LineWrapper from "./LineWrapper"
-import RuleLine from "./RuleLine"
+import RuleLineComponent from "./RuleLine"
 import { getSubProofLineCount } from "./utils"
 
-type Props = Subproof & {
+type Props = {
     indentationLevel: number
     assumptionLineNumber: number
-    setSubproof: (subproof: Subproof) => void
-    removeSubproof: () => void
+    subproofState: State<Subproof>
 }
 
-const SubproofComponent = ({assumption, lines, indentationLevel, assumptionLineNumber, setSubproof, removeSubproof}: Props) => {
+const SubproofComponent = ({indentationLevel, assumptionLineNumber, subproofState}: Props) => {
 
     let offset = assumptionLineNumber;
 
-    const setLine = (index: number, line: SubproofLine) => {
-        const copy = [...lines];
-        copy[index] = line;
-        setSubproof({assumption: assumption, lines: copy});
-    }
+    const state = useState(subproofState);
 
-    const removeLine = (index: number) => setSubproof({
-        assumption: assumption,
-        lines: [...lines.slice(0, index), ...lines.slice(index + 1)]
-    })
-
-    const insertLine = (index: number, line: SubproofLine) => setSubproof({
-        assumption: assumption,
-        lines: [...lines.slice(0, index), line, ...lines.slice(index)]
-    })
+    const insertLine = (index: number, line: SubproofLine) => state.lines.set(lines => [...lines.slice(0, index), line, ...lines.slice(index)])
 
     const insertAbsurdity = (index: number) => insertLine(index, {})
 
@@ -49,10 +37,10 @@ const SubproofComponent = ({assumption, lines, indentationLevel, assumptionLineN
         height="h-12"
         indentationLevel={indentationLevel}
         head={assumptionLineNumber}
-        remove={removeSubproof}
+        remove={() => state.set(none)}
         addBottom
     >
-        <Assumption assumption={assumption} setAssumption={(assumption) => setSubproof({lines: lines, assumption: assumption})}/>
+        <Assumption state={state.assumption} />
     </LineWrapper>
     <Inserter 
         indentationLevel={indentationLevel}
@@ -60,49 +48,44 @@ const SubproofComponent = ({assumption, lines, indentationLevel, assumptionLineN
         addAbsurdity={() => insertAbsurdity(assumptionLineNumber + 1)}
         addSubproof={() => insertSubproof(assumptionLineNumber + 1)}
     />
-    {lines.map((line, index) => {
+    {state.lines.map((line, index) => {
         const lineNumber = offset + index + 1;
-        if(isSubproof(line)) {
-            offset += getSubProofLineCount(line);
-            return <>
-            <SubproofComponent 
-                key={index} 
-                {...line} 
+        if(isSubproof(line.value)) {
+            offset += getSubProofLineCount(line.value);
+            return <div key={index}>
+            <SubproofComponent
+                subproofState={line as State<Subproof>}
                 indentationLevel={indentationLevel + 1}
-                setSubproof={(subproof) => setLine(index, subproof)}
-                assumptionLineNumber={lineNumber}
-                removeSubproof={() => removeLine(index)}
+                assumptionLineNumber={assumptionLineNumber}
             />
             <Inserter 
-                key={index}
                 indentationLevel={indentationLevel}
                 addLine={() => insertRuleLine(index + 1)}
                 addAbsurdity={() => insertAbsurdity(index + 1)}
                 addSubproof={() => insertSubproof(index + 1)}
             />
-            </>
+            </div>
         }
 
-        return <>
+        return <div key={index}>
             <LineWrapper
                 height="h-12" 
                 indentationLevel={indentationLevel} 
                 head={lineNumber}
-                remove={() => removeLine(index)}
+                remove={() => line.set(none)}
             >
-            {isRuleLine(line) ? 
-            <RuleLine {...line} max={lineNumber - 1} setRuleLine={(ruleLine) => setLine(index, ruleLine)}/> :
-            <Absurdity {...line} max={lineNumber - 1} setAbsurdity={(absurdity) => setLine(index, absurdity)}/>
+            {isRuleLine(line.value) ? 
+            <RuleLineComponent state={line as State<RuleLine>} max={lineNumber - 1}/> :
+            <AbsurdityComponent state={line as State<Absurdity>} max={lineNumber - 1}/>
             }
         </LineWrapper>
         <Inserter 
-            key={index}
             indentationLevel={indentationLevel}
             addLine={() => insertRuleLine(index + 1)}
             addAbsurdity={() => insertAbsurdity(index + 1)}
             addSubproof={() => insertSubproof(index + 1)}
         />
-    </>
+    </div>
     })}
     </>
 }

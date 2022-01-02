@@ -1,17 +1,20 @@
+import { State, useState } from "@hookstate/core";
 import LineInput from "../LineInput"
 import { Absurdity } from "./domain";
 
-type Props = Absurdity & {
-    setAbsurdity: (absurdity: Absurdity) => void,
+type Props = {
+    state: State<Absurdity>
     max: number
 }
 
-export default ({line1, line2, setAbsurdity, max}: Props) => {
+export default ({state, max}: Props) => {
+
+    //const state = useState(propState);
     
     return <>
     <div className="w-52 flex items-center justify-start">{"\u22A5"}</div>
     <div className="w-32 flex items-center justify-start">Abs.</div>
-    <LineInput max={max} lineNumber={line1} setLineNumber={(lineNumber) => setAbsurdity({line1: lineNumber, line2: line2})}/>
-    <LineInput max={max} lineNumber={line2} setLineNumber={(lineNumber) => setAbsurdity({line1: line1, line2: lineNumber})}/>
+    <LineInput max={max} state={state.line1}/>
+    <LineInput max={max} state={state.line2}/>
     </>
 }

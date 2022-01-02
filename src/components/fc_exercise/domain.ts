@@ -1,3 +1,5 @@
+import { State } from "@hookstate/core"
+
 export type Assumption = string
 
 export type Premise = string
@@ -18,7 +20,7 @@ export type ProofLine = Subproof | RuleLine
 
 export type SubproofLine = Subproof | RuleLine | Absurdity
 
-export const isSubproof = (line: SubproofLine): line is Subproof => (line as Subproof).assumption != undefined;
+export const isSubproof = (line: ProofLine | SubproofLine): line is Subproof => (line as Subproof).assumption != undefined;
 export const isRuleLine = (line: ProofLine | SubproofLine): line is RuleLine => (line as RuleLine).formula != undefined;
 
 export interface Subproof {

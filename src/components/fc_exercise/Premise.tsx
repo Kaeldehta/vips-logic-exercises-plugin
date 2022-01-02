@@ -1,13 +1,14 @@
+import { useState, State } from "@hookstate/core"
 import FormulaInput from "../FormulaInput"
 import { Premise } from "./domain"
 
 interface Props {
-    premise: Premise,
-    setPremise: (premise: Premise) => void,
+    state: State<Premise>,
 }
 
-export default ({premise, setPremise}: Props) => 
+export default ({state}: Props) => 
 <>
-    <FormulaInput formula={premise} setFormula={setPremise}/>
+    <FormulaInput state={state}/>
     <div className="flex items-center">Prem.</div>
 </>
+

@@ -1,13 +1,14 @@
+import { State, useState } from "@hookstate/core";
 import FormulaInput from "../FormulaInput"
 import { Assumption } from "./domain";
 
 type Props = {
-    assumption: Assumption
-    setAssumption: (assumption: Assumption) => void
+    state: State<Assumption>
 }
 
-export default ({assumption, setAssumption}: Props) => 
+export default ({state}: Props) => 
 <>
-    <FormulaInput formula={assumption} setFormula={setAssumption}/>
+    <FormulaInput state={state}/>
     <div className="flex items-center">Ass.</div>
 </>
+
