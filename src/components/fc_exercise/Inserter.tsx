@@ -4,18 +4,18 @@ import {FiPlusCircle, FiArrowRightCircle, FiArrowLeftCircle, FiArrowDownCircle} 
 
 interface Props {
     indentationLevel: number,
-    addLine?: () => void,
+    addRuleApplication?: () => void,
     addPremise?: () => void,
-    addSubproof?: () => void,
+    addAssumption?: () => void,
     addAbsurdity?: () => void,
 }
 
-export default ({indentationLevel, addLine, addPremise, addAbsurdity, addSubproof}: Props) => {
+export default ({indentationLevel, addRuleApplication, addPremise, addAbsurdity, addAssumption}: Props) => {
 
     return <LineWrapper height="h-8" indentationLevel={indentationLevel}>
         <div className="flex w-52 justify-center items-center gap-4">
-        {addLine && <button className="group-hover:flex hidden" type="button" onClick={addLine}><FiArrowDownCircle/></button>}
-        {addSubproof && <button className="group-hover:flex hidden" type="button" onClick={addSubproof}><FiArrowRightCircle/></button>}
+        {addRuleApplication && <button className="group-hover:flex hidden" type="button" onClick={addRuleApplication}><FiArrowDownCircle/></button>}
+        {addAssumption && <button className="group-hover:flex hidden" type="button" onClick={addAssumption}><FiArrowRightCircle/></button>}
         {addAbsurdity && <button className="group-hover:flex hidden" type="button" onClick={addAbsurdity}>{"\u22A5"}</button>}
         {addPremise && <button className="group-hover:flex hidden" type="button" onClick={addPremise}><FiPlusCircle/></button>}
         </div>

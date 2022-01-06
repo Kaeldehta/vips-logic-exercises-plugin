@@ -1,5 +1,6 @@
 import { State, useState } from "@hookstate/core";
 import { ChangeEvent } from "react";
+import { pathToPHPFormName } from "./utils";
 
 interface Props {
     state: State<string>
@@ -41,8 +42,9 @@ const FormulaInput = ({state: propState}: Props) => {
         //e.target.setCustomValidity("I hate my life");
     }
 
-    return <input className="bg-gray-100 w-52 h-12" required aria-required value={state.value} onChange={handleChange}/>
-
+    return <>
+        <input name={pathToPHPFormName(state.path)} className="bg-gray-100 w-52 h-12" required aria-required value={state.value} onChange={handleChange}/>
+    </>
 }
 
 export default FormulaInput;

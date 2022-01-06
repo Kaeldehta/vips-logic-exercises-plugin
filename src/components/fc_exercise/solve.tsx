@@ -1,101 +1,48 @@
-import {isSubproof, Premise, Proof, ProofLine, RuleLine, Subproof} from "./domain"
-import PremiseComponent from "./Premise";
-import SubproofComponent from "./Subproof";
-import RuleLineComponent from "./RuleLine";
-import LineWrapper from "./LineWrapper";
-import { getSubProofLineCount } from "./utils";
+import {isAssumptionState, Line, ProofLine} from "./domain"
+import {State, useState} from "@hookstate/core";
+import ProofLineComponent from "./ProofLine";
+import { nanoid } from "nanoid";
 import Inserter from "./Inserter";
+import InserterWrapper from "./InserterWrapper";
 
-import {useState, State, none} from "@hookstate/core";
+export const wrapState = (state: State<ProofLine[]>) => ({
+    state: state,
+    addLine: (line: Line, index: number, indentationLevel: number) => {
+        const newId = nanoid();
 
-export default ({lines: defaultLines, premises: defaultPremises}: Proof) => {
+        state.merge(p => {
+            const merge: Record<number, ProofLine> = {};
+            merge[index] = {id: newId, line, indentationLevel};
+            p.forEach((value, i) => {
+                if(i >= index) {
+                    merge[i + 1] = value;
+                }   
+            });
+            return merge;
+        })
+    }
+})
 
-    const premisesState = useState(defaultPremises?? []);
+export default ({lines: defaultLines}: {lines: ProofLine[]}) => {
 
-    const linesState = useState(defaultLines?? []);
-
-    const addPremise = () => premisesState[premisesState.length].set(""
-    )
-
-    // const removePremise = (index: number) => setPremises(premises => [...premises.slice(0, index), ...premises.slice(index + 1)]);
-
-    // const removeLine = (index: number) => setLines(lines => [...lines.slice(0, index), ...lines.slice(index + 1)]);
-    const insertLine = (index: number, line: ProofLine) => linesState.set(lines => [...lines.slice(0, index), line, ...lines.slice(index)]);
-
-    const insertSubproof = (index: number) => insertLine(index, {
-        assumption: "",
-        lines: []
-    });
-
-    const insertRuleLine = (index: number) => insertLine(index, {
-        formula: ""
-    });
-
-    let offset = premisesState.length;
+    const {state: linesState, addLine} = wrapState(useState(defaultLines?? []));
 
     return <div>
 
-        <input type="hidden" name="premises" value={JSON.stringify(premisesState.value)} />
-        <input type="hidden" name="lines" value={JSON.stringify(linesState.value)} />
-
-        {premisesState.map((premiseState, index) => 
-        <><LineWrapper 
-            key={index}
-            height="h-12"
-            indentationLevel={0}
-            head={index + 1}
-            remove={() => premisesState[index].set(none)}
-            addBottom={index == premisesState.length - 1}
-        >
-            <PremiseComponent state={premiseState}/>
-        </LineWrapper>
-        {index < premisesState.length - 1 &&
-        <Inserter indentationLevel={0}/>
-        }
-        </>
-        )}
-
-        <Inserter 
-            indentationLevel={0}
-            addPremise={addPremise}
-            addSubproof={() => insertSubproof(0)}
-            addLine={() => insertRuleLine(0)}
-        />  
-        
-        {linesState.map((lineState, index) => {
-            const lineNumber = offset + index + 1;
-            
-            if(isSubproof(lineState.value)) {
-                offset += getSubProofLineCount(lineState.value);
-                return <div key={index}>
-                    <SubproofComponent
-                        subproofState={lineState as State<Subproof>}
-                        indentationLevel={1} 
-                        assumptionLineNumber={lineNumber}
-                    />
-                    <Inserter
-                        indentationLevel={0}
-                        addSubproof={() => insertSubproof(index + 1)}
-                        addLine={() => insertRuleLine(index + 1)}
-                    />
-                </div>
-            }
-            return <div key={index}>
-            <LineWrapper
-                height="h-12" 
-                indentationLevel={0} 
-                head={lineNumber}
-                remove={() => lineState.set(none)}
-            >
-                <RuleLineComponent state={lineState as State<RuleLine>} max={lineNumber - 1}/>
-            </LineWrapper>
-            <Inserter
+        {(linesState.length == 0 || isAssumptionState(linesState[0].line)) &&
+            <Inserter 
                 indentationLevel={0}
-                addSubproof={() => insertSubproof(index + 1)}
-                addLine={() => insertRuleLine(index + 1)}
+                addAssumption={() => addLine({assumption: ""}, 0, 1)}
+                addPremise={() => addLine({premise: ""}, 0, 0)}
             />
-            </div>
+        }
+
+        {linesState.map((line, index) => {
+
+            return <div key={line.id.value}>
+                <ProofLineComponent  state={line} index={index} linesState={linesState}/>
+                <InserterWrapper linesState={linesState} index={index}/>
+                </div>
         })}
-    
     </div>
 }

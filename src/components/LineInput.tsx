@@ -1,11 +1,11 @@
 import { none, State, useState } from "@hookstate/core";
 
 interface Props {
-    max: number
+    index: number
     state: State<number| undefined>
 }
 
-export default ({state: propState, max}: Props) => {
+export default ({state: propState, index}: Props) => {
 
     const state = useState(propState);
 
@@ -18,7 +18,7 @@ export default ({state: propState, max}: Props) => {
 
         const number = parseInt(e.target.value);
 
-        if(number > 0 && number <= max) {
+        if(number > 0 && number <= index) {
             state.set(number);
         }
     }

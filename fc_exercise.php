@@ -30,11 +30,20 @@ class fc_exercise extends Exercise
 
     public function responseFromRequest($request)
     {
-        $premises = json_decode($request["premises"]);
-        $lines = json_decode($request["lines"]);
-        $result = ["lines" => $lines, "premises" => $premises];
+        $lines = $request["lines"];
+        foreach ($lines as $key => $value) {
+            if($lines[$key]["line"]["line1"]) {
+                $lines[$key]["line"]["line1"] = intval($value["line"]["line1"]);
+            }
 
-        return $result;
+            if($lines[$key]["line"]["line2"]) {
+                $lines[$key]["line"]["line2"] = intval($value["line"]["line2"]);
+            }
+
+            $lines[$key]["indentationLevel"] = intval($value["indentationLevel"]);
+        }
+
+        return ["lines" => $lines];
     }
 
     public function getEditTemplate($assignment)
@@ -58,7 +67,6 @@ class fc_exercise extends Exercise
         if ($solution) {
             $response = $solution->response;
             $props["lines"] = $response["lines"];
-            $props["premises"] = $response["premises"];
             //$template->results = $this->evaluateItems($solution);
         }
 

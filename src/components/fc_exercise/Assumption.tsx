@@ -8,7 +8,7 @@ type Props = {
 
 export default ({state}: Props) => 
 <>
-    <FormulaInput state={state}/>
+    <FormulaInput state={state.assumption}/>
     <div className="flex items-center">Ass.</div>
 </>
 
