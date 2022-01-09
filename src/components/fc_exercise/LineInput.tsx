@@ -29,6 +29,14 @@ export default (props: Props) => {
         
     }, [linesState.length]);
 
+    useEffect(() => {
+        if(state.value === undefined) {
+            inputState.set("");
+            selectedLineId.set(undefined);
+        }
+
+    }, [state.value])
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
         if(e.target.value == "") {

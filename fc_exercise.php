@@ -32,12 +32,16 @@ class fc_exercise extends Exercise
     {
         $lines = $request["lines"];
         foreach ($lines as $key => $value) {
-            if($lines[$key]["line"]["line1"]) {
-                $lines[$key]["line"]["line1"] = intval($value["line"]["line1"]);
+            if($lines[$key]["line"]["from"]["line1"]) {
+                $lines[$key]["line"]["from"]["line1"] = intval($value["line"]["from"]["line1"]);
             }
 
-            if($lines[$key]["line"]["line2"]) {
-                $lines[$key]["line"]["line2"] = intval($value["line"]["line2"]);
+            if($lines[$key]["line"]["from"]["line2"]) {
+                $lines[$key]["line"]["from"]["line2"] = intval($value["line"]["from"]["line2"]);
+            }
+
+            if($lines[$key]["line"]["from"]["line"]) {
+                $lines[$key]["line"]["from"]["line"] = intval($value["line"]["from"]["line"]);
             }
 
             $lines[$key]["indentationLevel"] = intval($value["indentationLevel"]);

@@ -32,7 +32,7 @@ export default ({linesState, index}: Props) => {
             indentationLevel={0}
             addPremise={() => addLine({premise: ""}, next, 0)}
             addAssumption={() => addLine({assumption: ""}, next, 1)}
-            addRuleApplication={() => addLine({formula: ""}, next, 0)}
+            addRuleApplication={() => addLine({formula: "", from: {}, rule: undefined}, next, 0)}
         />
         
     }
@@ -55,8 +55,8 @@ export default ({linesState, index}: Props) => {
 
         return <Inserter key={index}
             indentationLevel={indentation}
-            addRuleApplication={() => addLine({formula: ""}, next, indentation)}
-            addAbsurdity={indentation > 0 ? () => addLine({}, next, indentation): undefined}
+            addRuleApplication={() => addLine({formula: "", from: {}, rule: undefined}, next, indentation)}
+            addAbsurdity={indentation > 0 ? () => addLine({from: {}}, next, indentation): undefined}
             addAssumption={() => addLine({assumption: ""}, next, indentation + 1)}
         />
     })}</>

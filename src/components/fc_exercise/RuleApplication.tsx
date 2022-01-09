@@ -2,7 +2,7 @@ import { State, useState } from "@hookstate/core";
 import { ChangeEvent } from "react";
 import FormulaInput from "../FormulaInput";
 import LineInput from "./LineInput";
-import { ProofLine, RuleApplication } from "./domain";
+import { DisjunctionElim, isEmptyRuleState, isSingleLineRuleState, isTwoLineRuleState, ProofLine, RuleApplication, SingleLineRuleApplication, TwoLineRuleApplication, ValidRuleApplication } from "./domain";
 import { pathToPHPFormName } from "../utils";
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 }
 
 interface Option {
-    value: RuleApplication["rule"]
+    value: ValidRuleApplication["rule"]
     label: string
 }
 
@@ -33,25 +33,96 @@ const options: Option[] =
         value: "b-elim",
         label: "\u2194-Elim"
     },
+    {
+        value: "c-intro",
+        label: "\u2227-Intro"
+    },
+    {
+        value: "c-elim",
+        label: "\u2227-Elim"
+    },
+    {
+        value: "d-intro",
+        label: "\u2228-Intro"
+    },
+    {
+        value: "d-elim",
+        label: "\u2228-Elim"
+    },
+    {
+        value: "raa",
+        label: "RAA",
+    },
+    {
+        value: "dn",
+        label: "DN",
+    }
 ]
 
-export default ({state: propState, linesState}: Props) => {
+const RuleApplicationSwitch = ({state: propState, linesState} : Props) => {
 
-    const state = useState(propState);
+    const rule = useState(propState.rule as State<RuleApplication["rule"]>);
+
+    if(isTwoLineRuleState(rule)) {
+        const fromState = propState.from as State<TwoLineRuleApplication["from"]>
+        return <div>
+        <LineInput state={fromState.line1} linesState={linesState}/>
+        {rule.value == "raa"? "-" : ", "}
+        <LineInput state={fromState.line2} linesState={linesState}/>
+        </div>
+    }
+    else if (isSingleLineRuleState(rule)) {
+        const fromState = propState.from as State<SingleLineRuleApplication["from"]>
+        return <div>
+        <LineInput state={fromState.line} linesState={linesState}/>
+        </div>
+    }
+    else if (isEmptyRuleState(rule)) {
+        return <div></div>;
+    }
+
+    const fromState = propState.from as State<DisjunctionElim["from"]>
+
+    return <div>
+    <LineInput state={fromState.line} linesState={linesState}/>
+    {", "}
+    <LineInput state={fromState.assumption1} linesState={linesState}/>
+    {"-"}
+    <LineInput state={fromState.line1} linesState={linesState}/>
+    {", "}
+    <LineInput state={fromState.assumption2} linesState={linesState}/>
+    {"-"}
+    <LineInput state={fromState.line2} linesState={linesState}/>
+    </div>
+}
+
+export const RuleSelect = (props: {state: State<RuleApplication>}) => {
+
+    const from = useState(props.state.from as State<RuleApplication["from"]>);
+
+    const rule = useState(props.state.rule as State<RuleApplication["rule"]>);
 
     const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-        state.rule.set(e.target.value as RuleApplication["rule"])
+        rule.set(e.target.value as ValidRuleApplication["rule"]);
+        from.set({});
+        console.log("WHATUP");
     }
+
+    return <div className="w-32">
+    <select name={pathToPHPFormName(rule.path)} required aria-required value={rule.value?? ""} onChange={handleChange} className="h-12">
+    <option disabled hidden value=''></option>
+    {options.map(({value, label}) => <option key={value} value={value}>{label}</option>)}
+    </select>
+    </div>
+}
+
+export default ({state, linesState}: Props) => {
 
     return <>
         <FormulaInput state={state.formula}/>
-        <div className="w-32">
-        <select name={pathToPHPFormName(state.rule.path)} required aria-required value={state.rule.value?? ""} onChange={handleChange} className="h-12">
-        <option disabled hidden value=''></option>
-        {options.map(({value, label}) => <option key={value} value={value}>{label}</option>)}
-        </select>
-        </div>
-        <LineInput state={state.line1} linesState={linesState}/>
-        <LineInput state={state.line2} linesState={linesState}/>
+
+        <RuleSelect state={state}/>
+        
+        <RuleApplicationSwitch state={state} linesState={linesState} />
     </>;
 }

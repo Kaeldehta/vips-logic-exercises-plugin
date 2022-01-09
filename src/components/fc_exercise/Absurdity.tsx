@@ -12,7 +12,8 @@ export default ({state, linesState}: Props) => {
     return <>
     <div className="w-52 flex items-center justify-start">{"\u22A5"}</div>
     <div className="w-32 flex items-center justify-start">Abs.</div>
-    <LineInput state={state.line1} linesState={linesState}/>
-    <LineInput state={state.line2} linesState={linesState}/>
+    <LineInput state={state.from.line1} linesState={linesState}/>
+    {", "}
+    <LineInput state={state.from.line2} linesState={linesState}/>
     </>
 }
