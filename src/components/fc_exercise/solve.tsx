@@ -1,16 +1,16 @@
-import {isAssumptionState, Line, ProofLine} from "./domain"
+import {isAssumptionState, Line, Proof, ProofLine} from "./domain"
 import {State, useState} from "@hookstate/core";
 import ProofLineComponent from "./ProofLine";
 import { nanoid } from "nanoid";
 import Inserter from "./Inserter";
 import InserterWrapper from "./InserterWrapper";
 
-export const wrapState = (state: State<ProofLine[]>) => ({
+export const wrapState = (state: State<Proof>) => ({
     state: state,
     addLine: (line: Line, index: number, indentationLevel: number) => {
         const newId = nanoid();
 
-        state.merge(p => {
+        state.lines.merge(p => {
             const merge: Record<number, ProofLine> = {};
             merge[index] = {id: newId, line, indentationLevel};
             p.forEach((value, i) => {
@@ -25,23 +25,24 @@ export const wrapState = (state: State<ProofLine[]>) => ({
 
 export default ({lines: defaultLines}: {lines: ProofLine[]}) => {
 
-    const {state: linesState, addLine} = wrapState(useState(defaultLines?? []));
+    const {state: linesState, addLine} = wrapState(useState({lines: defaultLines?? []}));
 
     return <div>
 
-        {(linesState.length == 0 || isAssumptionState(linesState[0].line)) &&
+        {(linesState.lines.length == 0 || isAssumptionState(linesState.lines[0].line)) &&
             <Inserter 
                 indentationLevel={0}
+                addBottom
                 addAssumption={() => addLine({assumption: ""}, 0, 1)}
                 addPremise={() => addLine({premise: ""}, 0, 0)}
             />
         }
 
-        {linesState.map((line, index) => {
+        {linesState.lines.map((line, index) => {
 
             return <div key={line.id.value}>
-                <ProofLineComponent  state={line} index={index} linesState={linesState}/>
-                <InserterWrapper linesState={linesState} index={index}/>
+                <ProofLineComponent  state={line} linesState={linesState.lines}/>
+                <InserterWrapper proofState={linesState} index={index}/>
                 </div>
         })}
     </div>

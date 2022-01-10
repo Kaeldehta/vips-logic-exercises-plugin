@@ -1,26 +1,26 @@
 import { State, useState } from "@hookstate/core";
-import { isAssumptionState, isPremiseState, ProofLine } from "./domain";
+import { isAssumptionState, isPremiseState, Proof, ProofLine } from "./domain";
 import Inserter from "./Inserter";
 import { wrapState } from "./solve";
 
 interface Props {
-    linesState: State<ProofLine[]>
+    proofState: State<Proof>
     index: number
 }
 
-export default ({linesState, index}: Props) => {
+export default ({proofState, index}: Props) => {
 
-    const {state, addLine} = wrapState(useState(linesState));
+    const {state, addLine} = wrapState(useState(proofState));
 
     const next = index + 1;
 
-    const nextState = state[next];
+    const nextState = state.lines[next];
 
-    const currentState = state[index];
+    const currentState = state.lines[index];
 
     const currentIndentation = currentState.indentationLevel.value;
 
-    const nextExists = next < linesState.length;
+    const nextExists = next < state.lines.length;
 
     if(isPremiseState(currentState.line)) {
         if(nextExists && isPremiseState(nextState.line)) {
@@ -28,7 +28,8 @@ export default ({linesState, index}: Props) => {
                 indentationLevel={0}
             />
         }
-        return <Inserter 
+        return <Inserter
+            addBottom
             indentationLevel={0}
             addPremise={() => addLine({premise: ""}, next, 0)}
             addAssumption={() => addLine({assumption: ""}, next, 1)}

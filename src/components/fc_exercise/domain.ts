@@ -83,3 +83,7 @@ export type ProofLine = {
     indentationLevel: number
     id: string
 }
+
+export type Proof = {
+    lines: ProofLine[]
+}

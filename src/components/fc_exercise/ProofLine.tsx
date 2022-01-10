@@ -6,21 +6,18 @@ import RuleApplication from "./RuleApplication";
 import Assumption from "./Assumption";
 import Absurdity from "./Absurdity";
 import Premise from "./Premise";
-import { stat } from "fs";
-import internal from "stream";
 import { pathToPHPFormName } from "../utils";
 
 interface Props {
     state: State<ProofLine>
     linesState: State<ProofLine[]>
-    index: number
 }
 
 export default ({state: propState, linesState}: Props) => {
 
     const state = useState(propState);
 
-    const index = state.path[0] as number;
+    const index = state.path[1] as number;
 
     const generateLine = () => {
         if(isAssumptionState(state.line)) {
@@ -36,7 +33,7 @@ export default ({state: propState, linesState}: Props) => {
         return <Absurdity state={state.line as State<AbsurdityType>} linesState={linesState}/>
     }
 
-    return <LineWrapper height="h-12" head={index + 1} indentationLevel={state.indentationLevel.value} remove={isAssumptionState(state.line)? () => linesState.merge(lines => {
+    return <LineWrapper reduceHeight={isAssumptionState(state.line)} addBottom={isAssumptionState(state.line)} height="h-12" head={index + 1} indentationLevel={state.indentationLevel.value} remove={isAssumptionState(state.line)? () => linesState.merge(lines => {
         var merge: Record<number, ProofLine> = {};
         merge[index] = none;
         let i = index;

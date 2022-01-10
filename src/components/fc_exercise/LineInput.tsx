@@ -48,7 +48,7 @@ export default (props: Props) => {
 
         const number = parseInt(e.target.value);
 
-        if(number > 0 && number <= state.path[0]) {
+        if(number > 0 && number <= state.path[1]) {
             state.set(number - 1);
             selectedLineId.set(linesState[number - 1].id.value);
             inputState.set(number);

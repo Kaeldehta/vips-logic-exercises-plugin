@@ -1,5 +1,6 @@
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import FormulaInput from "./FormulaInput";
+import {useState} from "@hookstate/core"
 
 interface Props {
     consequence: string,
@@ -9,26 +10,19 @@ interface Props {
 
 const EditComponent = ({consequence, statements, separator}: Props) => {
 
-    const [consequenceState, setConsequenceState] = useState(consequence ?? "");
-
-    const [statementsState, setStatementsState] = useState(statements ?? []);
-
-    const addNewStatement = () => setStatementsState(oldState => [...oldState, ""]);
-
-    const setStatement = (statement: string, index: number) => setStatementsState(oldState => 
-    {
-        const copyState = [...oldState];
-        copyState[index] = statement;
-        return copyState;
+    const state = useState({
+        consequence: consequence ?? "",
+        statements: statements ?? [],
     })
+
+    const addNewStatement = () => state.statements.merge([""]);
 
     return <>
         <div className="flex flex-row items-center gap-1">
-        {statementsState.map((statement, index) => 
+        {state.statements.map((statement, index) => 
             <FormulaInput 
                 key={index}
-                formula={statement}
-                setFormula={(formula) => setStatement(formula, index)}
+                state={statement}
             />)}
         <button className="border-black border-2 px-3 hover:bg-gray-100" onClick={(event)=> {
             event.preventDefault();
@@ -36,8 +30,7 @@ const EditComponent = ({consequence, statements, separator}: Props) => {
         }}>+</button>
         {separator}
         <FormulaInput
-            formula={consequenceState}
-            setFormula={setConsequenceState}
+            state={state.consequence}
         />
         </div>
     </>

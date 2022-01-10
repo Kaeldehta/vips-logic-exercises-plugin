@@ -1,6 +1,6 @@
 import LineWrapper from "./LineWrapper"
 
-import {FiPlusCircle, FiArrowRightCircle, FiArrowLeftCircle, FiArrowDownCircle} from "react-icons/fi";
+import {FiPlusCircle, FiArrowRightCircle, FiArrowDownCircle} from "react-icons/fi";
 
 interface Props {
     indentationLevel: number,
@@ -8,11 +8,13 @@ interface Props {
     addPremise?: () => void,
     addAssumption?: () => void,
     addAbsurdity?: () => void,
+    addBottom?: boolean,
+    reduceHeight?: boolean
 }
 
-export default ({indentationLevel, addRuleApplication, addPremise, addAbsurdity, addAssumption}: Props) => {
+export default ({reduceHeight, addBottom, indentationLevel, addRuleApplication, addPremise, addAbsurdity, addAssumption}: Props) => {
 
-    return <LineWrapper height="h-8" indentationLevel={indentationLevel}>
+    return <LineWrapper reduceHeight={reduceHeight} addBottom={addBottom} height="h-8" indentationLevel={indentationLevel}>
         <div className="flex w-52 justify-center items-center gap-4">
         {addRuleApplication && <button className="group-hover:flex hidden" type="button" onClick={addRuleApplication}><FiArrowDownCircle/></button>}
         {addAssumption && <button className="group-hover:flex hidden" type="button" onClick={addAssumption}><FiArrowRightCircle/></button>}
