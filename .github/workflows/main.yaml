@@ -6,23 +6,23 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-  steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Setup Node
-      uses: actions/setup-node@v2
-      with:
-        node-version-file: ".nvmrc"
-    - name: Build
-      run: |
-        npm ci
-        npm run build
-    - name: Zip
-      uses: montudor/action-zip@v1
-      with:
-        args: zip -qq -r package.zip dist templates plugin.manifest *.php
-    - name: Release
-      uses: softprops/action-gh-release@v1
-      with:
-        files: |
-          package.zip
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version-file: ".nvmrc"
+      - name: Build
+        run: |
+          npm ci
+          npm run build
+      - name: Zip
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r package.zip dist templates plugin.manifest *.php
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            package.zip
