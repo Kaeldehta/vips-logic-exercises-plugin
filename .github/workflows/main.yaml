@@ -20,7 +20,7 @@ jobs:
       - name: Zip
         uses: montudor/action-zip@v1
         with:
-          args: zip -v -r package.zip dist templates plugin.manifest ./*.php
+          args: zip -v package.zip plugin.manifest *.php -r dist templates
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
