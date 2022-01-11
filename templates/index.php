@@ -1,4 +1,9 @@
-<div id="exercise-container" data-props="<?= htmlReady(json_encode($props)) ?>" data-view="<?= htmlReady($view) ?>" data-exercise-type="<?= htmlReady($exercise_type) ?>">
+<div id="exercise-container">
 </div>
 
-<script src="<?= PluginEngine::getPlugin("LogicExercises")->getPluginURL() . "/dist/index.js" ?>"></script>
+<script>
+    const REACT_PROPS = <?= json_encode($props) ?>
+</script>
+
+<script src="<?= PluginEngine::getPlugin("LogicExercises")->getPluginURL() . "/dist/" . $exercise_type . "/" . $view . ".js" ?>"></script>
+<link rel="stylesheet" href="<?= PluginEngine::getPlugin("LogicExercises")->getPluginURL() . "/dist/" . $exercise_type . "/" . $view . ".css" ?>">

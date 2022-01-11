@@ -4,6 +4,8 @@ import ProofLineComponent from "./ProofLine";
 import { nanoid } from "nanoid";
 import Inserter from "./Inserter";
 import InserterWrapper from "./InserterWrapper";
+import { render } from "react-dom";
+import "./solve.css";
 
 export const wrapState = (state: State<Proof>) => ({
     state: state,
@@ -23,7 +25,7 @@ export const wrapState = (state: State<Proof>) => ({
     }
 })
 
-export default ({lines: defaultLines}: {lines: ProofLine[]}) => {
+const Solve =  ({lines: defaultLines}: {lines: ProofLine[]}) => {
 
     const {state: linesState, addLine} = wrapState(useState({lines: defaultLines?? []}));
 
@@ -47,3 +49,9 @@ export default ({lines: defaultLines}: {lines: ProofLine[]}) => {
         })}
     </div>
 }
+ 
+const element = document.getElementById("exercise-container");
+
+declare const REACT_PROPS: {solution: {lines: ProofLine[]}};
+
+render(<Solve lines={REACT_PROPS.solution.lines}/>, element);

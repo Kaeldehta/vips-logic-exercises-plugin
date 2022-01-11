@@ -1,6 +1,6 @@
 <?php
 
-class fc_exercise extends Exercise
+class fc_exercise extends ReactExercise
 {
 
     public function initFromRequest($request)
@@ -16,16 +16,6 @@ class fc_exercise extends Exercise
     public function evaluateItems($solution)
     {
         return [];
-    }
-
-    public function getTemplate($view, $props) {
-        $templatefactory = new Flexi_TemplateFactory(__DIR__ . '/templates');
-        $template = $templatefactory->open('index');
-        $template->view = $view;
-        $template->props = $props;
-        $template->exercise_type = __CLASS__;
-
-        return $template;
     }
 
     public function responseFromRequest($request)
@@ -48,34 +38,5 @@ class fc_exercise extends Exercise
         }
 
         return ["lines" => $lines];
-    }
-
-    public function getEditTemplate($assignment)
-    {
-        $props = $this->task;
-        
-        $template = $this->getTemplate("edit", $props);
-
-        return $template;
-    }
-
-
-    public function getViewTemplate($view, $solution, $assignment, $user_id)
-    {
-        $props = [
-            "consequence" => $this->task["consequence"],
-            "statements" => $this->task["statements"],
-        ];
-        
-
-        if ($solution) {
-            $response = $solution->response;
-            $props["lines"] = $response["lines"];
-            //$template->results = $this->evaluateItems($solution);
-        }
-
-        $template = $this->getTemplate($view, $props);
-
-        return $template;
     }
 }

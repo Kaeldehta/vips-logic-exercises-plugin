@@ -16,6 +16,7 @@ class LogicExercises extends StudIPPlugin implements SystemPlugin
         parent::__construct();
 
         if (class_exists('Exercise')) {
+            StudipAutoloader::addClassLookup('ReactExercise', __DIR__ . '/ReactExercise.php');
             StudipAutoloader::addClassLookup('st_exercise', __DIR__ . '/st_exercise.php');
             Exercise::addExerciseType('Semantic Tree', 'st_exercise', 'semantic-tree');
 
