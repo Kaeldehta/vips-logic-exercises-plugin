@@ -6,6 +6,7 @@ import Inserter from "./Inserter";
 import InserterWrapper from "./InserterWrapper";
 import { render } from "react-dom";
 import "./solve.css";
+import { useEffect } from "react";
 
 export const wrapState = (state: State<Proof>) => ({
     state: state,
