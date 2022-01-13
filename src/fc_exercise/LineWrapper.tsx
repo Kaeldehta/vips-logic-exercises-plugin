@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { FiXCircle } from "react-icons/fi";
-import Border from "./Border";
-import BorderRepeat from "./BorderRepeat";
+import Border from "./solve/Border";
+import BorderRepeat from "./solve/BorderRepeat";
 
 interface Props {
     children?: ReactNode

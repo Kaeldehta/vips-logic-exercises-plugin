@@ -1,4 +1,4 @@
-import LineWrapper from "./LineWrapper"
+import LineWrapper from "../LineWrapper"
 
 import {FiPlusCircle, FiArrowRightCircle, FiArrowDownCircle} from "react-icons/fi";
 

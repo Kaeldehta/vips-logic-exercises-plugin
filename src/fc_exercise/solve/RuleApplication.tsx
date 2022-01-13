@@ -4,60 +4,12 @@ import FormulaInput from "../../FormulaInput";
 import LineInput from "./LineInput";
 import { DisjunctionElim, isEmptyRuleState, isSingleLineRuleState, isTwoLineRuleState, ProofLine, RuleApplication, SingleLineRuleApplication, TwoLineRuleApplication, ValidRuleApplication } from "../domain";
 import { pathToPHPFormName } from "../../utils";
+import { options } from "../utils";
 
 type Props = {
     state: State<RuleApplication>
     linesState: State<ProofLine[]>
 }
-
-interface Option {
-    value: ValidRuleApplication["rule"]
-    label: string
-}
-
-const options: Option[] = 
-[
-    {
-        value: "i-intro",
-        label: "\u2192-Intro"
-    },
-    {
-        value: "i-elim",
-        label: "\u2192-Elim"
-    },
-    {
-        value: "b-intro",
-        label: "\u2194-Intro"
-    },
-    {
-        value: "b-elim",
-        label: "\u2194-Elim"
-    },
-    {
-        value: "c-intro",
-        label: "\u2227-Intro"
-    },
-    {
-        value: "c-elim",
-        label: "\u2227-Elim"
-    },
-    {
-        value: "d-intro",
-        label: "\u2228-Intro"
-    },
-    {
-        value: "d-elim",
-        label: "\u2228-Elim"
-    },
-    {
-        value: "raa",
-        label: "RAA",
-    },
-    {
-        value: "dn",
-        label: "DN",
-    }
-]
 
 const RuleApplicationSwitch = ({state: propState, linesState} : Props) => {
 

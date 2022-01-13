@@ -1,6 +1,6 @@
 import { none, State, useState } from "@hookstate/core";
 import { isAssumptionState, isRuleApplicationState, ProofLine, Absurdity as AbsurdityType, isPremiseState, isAssumption } from "../domain";
-import LineWrapper from "./LineWrapper";
+import LineWrapper from "../LineWrapper";
 import RuleApplication from "./RuleApplication";
 
 import Assumption from "./Assumption";

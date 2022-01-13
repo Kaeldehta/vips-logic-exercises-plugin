@@ -65,7 +65,9 @@ export const isPremiseState = (state: State<any>): state is State<Premise> => is
 export const isTwoLineRule = (rule: RuleApplication["rule"]): rule is TwoLineRuleApplication["rule"] => {
     return rule == "b-intro" || rule == "c-intro" || rule == "i-elim" || rule == "i-intro" || rule == "raa";
 }
-export const isTwoLineRuleState = (state: State<any>): state is State<TwoLineRuleApplication["rule"]> => isTwoLineRule(state.value)
+export const isSingleLineRuleApplication = (app: RuleApplication): app is SingleLineRuleApplication => isSingleLineRule(app.rule);
+export const isTwoLineRuleApplication = (app: RuleApplication): app is TwoLineRuleApplication => isTwoLineRule(app.rule);
+export const isTwoLineRuleState = (state: State<any>): state is State<TwoLineRuleApplication["rule"]> => isTwoLineRule(state.value);
 export const isEmptyRule = (rule: RuleApplication["rule"]): rule is EmptyRuleApplication["rule"] => {
     return rule === undefined;
 }
