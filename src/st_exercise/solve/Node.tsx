@@ -1,5 +1,5 @@
 import {useState} from "react";
-import FormulaInput from "../FormulaInput";
+import FormulaInput from "../../FormulaInput";
 import RuleSelect, {Rule} from "./RuleSelect";
 
 export interface Node {

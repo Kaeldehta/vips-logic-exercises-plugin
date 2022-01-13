@@ -1,4 +1,4 @@
-import EditComponent from "../EditComponent";
+import EditComponent from "../../EditComponent";
 
 interface Props {
     statements: string[],
