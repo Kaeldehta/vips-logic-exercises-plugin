@@ -31,20 +31,20 @@ const FormulaInput = ({state: propState}: Props) => {
     const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         cursor.set(e.target.selectionStart!);
 
-        let newFormula = e.target.value.replaceAll("i", "\u2192");
-        newFormula = newFormula.replaceAll("o", "\u2194");
-        newFormula = newFormula.replaceAll("k", "\u2227");
-        newFormula = newFormula.replaceAll("l", "\u2228");
-        newFormula = newFormula.replaceAll("n", "\u00AC");
-        newFormula = newFormula.replaceAll("1", "\u2081");
-        newFormula = newFormula.replaceAll("2", "\u2082");
-        newFormula = newFormula.replaceAll("3", "\u2083");
-        newFormula = newFormula.replaceAll("4", "\u2084");
-        newFormula = newFormula.replaceAll("5", "\u2085");
-        newFormula = newFormula.replaceAll("6", "\u2086");
-        newFormula = newFormula.replaceAll("7", "\u2087");
-        newFormula = newFormula.replaceAll("8", "\u2088");
-        newFormula = newFormula.replaceAll("9", "\u2089");
+        let newFormula = e.target.value.replace(/i/g, "\u2192");
+        newFormula = newFormula.replace(/o/g, "\u2194");
+        newFormula = newFormula.replace(/k/g, "\u2227");
+        newFormula = newFormula.replace(/l/g, "\u2228");
+        newFormula = newFormula.replace(/n/g, "\u00AC");
+        newFormula = newFormula.replace(/1/g, "\u2081");
+        newFormula = newFormula.replace(/2/g, "\u2082");
+        newFormula = newFormula.replace(/3/g, "\u2083");
+        newFormula = newFormula.replace(/4/g, "\u2084");
+        newFormula = newFormula.replace(/5/g, "\u2085");
+        newFormula = newFormula.replace(/6/g, "\u2086");
+        newFormula = newFormula.replace(/7/g, "\u2087");
+        newFormula = newFormula.replace(/8/g, "\u2088");
+        newFormula = newFormula.replace(/9/g, "\u2089");
 
         state.set(newFormula);
     }

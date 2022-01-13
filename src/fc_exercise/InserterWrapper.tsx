@@ -1,10 +1,10 @@
 import { State, useState } from "@hookstate/core";
-import { isAssumptionState, isPremiseState, Proof, ProofLine } from "./domain";
+import { isAssumptionState, isPremiseState, Response } from "./domain";
 import Inserter from "./Inserter";
 import { wrapState } from "./solve";
 
 interface Props {
-    proofState: State<Proof>
+    proofState: State<Response>
     index: number
 }
 

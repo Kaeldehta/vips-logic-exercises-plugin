@@ -1,4 +1,4 @@
-import {isAssumptionState, Line, Proof, ProofLine} from "./domain"
+import {isAssumptionState, Line, Response, ProofLine} from "./domain"
 import {State, useState} from "@hookstate/core";
 import ProofLineComponent from "./ProofLine";
 import { nanoid } from "nanoid";
@@ -6,9 +6,8 @@ import Inserter from "./Inserter";
 import InserterWrapper from "./InserterWrapper";
 import { render } from "react-dom";
 import "./solve.css";
-import { useEffect } from "react";
 
-export const wrapState = (state: State<Proof>) => ({
+export const wrapState = (state: State<Response>) => ({
     state: state,
     addLine: (line: Line, index: number, indentationLevel: number) => {
         const newId = nanoid();
@@ -53,6 +52,8 @@ const Solve =  ({lines: defaultLines}: {lines: ProofLine[]}) => {
  
 const element = document.getElementById("exercise-container");
 
-declare const REACT_PROPS: {solution: {lines: ProofLine[]}};
+declare const REACT_PROPS: {response?: Response};
 
-render(<Solve lines={REACT_PROPS.solution.lines}/>, element);
+const lines = REACT_PROPS.response ? REACT_PROPS.response.lines : [];
+
+render(<Solve lines={lines}/>, element);

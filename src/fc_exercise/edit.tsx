@@ -1,6 +1,7 @@
 import EditComponent from "../EditComponent";
 import { render } from "react-dom";
 import "./edit.css";
+import { Task } from "./domain";
 
 interface Props {
     statements: string[],
@@ -11,6 +12,6 @@ const Edit = (props: Props) => <EditComponent {...props} separator={<div>{"\u22A
 
 const element = document.getElementById("exercise-container");
 
-declare const REACT_PROPS: {consequence: string, statements: string[]};
+declare const REACT_PROPS: {task: Task};
 
-render(<Edit {...REACT_PROPS}/>, element);
+render(<Edit {...REACT_PROPS.task}/>, element);
