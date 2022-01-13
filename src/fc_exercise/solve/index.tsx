@@ -1,11 +1,11 @@
-import {isAssumptionState, Line, Response, ProofLine} from "./domain"
+import {isAssumptionState, Line, Response, ProofLine} from "../domain"
 import {State, useState} from "@hookstate/core";
 import ProofLineComponent from "./ProofLine";
 import { nanoid } from "nanoid";
 import Inserter from "./Inserter";
 import InserterWrapper from "./InserterWrapper";
 import { render } from "react-dom";
-import "./solve.css";
+import "./index.css";
 
 export const wrapState = (state: State<Response>) => ({
     state: state,

@@ -1,9 +1,9 @@
 import { State, useState } from "@hookstate/core";
 import { ChangeEvent } from "react";
-import FormulaInput from "../FormulaInput";
+import FormulaInput from "../../FormulaInput";
 import LineInput from "./LineInput";
-import { DisjunctionElim, isEmptyRuleState, isSingleLineRuleState, isTwoLineRuleState, ProofLine, RuleApplication, SingleLineRuleApplication, TwoLineRuleApplication, ValidRuleApplication } from "./domain";
-import { pathToPHPFormName } from "../utils";
+import { DisjunctionElim, isEmptyRuleState, isSingleLineRuleState, isTwoLineRuleState, ProofLine, RuleApplication, SingleLineRuleApplication, TwoLineRuleApplication, ValidRuleApplication } from "../domain";
+import { pathToPHPFormName } from "../../utils";
 
 type Props = {
     state: State<RuleApplication>

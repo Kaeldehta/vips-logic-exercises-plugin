@@ -8,5 +8,5 @@
     }
 </script>
 
-<script src="<?= PluginEngine::getPlugin("LogicExercises")->getPluginURL() . "/dist/" . $exercise->type . "/" . $reactView . ".js" ?>"></script>
-<link rel="stylesheet" href="<?= PluginEngine::getPlugin("LogicExercises")->getPluginURL() . "/dist/" . $exercise->type . "/" . $reactView . ".css" ?>">
+<script src="<?= PluginEngine::getPlugin("LogicExercises")->getPluginURL() . "/dist/" . $exercise->type . "/" . $reactView . "/index.js" ?>"></script>
+<link rel="stylesheet" href="<?= PluginEngine::getPlugin("LogicExercises")->getPluginURL() . "/dist/" . $exercise->type . "/" . $reactView . "/index.css" ?>">

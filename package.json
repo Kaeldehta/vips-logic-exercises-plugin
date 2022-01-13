@@ -5,8 +5,8 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "build": "parcel build './src/**/{solve,edit,correct}.tsx'",
-    "watch": "parcel watch './src/**/{solve,edit,correct}.tsx'"
+    "build": "parcel build './src/**/index.tsx'",
+    "watch": "parcel watch './src/**/index.tsx'"
   },
   "devDependencies": {
     "@types/node": "^16.11.12",

@@ -1,6 +1,6 @@
 import {render} from "react-dom";
-import {ProofLine, Response, Task} from "./domain";
-import "./correct.css";
+import {ProofLine, Response, Task} from "../domain";
+import "./index.css";
 
 const Correct = ({lines}: {lines: ProofLine[]}) => {
 

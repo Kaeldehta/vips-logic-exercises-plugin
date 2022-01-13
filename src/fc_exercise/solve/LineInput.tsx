@@ -1,7 +1,7 @@
 import { State, useState } from "@hookstate/core";
 import { useEffect, useRef } from "react";
-import { pathToPHPFormName } from "../utils";
-import { ProofLine } from "./domain";
+import { pathToPHPFormName } from "../../utils";
+import { ProofLine } from "../domain";
 
 interface Props {
     state: State<number | undefined>

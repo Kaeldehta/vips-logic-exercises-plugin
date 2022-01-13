@@ -1,6 +1,6 @@
 import { State, useState } from "@hookstate/core";
-import FormulaInput from "../FormulaInput"
-import { Assumption } from "./domain";
+import FormulaInput from "../../FormulaInput"
+import { Assumption } from "../domain";
 
 type Props = {
     state: State<Assumption>

@@ -1,7 +1,7 @@
 import { State, useState } from "@hookstate/core";
-import { isAssumptionState, isPremiseState, Response } from "./domain";
+import { isAssumptionState, isPremiseState, Response } from "../domain";
 import Inserter from "./Inserter";
-import { wrapState } from "./solve";
+import { wrapState } from ".";
 
 interface Props {
     proofState: State<Response>

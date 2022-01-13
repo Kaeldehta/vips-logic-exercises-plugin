@@ -1,6 +1,6 @@
 import { State } from "@hookstate/core"
-import FormulaInput from "../FormulaInput"
-import { Premise } from "./domain"
+import FormulaInput from "../../FormulaInput"
+import { Premise } from "../domain"
 
 interface Props {
     state: State<Premise>,

@@ -1,12 +1,12 @@
 import { none, State, useState } from "@hookstate/core";
-import { isAssumptionState, isRuleApplicationState, ProofLine, Absurdity as AbsurdityType, isPremiseState, isAssumption } from "./domain";
+import { isAssumptionState, isRuleApplicationState, ProofLine, Absurdity as AbsurdityType, isPremiseState, isAssumption } from "../domain";
 import LineWrapper from "./LineWrapper";
 import RuleApplication from "./RuleApplication";
 
 import Assumption from "./Assumption";
 import Absurdity from "./Absurdity";
 import Premise from "./Premise";
-import { pathToPHPFormName } from "../utils";
+import { pathToPHPFormName } from "../../utils";
 
 interface Props {
     state: State<ProofLine>

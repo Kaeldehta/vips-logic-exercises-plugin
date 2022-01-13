@@ -1,7 +1,7 @@
-import EditComponent from "../EditComponent";
+import EditComponent from "../../EditComponent";
 import { render } from "react-dom";
-import "./edit.css";
-import { Task } from "./domain";
+import "./index.css";
+import { Task } from "../domain";
 
 interface Props {
     statements: string[],

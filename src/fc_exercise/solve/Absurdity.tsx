@@ -1,6 +1,6 @@
 import { State, useState } from "@hookstate/core";
 import LineInput from "./LineInput"
-import { Absurdity, ProofLine } from "./domain";
+import { Absurdity, ProofLine } from "../domain";
 
 type Props = {
     state: State<Absurdity>
