@@ -1,9 +1,12 @@
-<div id="exercise-container">
+<div id="exercise-container" class="tailwind">
 </div>
 
 <script>
-    const REACT_PROPS = <?= json_encode($props) ?>
+    const REACT_PROPS = {
+        task: <?= json_encode($exercise->task) ?>,
+        <? if ($response): ?> response: <?= json_encode($response) ?> <? endif ?>
+    }
 </script>
 
-<script src="<?= PluginEngine::getPlugin("LogicExercises")->getPluginURL() . "/dist/" . $exercise_type . "/" . $view . ".js" ?>"></script>
-<link rel="stylesheet" href="<?= PluginEngine::getPlugin("LogicExercises")->getPluginURL() . "/dist/" . $exercise_type . "/" . $view . ".css" ?>">
+<script src="<?= PluginEngine::getPlugin("LogicExercises")->getPluginURL() . "/dist/" . $exercise->type . "/" . $reactView . ".js" ?>"></script>
+<link rel="stylesheet" href="<?= PluginEngine::getPlugin("LogicExercises")->getPluginURL() . "/dist/" . $exercise->type . "/" . $reactView . ".css" ?>">

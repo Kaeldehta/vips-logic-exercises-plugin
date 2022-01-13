@@ -2,39 +2,29 @@
 
 abstract class ReactExercise extends Exercise {
 
-    public function getTemplate($view, $props) {
+    public function getTemplate($view) {
         $templatefactory = new Flexi_TemplateFactory(__DIR__ . '/templates');
         $template = $templatefactory->open('index');
-        $template->view = $view;
-        $template->props = $props;
-        $template->exercise_type = get_class($this);
-
+        $template->reactView = $view;
+        $template->exercise = $this;
         return $template;
     }
 
     public function getEditTemplate($assignment)
     {
-        $props = $this->task;
-        
-        $template = $this->getTemplate("edit", $props);
-
-        return $template;
+        return $this->getTemplate("edit");
     }
 
     public function getViewTemplate($view, $solution, $assignment, $user_id)
     {
-        $props = $this->task;
-        
-        if ($solution) {
-            $props["solution"] = $solution->response;
-            //$template->results = $this->evaluateItems($solution);
-        }
+        $template = $this->getTemplate($view);
 
-        $template = $this->getTemplate($view, $props);
+        $template->solution = $solution;
+        $template->response = $solution->response;
 
         return $template;
     }
-
+    
 }
 
 ?>
