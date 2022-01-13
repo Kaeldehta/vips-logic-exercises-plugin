@@ -20,7 +20,7 @@ jobs:
       - name: Zip
         uses: montudor/action-zip@v1
         with:
-          args: zip -v package.zip plugin.manifest *.php -r dist templates
+          args: zip -v -r package.zip plugin.manifest fc_exercise.php LogicExercises.php ReactExercise.php st_exercise.php dist templates
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
