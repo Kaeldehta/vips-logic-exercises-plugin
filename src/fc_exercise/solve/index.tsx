@@ -1,4 +1,4 @@
-import {isAssumptionState, Line, Response, ProofLine} from "../domain"
+import {isAssumptionState, Line, Response, ProofLine, Task} from "../domain"
 import {State, useState} from "@hookstate/core";
 import ProofLineComponent from "./ProofLine";
 import { nanoid } from "nanoid";
@@ -6,6 +6,7 @@ import Inserter from "./Inserter";
 import InserterWrapper from "./InserterWrapper";
 import { render } from "react-dom";
 import "./index.css";
+import { useEffect } from "react";
 
 export const wrapState = (state: State<Response>) => ({
     state: state,
@@ -25,11 +26,13 @@ export const wrapState = (state: State<Response>) => ({
     }
 })
 
-const Solve =  ({lines: defaultLines}: {lines: ProofLine[]}) => {
+const Solve =  ({lines: defaultLines, task}: {lines: ProofLine[], task: Task}) => {
 
     const {state: linesState, addLine} = wrapState(useState({lines: defaultLines?? []}));
 
     return <div>
+
+        <b className="flex gap-3 ml-10 mb-10 justify-start items-center">{task.statements.map((statement, index) => <div key={index}>{statement}{index < task.statements.length - 1 && ","}</div>)}<div>{"\u22A2"}<sub>FC</sub></div><div>{task.consequence}</div></b>
 
         {(linesState.lines.length == 0 || isAssumptionState(linesState.lines[0].line)) &&
             <Inserter 
@@ -52,8 +55,8 @@ const Solve =  ({lines: defaultLines}: {lines: ProofLine[]}) => {
  
 const element = document.getElementById("exercise-container");
 
-declare const REACT_PROPS: {response?: Response};
+declare const REACT_PROPS: {response?: Response, task: Task};
 
 const lines = REACT_PROPS.response ? REACT_PROPS.response.lines : [];
 
-render(<Solve lines={lines}/>, element);
+render(<Solve lines={lines} task={REACT_PROPS.task}/>, element);
