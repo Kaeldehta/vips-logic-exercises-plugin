@@ -30,7 +30,6 @@ export default (props: Props) => {
     }, [linesState.length]);
 
     useEffect(() => {
-        console.log(state.value);
         if(state.value === undefined) {
             inputState.set("");
             selectedLineId.set(undefined);
