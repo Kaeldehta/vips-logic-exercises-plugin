@@ -13,9 +13,9 @@ export default (props: Props) => {
     const state = useState(props.state);
     const linesState = useState(props.linesState);
 
-    const inputState = useState(state.value?? "");
+    const inputState = useState<number| string>("");
 
-    const selectedLineId = useState(state.value ? linesState[state.value].id.value : undefined);
+    const selectedLineId = useState(state.value !== undefined ? linesState[state.value].id.value : undefined);
 
     useEffect(() => {
         const find = linesState.findIndex(({id}) => id.value == selectedLineId.value);
@@ -30,6 +30,7 @@ export default (props: Props) => {
     }, [linesState.length]);
 
     useEffect(() => {
+        console.log(state.value);
         if(state.value === undefined) {
             inputState.set("");
             selectedLineId.set(undefined);
