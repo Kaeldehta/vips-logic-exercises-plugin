@@ -1,8 +1,9 @@
 import {render} from "react-dom";
-import {Absurdity, DisjunctionElim, isAssumption, isPremise, isRuleApplication, isSingleLineRule, isSingleLineRuleApplication, isTwoLineRuleApplication, Line, ProofLine as ProofLineType, Response, RuleApplication, Task, ValidRuleApplication} from "../domain";
+import {DisjunctionElim, isAssumption, isPremise, isRuleApplication, isSingleLineRuleApplication, isTwoLineRuleApplication, Line, ProofLine as ProofLineType, Response, ValidRuleApplication} from "../domain";
 import LineWrapper from "../LineWrapper";
 import { options } from "../utils";
 import "./index.css";
+import { Task } from "../../domain";
 
 const ruleToLabel: Record<ValidRuleApplication["rule"],string>| {} = options.reduce((agg, option) => ({...agg, [option.value]: option.label}), {});
 

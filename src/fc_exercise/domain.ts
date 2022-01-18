@@ -89,8 +89,3 @@ export type ProofLine = {
 export type Response = {
     lines: ProofLine[]
 }
-
-export type Task = {
-    consequence: string,
-    statements: string[]
-}
