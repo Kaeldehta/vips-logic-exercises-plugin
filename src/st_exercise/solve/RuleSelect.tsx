@@ -1,38 +1,24 @@
-import {useState} from "react";
+import { State, useState } from "@hookstate/core"
+import { ChangeEventHandler } from "react";
+import { pathToPHPFormName } from "../../utils";
+import { RuleApplication, rules } from "../types"
 
-export interface Rule {
-    line: number,
-    rule: string,
-    form_prefix: string
+interface Props {
+    state: State<RuleApplication["rule"]>
 }
 
-const options = [
-    "DN",
-    "C",
-    "NC",
-    "D",
-    "ND",
-    "MC",
-    "NMC",
-    "MB",
-    "NMB"
-]
+const RuleSelect = (props: Props) => {
 
-const RuleSelect = (props: Rule | {form_prefix: string}) => {
+    const state = useState(props.state);
 
-    const [rule, setRule] = useState((props as Rule).rule ?? "A");
+    const handleChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
+        state.set(e.target.value as RuleApplication["rule"]);
+    };
 
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        //console.log(event);
-        setRule(event.target.value);
-    }
-
-    return <>
-        <select value={rule} onChange={handleChange} name={props.form_prefix + "[rule]"}>
-            {options.map((option) => <option key={option} value={option}>{option}</option>)}
-        </select>
-        {rule != "A" && <input name={props.form_prefix + "[line]"} min={1} required aria-required type="number" defaultValue={(props as Rule).line}/>}
-    </>
+    return <select className="w-20" name={pathToPHPFormName(state.path)} aria-required required value={state.value ?? ""} onChange={handleChange}>
+        <option disabled hidden value=''></option>
+        {rules.map((option) => <option key={option} value={option}>{option}</option>)}
+    </select>
 }
 
-export default RuleSelect;
+export default RuleSelect

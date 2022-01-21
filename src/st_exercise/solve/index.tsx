@@ -1,32 +1,59 @@
-import NodeComponent, {Node} from "./Node";
-import {useState} from "react";
+import TaskRender from "../../TaskRender";
+import { Task } from "../../domain";
+import { render } from "react-dom";
+import { Response } from "../types";
+import { useState } from "@hookstate/core";
+import NodeComponent from "./Node";
+import { nanoid } from "nanoid";
+import "./index.css"
+import { useEffect } from "react";
 
 interface SolveCompomentProps {
-    consequence: string,
-    statements?: string[],
-    root?: Node
+    task: Task
+    response: Response
 }
 
+const SolveComponent = ({task, response}: SolveCompomentProps) => {
 
-const SolveComponent = (props: SolveCompomentProps) => {
+    const state = useState(response);
 
-    const [root, setRoot] = useState(props.root);
+    useEffect(() => {
+        console.log(state.value)
+    },[state.value]);
 
-    return <div>
-        <b>
-            {props.statements?.join(", ")}
-            {" \u22A8 "}
-            {props.consequence}
-        </b>
-        <div className="flex justify-start">
-        {root ? <NodeComponent {...root} form_prefix="root" remove={() => setRoot(undefined)}/> : 
-        <button onClick={(event) => {
-            event.preventDefault();
-            setRoot({formula: "", line: 1});
-        }}>Add Line</button>
-        }
+    return <div className="w-full">
+        <TaskRender task={task} separator={"\u22A8"}/>
+        <div className="flex flex-col gap-1">
+            <NodeComponent nodeState={state.root}/>
         </div>
+        
+        
     </div>
 }
 
-export default SolveComponent;
+const element = document.getElementById("exercise-container");
+
+declare const REACT_PROPS: {task: Task, response: Response};
+
+const id = nanoid();
+
+render(<SolveComponent {...REACT_PROPS} response={{
+    root: {
+        id: id,
+        line: {
+            formula: "p",
+            from: {
+
+            }
+        },
+        next: {
+            id: nanoid(),
+            line: {
+                formula: "",
+                from: {
+
+                }
+            }
+        }
+    }
+}}/>, element);

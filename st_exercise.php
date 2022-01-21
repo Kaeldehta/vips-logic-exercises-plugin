@@ -9,5 +9,4 @@ class st_exercise extends LogicExercise
 
         return $result;
     }
-    
 }

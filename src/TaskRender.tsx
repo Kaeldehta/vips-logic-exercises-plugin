@@ -1,8 +1,9 @@
+import { ReactNode } from "react";
 import { Task } from "./domain";
 
 interface Props {
     task: Task
-    separator: JSX.Element
+    separator: ReactNode
 }
 
 const TaskRender = ({task, separator}: Props) => {

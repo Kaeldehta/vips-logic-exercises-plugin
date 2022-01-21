@@ -1,54 +1,85 @@
-import {useState} from "react";
-import FormulaInput from "../../FormulaInput";
-import RuleSelect, {Rule} from "./RuleSelect";
+import { State, useState } from "@hookstate/core";
+import { nanoid } from "nanoid";
+import { pathToPHPFormName } from "../../utils";
+import { Branch, Node, Response } from "../types";
+import LineComponent from "./Line";
 
-export interface Node {
-    line: number,
-    formula: string,
-
-    from?: Rule
-
-    left?: Node,
-    right?: Node,
-
-    form_prefix?: string,
-    remove?: () => void,
+interface Props {
+    nodeState: State<Node>
 }
 
-const NodeComponent = (props: Node) => {
+const isBranch = (state: State<Node> | State<Branch>): state is State<Branch> => {
+    return !!(state as State<Branch>).left.ornull;
+}
 
-    const [formula, setFormula] = useState(props.formula);
+interface RenderNextProps {
+    state: State<Node["next"]>
+}
 
-    const [left, setLeft] = useState(props.left);
+const RenderNext = (props: RenderNextProps) => {
+    
+    const state = useState(props.state);
 
-    const [right, setRight] = useState(props.right);
+    const orNull = state.ornull;
 
-    return <div className="flex flex-col justify-start gap-2 self-start">
-        <div className="self-center flex flex-row gap-2 items-center">
-            <div>{props.line}</div>
-            <FormulaInput formula={formula} setFormula={setFormula}/>
-            <RuleSelect {...props.from?? {}} form_prefix={props.form_prefix + "[from]"}/>
-            <input type="hidden" value={props.line} name={props.form_prefix + '[line]'}/>
-        </div>
-        
-        <div className="flex flex-row gap-2">
-        {left && <NodeComponent {...left} form_prefix={props.form_prefix + '[left]'} remove={() => setLeft(undefined)}/>}
-        {right && <NodeComponent {...right} form_prefix={props.form_prefix + '[right]'} remove={() => setRight(undefined)}/>}
-        </div>
-        {!left && !right && 
-        <div className="flex flex-row gap-2">
-            <button className="hover:bg-gray-500 border-2 border-black px-2" onClick={(event) => {
-                event.preventDefault();
-                setLeft({formula: "", line: 2});
-            }}>Add Line</button>
-            <button className="hover:bg-gray-500 border-2 border-black px-2" onClick={(event) => {
-                event.preventDefault();
-                setLeft({formula: "", line: 2});
-                setRight({formula: "", line: 2});
-            }}>Branch</button>
-        </div>}
-        
+    if(!orNull) return <div className="flex items-center">
+        <button type="button" onClick={() => {
+            state.set({id: nanoid(), line: {
+                formula: ""
+            }});
+        }}>Ass</button>
+        <button type="button" onClick={() => {
+            state.set({id: nanoid(), line: {
+                formula: "",
+                from: {}
+            }})
+        }}>Rule</button>
+        <button type="button" onClick={() => {
+            state.set({
+                left: {
+                    id: nanoid(), 
+                    line: {
+                        formula: "",
+                        from: {}
+                    }
+                },
+                right: {
+                    id: nanoid(), 
+                    line: {
+                        formula: "",
+                        from: {}
+                    }
+                }   
+            })
+        }}>Branch</button>
+        <button type="button">Falsum</button>
     </div>
+
+    if(isBranch(orNull)) {
+        return <div className="flex">
+            <div className="flex flex-col gap-1 justify-start">
+            <NodeComponent nodeState={orNull.right}/>
+            </div>
+            <div className="flex flex-col gap-1 justify-start">
+            <NodeComponent nodeState={orNull.left}/>
+            </div>
+        </div>
+    }
+
+    return <NodeComponent nodeState={orNull}/>;
+
+}
+
+const NodeComponent = ({nodeState}: Props) => {
+
+    const id = useState(nodeState.id);
+
+    return <>
+        <input type="hidden" name={pathToPHPFormName(id.path)} value={id.value}/>
+        <LineComponent state={nodeState.line}/>
+        <RenderNext state={nodeState.next}/>
+    </>
+
 
 }
 
