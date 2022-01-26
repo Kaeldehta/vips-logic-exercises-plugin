@@ -1,6 +1,7 @@
 import { State, useState } from "@hookstate/core"
 import FormulaInput from "../../FormulaInput";
-import { Assumption, Falsum, Line, Response, RuleApplication } from "../types"
+import { useTask } from "../../utils";
+import { Assumption, Falsum, Line, RuleApplication } from "../types"
 import RuleSelect from "./RuleSelect";
 
 interface Props {
@@ -20,6 +21,8 @@ const LineComponent = (props: Props) => {
 
     const state = useState(props.state) as State<Falsum> | State<Assumption> | State<RuleApplication>;
 
+    const {predicateLogic} = useTask();
+
     if(isFalsum(state)) {
         return <div className="flex items-center gap-1">
             <div className="w-52">Falsum</div>
@@ -30,12 +33,12 @@ const LineComponent = (props: Props) => {
 
     if(isAssumption(state)) {
         return <div className="flex items-center gap-1">
-            <FormulaInput state={state.formula}/><div className="w-40">Ass.</div>
+            <FormulaInput allowPred={predicateLogic} state={state.formula}/><div className="w-40">Ass.</div>
         </div>
     }
 
     return <div className="flex items-center gap-1">
-        <FormulaInput state={state.formula}/>
+        <FormulaInput allowPred={predicateLogic} state={state.formula}/>
         <RuleSelect state={state.rule}/>
         <div className="w-20">Line</div>
     </div>

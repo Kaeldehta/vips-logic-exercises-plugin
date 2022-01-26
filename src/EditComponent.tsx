@@ -1,18 +1,19 @@
 import { ReactNode } from "react";
 import FormulaInput from "./FormulaInput";
 import {useState} from "@hookstate/core"
+import { useTask } from "./utils";
 
 interface Props {
-    consequence: string,
-    statements: string[],
     separator: ReactNode
 }
 
-const EditComponent = ({consequence, statements, separator}: Props) => {
+const EditComponent = ({separator}: Props) => {
+
+    const {consequence, statements} = useTask();
 
     const state = useState({
-        consequence: consequence ?? "",
-        statements: statements ?? [],
+        consequence: consequence,
+        statements: statements,
     })
 
     const addNewStatement = () => state.statements.merge([""]);
@@ -21,6 +22,7 @@ const EditComponent = ({consequence, statements, separator}: Props) => {
         <div className="flex flex-row items-center gap-1">
         {state.statements.map((statement, index) => 
             <FormulaInput 
+                allowPred={true}
                 key={index}
                 state={statement}
             />)}
@@ -30,6 +32,7 @@ const EditComponent = ({consequence, statements, separator}: Props) => {
         }}>+</button>
         {separator}
         <FormulaInput
+            allowPred={true}
             state={state.consequence}
         />
         </div>

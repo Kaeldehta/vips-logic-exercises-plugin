@@ -5,7 +5,7 @@ class st_exercise extends LogicExercise
 
     public function responseFromRequest($request)
     {
-        $result = $request["root"];
+        $result = ["root" => $request["root"]];
 
         return $result;
     }

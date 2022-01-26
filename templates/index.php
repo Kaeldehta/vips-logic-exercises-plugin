@@ -4,7 +4,8 @@
 <script>
     const REACT_PROPS = {
         task: <?= json_encode($exercise->task) ?>,
-        <? if ($response): ?> response: <?= json_encode($response) ?> <? endif ?>
+        <? if ($response) : ?> response: <?= json_encode($response) ?>,
+        <? endif ?>
     }
 </script>
 

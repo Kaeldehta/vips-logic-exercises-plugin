@@ -1,18 +1,16 @@
+import { Task } from "../domain";
+
 type LineId = string;
 
 export interface Response {
     root: Node
 }
 
-export interface Branch {
-    left: Node
-    right: Node
-}
-
 export interface Node {
     id: LineId
     line: Line
-    next?: Node | Branch
+    left?: Node
+    right?: Node
 }
 
 export interface Assumption {
@@ -26,11 +24,12 @@ export interface Falsum {
     }
 }
 
-export const rules = ["NC", "ND"] as const;
+export const propRules = ["NC", "ND", "D", "C", "MC", "NMC", "NB", "B", "DN", "F"] as const;
+export const predRules = [...propRules, "UQ", "NUQ", "EQ", "NEQ", "IS", "NIS"] as const;
 
 export interface RuleApplication {
     formula: string
-    rule?: typeof rules[number]
+    rule?: typeof predRules[number]
     from: {
         line?: string
     }

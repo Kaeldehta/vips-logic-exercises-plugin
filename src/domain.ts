@@ -1,4 +1,7 @@
 export type Task = {
-    consequence: string,
-    statements: string[]
+    answers: [{
+        consequence: string,
+        statements: string[],
+        predicateLogic: boolean
+    }?]
 }
