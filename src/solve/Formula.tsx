@@ -12,7 +12,7 @@ const Formula = ({id}: {id: LineId}) => {
 
     console.log("Rerender Formula Input ", id)
 
-    if(formula == undefined) return <div className="w-52 h-12">{"\u22A5"}</div>
+    if(formula == undefined) return <input disabled className="w-52 h-12 " value={"\u22A5"}/>
 
     return <RootFormula value={formula} setValue={(value) => dispatch(setFormula({lineId: id, formula: value}))}/>
 }

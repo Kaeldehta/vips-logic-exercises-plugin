@@ -62,7 +62,15 @@ const Formula = ({value, setValue, allowPred}: Props) => {
     }
 
     return <>
-        <input pattern={allowPred ? finalPatternPred : finalPattern} onKeyPress={handleKeyPress} ref={ref} onChange={handleChange} className="bg-gray-100 w-52 h-12" required aria-required value={value}/>
+        <input 
+            pattern={allowPred ? finalPatternPred : finalPattern}
+            onKeyPress={handleKeyPress} 
+            ref={ref} 
+            onChange={handleChange} 
+            className="w-52 h-12" 
+            required aria-required 
+            value={value}
+        />
     </>
 }
 

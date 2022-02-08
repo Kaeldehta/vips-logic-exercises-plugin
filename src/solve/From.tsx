@@ -35,7 +35,7 @@ const From = ({id}: {id: LineId}) => {
         return from.length;
     });
 
-    if(fromLength === undefined) return <div className="w-32"/>;
+    if(fromLength === undefined) return <div className="w-36"/>;
 
     return <>{Array(fromLength).fill(0).map((_, index) => <FromSelect key={id} id={id} fromIndex={index}/>)}</>
 }

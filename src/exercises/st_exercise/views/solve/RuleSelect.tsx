@@ -25,7 +25,7 @@ const RuleSelect = ({id}: {id: LineId}) => {
 
     if(fromUndefined) return <div className="w-36">Ass</div>
 
-    if(formulaUndefined) return <div className="w-36"/>
+    if(formulaUndefined) return null
 
     return <Select
         className="w-36"

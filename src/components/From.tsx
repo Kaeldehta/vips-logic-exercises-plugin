@@ -10,7 +10,7 @@ interface Props {
 const From = ({options, value, setValue}: Props) => {
 
     return <Select 
-        className="w-32"
+        className="w-36"
         options={options}
         value={value} 
         onChange={(o) => setValue(o)}
