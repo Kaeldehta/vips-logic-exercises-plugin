@@ -5,23 +5,30 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "build": "parcel build './src/*/*/index.tsx'",
-    "watch": "parcel watch './src/*/*/index.tsx'"
+    "build": "webpack --mode production",
+    "watch": "webpack --watch --mode development"
   },
   "devDependencies": {
     "@types/node": "^16.11.12",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
     "autoprefixer": "^10.4.0",
-    "parcel": "^2.1.1",
     "postcss": "^8.4.5",
-    "tailwindcss": "^3.0.1"
+    "postcss-import": "^14.0.2",
+    "postcss-loader": "^6.2.1",
+    "tailwindcss": "^3.0.1",
+    "ts-loader": "^9.2.6",
+    "webpack": "^5.68.0",
+    "webpack-bundle-analyzer": "^4.5.0",
+    "webpack-cli": "^4.9.2"
   },
   "dependencies": {
-    "@hookstate/core": "^3.0.13",
-    "nanoid": "^3.1.30",
+    "@reduxjs/toolkit": "^1.7.1",
+    "modern-normalize": "^1.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-icons": "^4.3.1"
+    "react-icons": "^4.3.1",
+    "react-redux": "^7.2.6",
+    "react-select": "^5.2.2"
   }
 }

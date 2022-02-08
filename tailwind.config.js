@@ -4,5 +4,8 @@ module.exports = {
     extend: {
       display: ["group-hover"]
     }
+  },
+  corePlugins: {
+    preflight: false,
   }
 }

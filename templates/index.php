@@ -1,13 +1,4 @@
-<div id="exercise-container" class="tailwind">
+<div id="exercise-container" class="tailwind" data-type=<?= $exercise->type ?> data-view=<?= $reactView ?> data-task=<?= json_encode($exercise->task) ?> <? if ($response) : ?> data-response=<?= json_encode($response) ?><? endif ?>>
 </div>
 
-<script>
-    const REACT_PROPS = {
-        task: <?= json_encode($exercise->task) ?>,
-        <? if ($response) : ?> response: <?= json_encode($response) ?>,
-        <? endif ?>
-    }
-</script>
-
-<script src="<?= PluginEngine::getPlugin("LogicExercises")->getPluginURL() . "/dist/" . $exercise->type . "/" . $reactView . "/index.js" ?>"></script>
-<link rel="stylesheet" href="<?= PluginEngine::getPlugin("LogicExercises")->getPluginURL() . "/dist/" . $exercise->type . "/" . $reactView . "/index.css" ?>">
+<script src="<?= PluginEngine::getPlugin("LogicExercises")->getPluginURL() . "/dist/index.js" ?>"></script>

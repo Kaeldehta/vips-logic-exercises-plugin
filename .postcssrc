@@ -1,7 +1,0 @@
-{
-  "plugins": {
-    "postcss-nested": {},
-    "tailwindcss": {},
-    "autoprefixer": {}
-  }
-}

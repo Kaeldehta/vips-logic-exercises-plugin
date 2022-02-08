@@ -3,6 +3,11 @@
 abstract class LogicExercise extends Exercise
 {
 
+    public function responseFromRequest($request)
+    {
+        return json_decode($request["response"]);
+    }
+
     public function initFromRequest($request)
     {
         parent::initFromRequest($request);
