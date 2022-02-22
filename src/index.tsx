@@ -13,6 +13,7 @@ const main = async () => {
 
     const store = await createStore();
 
+    //@ts-ignore
     const result = await import(`./exercises/*/views/*/index.tsx`);
 
     const {default: Component} = await result[type][view]();
