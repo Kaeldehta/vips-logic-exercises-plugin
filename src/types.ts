@@ -12,9 +12,9 @@ export type LineId = string
 export interface Line {
     formula?: string
     indentation?: number
-    rule?: string
-    children?: Array<LineId>
-    from?: Array<LineId>
+    rule?: string | null
+    children: [LineId] | [LineId, LineId] | []
+    from: Array<LineId | null>
 }
 
 export interface Response {
@@ -27,4 +27,4 @@ export interface Store {
     answer: Answer
 }
 
-export interface FromOption {value: string, label: number}
+export type FromOption = {value: string, label: number} | null

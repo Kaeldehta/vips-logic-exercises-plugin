@@ -8,8 +8,8 @@ const createStore = async () => {
 
     return configureStore({
         reducer: {
-            answer: answer,
-            response: response
+            answer,
+            response
         }
     });
 }

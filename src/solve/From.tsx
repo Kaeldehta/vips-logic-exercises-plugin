@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import RootFrom from "../components/From";
 import { useTypedSelector } from "../hooks";
 import { setFrom } from "../redux/response";
-import { LineId } from "../types";
+import type { LineId } from "../types";
 
 const FromSelect = ({id, fromIndex}: {id: LineId, fromIndex: number}) => {
 
@@ -12,7 +12,7 @@ const FromSelect = ({id, fromIndex}: {id: LineId, fromIndex: number}) => {
 
     const from = useTypedSelector(state => state.response.lines[id].from[fromIndex]);
 
-    const fromLineIndex = useTypedSelector(state => state.response.ids.indexOf(from))
+    const fromLineIndex = useTypedSelector(state => from? state.response.ids.indexOf(from) : null)
 
     const ids = useTypedSelector(state => state.response.ids.slice(0, index));
 
@@ -20,9 +20,9 @@ const FromSelect = ({id, fromIndex}: {id: LineId, fromIndex: number}) => {
 
     console.log("Rerender From Input ", id);
 
-    const value = from ? {value: from, label: fromLineIndex + 1} : null;
+    const value = from && fromLineIndex ? {value: from, label: fromLineIndex + 1} : null;
 
-    return <RootFrom options={options} value={value} setValue={(o) => dispatch(setFrom({lineId: id, index: fromIndex, from: o.value}))}/>
+    return <RootFrom options={options} value={value} setValue={(o) => {if(o) {dispatch(setFrom({lineId: id, index: fromIndex, from: o.value}))}}}/>
 }
 
 const From = ({id}: {id: LineId}) => {

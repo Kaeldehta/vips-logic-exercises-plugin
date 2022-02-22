@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux"
+import { setStatement } from "../redux/answer";
 import FormulaInput from "../components/Formula"
 import { useTypedSelector } from "../hooks";
-import { setStatement } from "../answer";
 
 const Statement = ({id}: {id: string}) => {
 

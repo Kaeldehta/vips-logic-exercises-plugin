@@ -1,6 +1,6 @@
 import { setFormula } from "../redux/response";
 import RootFormula from "../components/Formula";
-import { LineId } from "../types";
+import type { LineId } from "../types";
 import { useDispatch } from "react-redux";
 import { useTypedSelector } from "../hooks";
 

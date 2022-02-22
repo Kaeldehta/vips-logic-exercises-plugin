@@ -2,7 +2,7 @@ import Select from "react-select";
 import { useDispatch } from "react-redux";
 import { useTypedSelector } from "../../../../hooks";
 import { setRule } from "../../../../redux/response";
-import { LineId } from "../../../../types";
+import type { LineId } from "../../../../types";
 import { propRulesOptions } from "../../types";
 
 const RuleSelect = ({id}: {id: LineId}) => {
@@ -31,7 +31,7 @@ const RuleSelect = ({id}: {id: LineId}) => {
         className="w-36"
         options={propRulesOptions}
         value={propRulesOptions.find(o => o.value === rule) ?? null}
-        onChange={(o) => dispatch(setRule({lineId: id, rule: o.value}))}
+        onChange={(o) => {if(o) dispatch(setRule({lineId: id, rule: o.value}))}}
     />
 }
 

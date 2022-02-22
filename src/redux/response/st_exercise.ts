@@ -1,5 +1,5 @@
 import { ActionReducerMapBuilder, createAction, nanoid } from "@reduxjs/toolkit";
-import { LineId, Response } from "../../types";
+import type { LineId, Response } from "../../types";
 
 export const start = createAction("semTree/start");
 export const addFalsum = createAction<LineId>("semTree/addFalsum");
@@ -11,20 +11,25 @@ const builderCallback = (builder: ActionReducerMapBuilder<Response>) =>
     builder.addCase(start, (state) => {
         state.ids.push("root");
         state.lines["root"] = {
-            formula: ""
+            formula: "",
+            from: [],
+            children: [],
         };
     }).addCase(addFalsum, (state, action) => {
         const newId = nanoid();
         state.ids.push(newId);
         state.lines[newId] = {
-            from: [null, null]
+            from: [null, null],
+            children: [],
         }
         state.lines[action.payload].children = [newId];
     }).addCase(addAssumption, (state, action) => {
         const newId = nanoid();
         state.ids.push(newId);
         state.lines[newId] = {
-            formula: ""
+            formula: "",
+            children: [],
+            from: [],
         }
         state.lines[action.payload].children = [newId];
     }).addCase(addRuleLine, (state, action) => {
@@ -33,7 +38,8 @@ const builderCallback = (builder: ActionReducerMapBuilder<Response>) =>
         state.lines[newId] = {
             formula: "",
             from: [null],
-            rule: null
+            rule: null,
+            children: []
         }
         state.lines[action.payload].children = [newId];
     }).addCase(branch, (state, action) => {
@@ -43,12 +49,14 @@ const builderCallback = (builder: ActionReducerMapBuilder<Response>) =>
         state.lines[newId1] = {
             formula: "",
             from: [null],
-            rule: null
+            rule: null,
+            children: []
         }
         state.lines[newId2] = {
             formula: "",
             from: [null],
-            rule: null
+            rule: null,
+            children: []
         }
 
         state.lines[action.payload].children = [newId1, newId2];

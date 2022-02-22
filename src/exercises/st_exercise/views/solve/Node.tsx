@@ -1,7 +1,7 @@
 import RuleSelect from "./RuleSelect";
 
 import {FiPlusCircle, FiArrowDownCircle} from "react-icons/fi";
-import { LineId } from "../../../../types";
+import type { LineId } from "../../../../types";
 import { useDispatch } from "react-redux";
 import { useTypedSelector } from "../../../../hooks";
 import { addFalsum, addAssumption, addRuleLine, branch } from "../../../../redux/response/st_exercise";
@@ -25,11 +25,9 @@ const RenderChildren = ({id}: {id: LineId}) => {
 
     const children = useTypedSelector(state => state.response.lines[id].children);
 
-    const length = useTypedSelector(state => state.response.lines[id].children?.length);
+    if(children.length == 0) return <AddLinesButtons id={id}/>
 
-    if(!length) return <AddLinesButtons id={id}/>
-
-    if(length == 1) return <NodeComponent id={children[0]}/>
+    if(children.length == 1) return <NodeComponent id={children[0]}/>
 
     return <div>
         <LineThing/>

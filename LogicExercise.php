@@ -5,15 +5,17 @@ abstract class LogicExercise extends Exercise
 
     public function responseFromRequest($request)
     {
-        return json_decode($request["response"]);
+        return json_decode($request["response"], true);
     }
 
     public function initFromRequest($request)
     {
         parent::initFromRequest($request);
 
-        $consequence = $request["consequence"];
-        $statements = $reqeust["statements"] ?? [];
+        $answer = json_decode($request["answer"], true);
+
+        $consequence = $answer["consequence"];
+        $statements = $answer["statements"];
 
         $predicateLogic = false;
 
@@ -21,11 +23,11 @@ abstract class LogicExercise extends Exercise
             $predicateLogic = true;
         }
 
-        foreach ($statements as $statement) {
-            if (preg_match("/[\x{2200}\x{2003}abcFGHxyz]/u", $statement)) {
-                $predicateLogic = true;
-            }
-        }
+        // foreach ($statements["entries"] as $statement) {
+        //     if (preg_match("/[\x{2200}\x{2003}abcFGHxyz]/u", $statement)) {
+        //         $predicateLogic = true;
+        //     }
+        // }
 
         $this->task = [
             "answers" => [

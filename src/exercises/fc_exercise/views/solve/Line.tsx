@@ -1,5 +1,5 @@
 import Formula from "../../../../solve/Formula";
-import { LineId } from "../../../../types";
+import type { LineId } from "../../../../types";
 import LineWrapper from "../../LineWrapper";
 
 const Line = ({id}: {id: LineId}) => {

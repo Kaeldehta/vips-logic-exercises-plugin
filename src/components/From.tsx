@@ -1,8 +1,8 @@
 import Select from "react-select";
-import { FromOption } from "../types";
+import type { FromOption } from "../types";
 
 interface Props {
-    options: Array<FromOption>
+    options: Array<NonNullable<FromOption>>
     value: FromOption
     setValue: (value: FromOption) => void
 }

@@ -1,5 +1,5 @@
 import { useTypedSelector } from "../../../../hooks";
-import { LineId } from "../../../../types";
+import type { LineId } from "../../../../types";
 
 
 const LineNumber = ({id}: {id: LineId}) => {

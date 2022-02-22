@@ -1,9 +1,9 @@
 import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
-import { Answer} from "../types";
+import type { Answer} from "../types";
 
 const element = document.getElementById("exercise-container");
 
-const initialAnswerState: Answer = element.dataset.answer? JSON.parse(element.dataset.answer) : {
+const initialAnswerState: Answer = element?.dataset.answer? JSON.parse(element.dataset.answer) : {
     consequence: "",
     statements: {
         ids: [],

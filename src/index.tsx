@@ -7,6 +7,8 @@ const main = async () => {
 
     const element = document.getElementById("exercise-container");
 
+    if(!element) throw new Error("Could not find element");
+
     const {view, type} = element.dataset;
 
     const store = await createStore();

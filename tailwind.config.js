@@ -1,10 +1,9 @@
 module.exports = {
-  content: ["./src/**/*.{ts,tsx}"],
-  variants: {
-    extend: {
-      display: ["group-hover"]
-    }
+  content: ["./src/**/*.{tsx,ts}"],
+  theme: {
+    extend: {},
   },
+  plugins: [],
   corePlugins: {
     preflight: false,
   }

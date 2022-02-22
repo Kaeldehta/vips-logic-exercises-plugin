@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
+import { setConsequence } from "../redux/answer";
 import FormulaInput from "../components/Formula";
 import { useTypedSelector } from "../hooks";
-import { setConsequence } from "../answer";
 
 
 const Consequence = () => {
