@@ -3,7 +3,7 @@ import Answer from "../../../../components/Answer";
 import { useDispatch } from "react-redux";
 import { useTypedSelector } from "../../../../hooks";
 import Submit from "../../../../solve/Submit";
-import { start } from "../../../../redux/response/st_exercise";
+import { start } from "../../../../redux/response/exercises/st_exercise";
 
 const Solve = () => {
 

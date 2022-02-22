@@ -13,7 +13,9 @@ const main = async () => {
 
     const store = await createStore();
 
-    const {default: Component} = await import(`./exercises/${type}/views/${view}`);
+    const result = await import(`./exercises/*/views/*/index.tsx`);
+
+    const {default: Component} = await result[type][view]();
 
     render(<Provider store={store}>
             <Component/>
