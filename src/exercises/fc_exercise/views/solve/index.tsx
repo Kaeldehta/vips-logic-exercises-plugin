@@ -12,4 +12,4 @@ const Solve =  () => {
     </div>
 }
 
-export default <Solve/>;
+export default Solve;
