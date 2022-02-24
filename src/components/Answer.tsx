@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { useTypedSelector } from "../hooks";
+import React from "react";
 
 interface Props {
     separator: ReactNode

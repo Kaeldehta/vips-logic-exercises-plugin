@@ -2,6 +2,7 @@ import { Provider } from "react-redux";
 import { render } from "react-dom";
 import "./index.css";
 import createStore from "./redux";
+import React from "react";
 
 const main = async () => {
 
@@ -13,10 +14,7 @@ const main = async () => {
 
     const store = await createStore();
 
-    //@ts-ignore
-    const result = await import(`./exercises/*/views/*/index.tsx`);
-
-    const {default: Component} = await result[type][view]();
+    const {default: Component} = await import(`./exercises/${type}/views/${view}`);
 
     render(<Provider store={store}>
             <Component/>

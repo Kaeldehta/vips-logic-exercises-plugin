@@ -2,5 +2,4 @@
 </div>
 
 <script src="<?= PluginEngine::getPlugin("LogicExercises")->getPluginURL() . "/dist/index.js" ?>"></script>
-<link rel="stylesheet" href="<?= PluginEngine::getPlugin("LogicExercises")->getPluginURL() . "/dist/index.css" ?>">
 </link>

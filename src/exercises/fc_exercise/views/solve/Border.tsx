@@ -1,17 +1,13 @@
+import React from "react";
 
-interface Props {
-    addBottom?: boolean
-    reduceHeight?: boolean
-}
+const Border = () => <svg className="w-10 h-full">
+    <line x1={"50%"} x2={"50%"} y1={"0%"} y2={"100%"} stroke="black"></line>
+</svg>
 
-export default ({addBottom, reduceHeight}: Props) => {
+export const AssumptionBorder = () => <svg className="w-10 h-full">
+    <line x1={"50%"} x2={"50%"} y1={"50%"} y2={"100%"} stroke="black"></line>
+    <line x1={"50%"} x2={"100%"} y1={"100%"} y2={"100%"} stroke="black"></line>
+</svg>
 
-    let className = "w-4 border-l-2 border-l-black"
-
-    if(reduceHeight) className += " flex self-end h-8";
-
-    if(addBottom) className += " border-b-2 border-b-black";
-    
-    return <div className={className}/> 
-}
+export default Border;
     

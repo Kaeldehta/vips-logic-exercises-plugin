@@ -1,10 +1,9 @@
+import { ActionCreator, Selector } from "@reduxjs/toolkit";
 import { useEffect, useRef, useState } from "react";
-
-interface Props {
-    value: string
-    allowPred?: boolean
-    setValue: (value: string) => void
-}
+import { useDispatch } from "react-redux";
+import { useTypedSelector } from "../hooks";
+import { Store } from "../types";
+import React from "react";
 
 const propositionalLogicChars = /[pqr12345789iklno\(\)]/
 
@@ -14,19 +13,30 @@ const finalPattern = "[\(\)pqr\u2192\u2194\u2227\u2228\u00AC\u2081\u2082\u2083\u
 
 const finalPatternPred = "[\(\)pqrabcFGHxyz\u2192\u2194\u2227\u2228\u00AC\u2081\u2082\u2083\u2084\u2085\u2086\u2087\u2088\u2089∀\u2203]+"
 
-const Formula = ({value, setValue, allowPred}: Props) => {
+interface FormulaProps {
+    selector: Selector<Store, string>
+    actionCreator: ActionCreator<any>,
+    allowPred?: true
+}
+
+const Formula = ({selector, actionCreator, allowPred: propsAllowPred}: FormulaProps) => {
+
+    const value = useTypedSelector(selector);
+
+    const allowPred = useTypedSelector(state => propsAllowPred?? state.answer.predicateLogic);
 
     const [cursor, setCursor] = useState(value.length);
 
     const ref = useRef<HTMLInputElement>(null);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if(!ref.current) return;
         if(ref.current.selectionStart != cursor) {
             ref.current.setSelectionRange(cursor, cursor);
         }
-    }, [cursor, ref.current, value])
-
+    }, [cursor, ref.current, value]);
 
     const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         setCursor(e.target.selectionStart!);
@@ -49,7 +59,7 @@ const Formula = ({value, setValue, allowPred}: Props) => {
             newFormula = newFormula.replace(/u/g, "∀");
             newFormula = newFormula.replace(/e/g, "\u2203");
         }
-        setValue(newFormula);
+        dispatch(actionCreator(newFormula));
     }
 
     const handleKeyPress: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
@@ -61,17 +71,15 @@ const Formula = ({value, setValue, allowPred}: Props) => {
         }
     }
 
-    return <>
-        <input 
-            pattern={allowPred ? finalPatternPred : finalPattern}
-            onKeyPress={handleKeyPress} 
-            ref={ref} 
-            onChange={handleChange} 
-            className="w-52 h-12" 
-            required aria-required 
-            value={value}
-        />
-    </>
+    return <input 
+        pattern={allowPred ? finalPatternPred : finalPattern}
+        onKeyPress={handleKeyPress} 
+        ref={ref}
+        onChange={handleChange} 
+        className="w-52 h-12 px-2 py-1" 
+        required aria-required 
+        value={value}
+    />
 }
 
 export default Formula;

@@ -1,22 +1,21 @@
 import RuleSelect from "./RuleSelect";
 
-import {FiPlusCircle, FiArrowDownCircle} from "react-icons/fi";
+import {FiPlusCircle, FiArrowDownCircle, FiCircle} from "react-icons/fi";
 import type { LineId } from "../../../../types";
-import { useDispatch } from "react-redux";
 import { useTypedSelector } from "../../../../hooks";
 import { addFalsum, addAssumption, addRuleLine, branch } from "../../../../redux/response/exercises/st_exercise";
 import Formula from "../../../../solve/Formula";
 import From from "../../../../solve/From";
+import LineNumber from "../../../../components/LineNumber";
+import DispatchActionButton from "../../../../components/DispatchActionButton";
 
 const AddLinesButtons = ({id}: {id: LineId}) => {
 
-    const dispatch = useDispatch();
-
     return <div className="flex">
-        <button className="flex items-center" onClick={() => dispatch(addFalsum(id))}>{"\u22A5"}</button>
-        <button className="flex items-center" onClick={() => dispatch(addAssumption(id))}><FiPlusCircle/></button>
-        <button className="flex items-center" onClick={() => dispatch(addRuleLine(id))}><FiArrowDownCircle/></button>
-        <button className="flex items-center" onClick={() => dispatch(branch(id))}>Branch</button>
+        <DispatchActionButton show icon={FiCircle} action={addFalsum(id)} content={"\u22A5"}/>
+        <DispatchActionButton show icon={FiPlusCircle} action={addAssumption(id)} />
+        <DispatchActionButton show icon={FiArrowDownCircle} action={addRuleLine(id)} />
+        <DispatchActionButton show icon={FiCircle} action={branch(id)} content="B"/>
     </div>
 
 }
@@ -40,7 +39,7 @@ const RenderChildren = ({id}: {id: LineId}) => {
 
 const LineThing = () => <svg className="h-12 w-full">
     <line x1="50%" y1="0%" x2="25%" y2="100%" stroke="black"/>
-    <line x1="75%" y1="100%" x2="50%" y2="0" stroke="black"/>
+    <line x1="75%" y1="100%" x2="50%" y2="0%" stroke="black"/>
 </svg>
 
 const NodeComponent = ({id}: {id: LineId}) => {
@@ -48,6 +47,7 @@ const NodeComponent = ({id}: {id: LineId}) => {
     return <div className="flex flex-col items-center justify-start">
         
         <div className="flex items-center gap-2">
+            <LineNumber id={id}/>
             <Formula id={id}/>
 
             <RuleSelect id={id}/>

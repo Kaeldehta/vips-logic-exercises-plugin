@@ -1,7 +1,9 @@
 import type { ReactNode } from "react";
-import Consequence from "./Consequence";
+import Formula from "../components/Formula";
+import { setConsequence } from "../redux/answer";
 import Statements from "./Statements";
 import Submit from "./Submit";
+import React from "react";
 
 interface Props {
     separator: ReactNode
@@ -18,7 +20,7 @@ const Edit= ({separator}: Props) => {
             addNewStatement();
         }}>+</button> */}
         {separator}
-        <Consequence/>
+        <Formula allowPred selector={state => state.answer.consequence} actionCreator={setConsequence}/>
         </div>
     </>
 }
