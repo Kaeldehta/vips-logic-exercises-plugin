@@ -1,6 +1,5 @@
 import { useTypedSelector } from "../../../../hooks";
 import Line from "./Line";
-import React from "react";
 
 const Lines = () => {
 

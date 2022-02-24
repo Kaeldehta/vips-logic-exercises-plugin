@@ -1,5 +1,5 @@
 import { ActionReducerMapBuilder, createAction, nanoid } from "@reduxjs/toolkit";
-import type { Response } from "../../../types";
+import type { Response } from "../../types";
 
 export const insertAbsurdity = createAction<{index: number, indentation: number}>("fcProof/addFalsum");
 export const insertAssumption = createAction<{index: number, indentation: number}>("fcProof/addAssumption");

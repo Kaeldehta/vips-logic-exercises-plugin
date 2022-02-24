@@ -1,12 +1,11 @@
 import { FiArrowRightCircle, FiPlusCircle } from "react-icons/fi";
 import Answer from "../../../../components/Answer";
 import { useTypedSelector } from "../../../../hooks";
-import { insertAssumption, insertPremise } from "../../../../redux/response/exercises/fc_exercise";
+import { insertAssumption, insertPremise } from "../../../../redux/response/fc_exercise";
 import Submit from "../../../../solve/Submit";
 import LineWrapper from "../../LineWrapper";
 import DispatchActionButton from "../../../../components/DispatchActionButton";
 import Lines from "./Lines";
-import React from "react";
 
 const Solve =  () => {
 

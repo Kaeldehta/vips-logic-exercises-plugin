@@ -1,5 +1,4 @@
 import { useTypedSelector } from "../hooks"
-import React from "react";
 
 const Submit = () => {
 

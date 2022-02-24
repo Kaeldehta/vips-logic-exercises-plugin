@@ -3,7 +3,6 @@ import RootFrom from "../components/From";
 import { useTypedSelector } from "../hooks";
 import { setFrom } from "../redux/response";
 import type { LineId } from "../types";
-import React from "react";
 
 const FromSelect = ({id, fromIndex}: {id: LineId, fromIndex: number}) => {
 

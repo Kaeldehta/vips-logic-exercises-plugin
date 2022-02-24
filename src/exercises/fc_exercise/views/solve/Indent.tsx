@@ -1,7 +1,6 @@
 import { useTypedSelector } from "../../../../hooks"
 import { LineId } from "../../../../types"
 import Border, { AssumptionBorder } from "./Border";
-import React from "react";
 
 const Indent = ({id}: {id: LineId}) => {
     const indentation = useTypedSelector(state => state.response.lines[id].indentation);

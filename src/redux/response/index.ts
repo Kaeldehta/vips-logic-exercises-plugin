@@ -17,8 +17,8 @@ const createResponseReducer = async () => {
     };
 
     const {type} = element.dataset;
-    
-    const {default: builderCallback}: {default: (builder: ActionReducerMapBuilder<Response>) => ActionReducerMapBuilder<Response>} = await import(`./exercises/${type}`);
+
+    const {default: builderCallback}: {default: (builder: ActionReducerMapBuilder<Response>) => ActionReducerMapBuilder<Response>} = await import(`./${type}`);
 
     return createReducer(initialState, (builder) => {
         builderCallback(builder).addCase(setFormula, (state, action) => {

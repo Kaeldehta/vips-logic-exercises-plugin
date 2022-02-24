@@ -1,5 +1,5 @@
 import { ActionReducerMapBuilder, createAction, nanoid } from "@reduxjs/toolkit";
-import type { LineId, Response } from "../../../types";
+import type { LineId, Response } from "../../types";
 
 export const start = createAction("semTree/start");
 export const addFalsum = createAction<LineId>("semTree/addFalsum");

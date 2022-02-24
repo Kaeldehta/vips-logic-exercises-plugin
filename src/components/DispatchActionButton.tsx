@@ -1,6 +1,5 @@
 import { IconType } from "react-icons";
 import { useDispatch } from "react-redux";
-import React from "react";
 
 interface DispatchActionButtonProps {
     action: any

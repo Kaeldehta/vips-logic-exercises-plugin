@@ -2,7 +2,6 @@ import { Provider } from "react-redux";
 import { render } from "react-dom";
 import "./index.css";
 import createStore from "./redux";
-import React from "react";
 
 const main = async () => {
 

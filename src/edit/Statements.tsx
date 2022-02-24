@@ -1,7 +1,6 @@
 import Formula from "../components/Formula";
 import { useTypedSelector } from "../hooks";
 import { setStatement } from "../redux/answer";
-import React from "react";
 
 const Statements = () => {
 

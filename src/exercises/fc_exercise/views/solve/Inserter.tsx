@@ -4,9 +4,8 @@ import {FiArrowRightCircle, FiArrowDownCircle} from "react-icons/fi";
 import { LineId } from "../../../../types";
 import { useTypedSelector } from "../../../../hooks";
 import DispatchActionButton from "../../../../components/DispatchActionButton";
-import { insertAbsurdity, insertAssumption, insertRuleLine } from "../../../../redux/response/exercises/fc_exercise";
+import { insertAbsurdity, insertAssumption, insertRuleLine } from "../../../../redux/response/fc_exercise";
 import Border from "./Border";
-import React from "react";
 
 const Inserter = ({id}: {id: LineId}) => {
 

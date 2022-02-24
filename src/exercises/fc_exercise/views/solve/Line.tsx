@@ -7,7 +7,6 @@ import DispatchActionButton from "../../../../components/DispatchActionButton";
 import { FiMinusCircle } from "react-icons/fi";
 import { removeLine } from "../../../../redux/response";
 import Indent from "./Indent";
-import React from "react";
 
 const Line = ({id}: {id: LineId}) => {
     

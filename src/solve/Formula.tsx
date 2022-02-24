@@ -2,7 +2,6 @@ import { setFormula } from "../redux/response";
 import RootFormula from "../components/Formula";
 import type { LineId } from "../types";
 import { useTypedSelector } from "../hooks";
-import React from "react";
 
 const Formula = ({id}: {id: LineId}) => {
 

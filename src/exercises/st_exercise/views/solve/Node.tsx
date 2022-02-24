@@ -3,7 +3,7 @@ import RuleSelect from "./RuleSelect";
 import {FiPlusCircle, FiArrowDownCircle, FiCircle} from "react-icons/fi";
 import type { LineId } from "../../../../types";
 import { useTypedSelector } from "../../../../hooks";
-import { addFalsum, addAssumption, addRuleLine, branch } from "../../../../redux/response/exercises/st_exercise";
+import { addFalsum, addAssumption, addRuleLine, branch } from "../../../../redux/response/st_exercise";
 import Formula from "../../../../solve/Formula";
 import From from "../../../../solve/From";
 import LineNumber from "../../../../components/LineNumber";

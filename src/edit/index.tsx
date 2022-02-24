@@ -3,7 +3,6 @@ import Formula from "../components/Formula";
 import { setConsequence } from "../redux/answer";
 import Statements from "./Statements";
 import Submit from "./Submit";
-import React from "react";
 
 interface Props {
     separator: ReactNode
