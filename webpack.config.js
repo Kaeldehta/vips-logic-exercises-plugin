@@ -14,7 +14,12 @@ module.exports = {
             {
                 test: /\.tsx?$/,
                 exclude: /node_modules/,
-                use: 'babel-loader',
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [["react-app", { "flow": false, "typescript": true, "runtime": "automatic" }]],
+                    }
+                }
             },
             {
                 test: /\.css$/,

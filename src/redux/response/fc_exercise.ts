@@ -1,10 +1,11 @@
 import { ActionReducerMapBuilder, createAction, nanoid } from "@reduxjs/toolkit";
-import type { Response } from "../../types";
+import type { LineId, Response } from "../../types";
 
 export const insertAbsurdity = createAction<{index: number, indentation: number}>("fcProof/addFalsum");
 export const insertAssumption = createAction<{index: number, indentation: number}>("fcProof/addAssumption");
 export const insertRuleLine = createAction<{index: number, indentation: number}>("fcProof/addRuleLine");
 export const insertPremise = createAction<{index: number}>("fcProof/addPremise");
+export const removeLine = createAction<LineId>("fcProof/removeLine");
 
 const builderCallback = (builder: ActionReducerMapBuilder<Response>) => 
     builder.addCase(insertAbsurdity, (state, action) => {
@@ -68,6 +69,29 @@ const builderCallback = (builder: ActionReducerMapBuilder<Response>) =>
             indentation: 0,
             from: [],
         }
+    }).addCase(removeLine, (state, action) => {
+        const thisLine = state.lines[action.payload];
+        const index = state.ids.indexOf(action.payload);
+
+        const assumption = !thisLine.from.length && thisLine.rule === undefined;
+        let removeCount = 1;
+
+        if(assumption) {
+            const indentation = thisLine.indentation
+            for(let i = index + 1; i < state.ids.length; i++) {
+                const line = state.lines[state.ids[i]];
+
+                if(line.indentation !== indentation || (!line.from.length && line.rule === undefined)) {
+                    break;
+                }
+
+                removeCount++;
+            }
+        }
+
+        const deleted = state.ids.splice(index, removeCount);
+
+        deleted.forEach((id) => delete state.lines[id]);
     })
 
 export default builderCallback;

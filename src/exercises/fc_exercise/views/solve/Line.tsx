@@ -5,8 +5,9 @@ import Inserter from "./Inserter";
 import LineNumber from "../../../../components/LineNumber";
 import DispatchActionButton from "../../../../components/DispatchActionButton";
 import { FiMinusCircle } from "react-icons/fi";
-import { removeLine } from "../../../../redux/response";
+import { removeLine } from "../../../../redux/response/fc_exercise";
 import Indent from "./Indent";
+import From from "./From";
 
 const Line = ({id}: {id: LineId}) => {
     
@@ -14,6 +15,7 @@ const Line = ({id}: {id: LineId}) => {
         <LineNumber id={id}/>
         <Indent id={id}/>
         <Formula id={id}/>
+        <From id={id}/>
         <DispatchActionButton icon={FiMinusCircle} action={removeLine(id)}/>
     </LineWrapper>
     <Inserter id={id}/>
