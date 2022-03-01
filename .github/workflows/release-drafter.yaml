@@ -12,10 +12,3 @@ jobs:
               id: draft
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            - name: Checkout
-              uses: actions/checkout@v2
-            - name: Update plugin.manifest
-              run: sed -i 's/version=[0-9\.]*/version=${{ steps.draft.outputs.tag_name }}/g' plugin.manifest
-            - uses: stefanzweifel/git-auto-commit-action@v4
-              with:
-                  commit_message: Updated plugin version.
