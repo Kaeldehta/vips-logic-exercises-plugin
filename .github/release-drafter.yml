@@ -20,7 +20,7 @@ version-resolver:
             - 'feature'
     patch:
         labels:
-            - 'bugfix'
+            - 'fix'
     default: patch
 template: |
     ## Changes
