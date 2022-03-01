@@ -1,13 +1,12 @@
-import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import { useTypedSelector } from "../hooks";
+import { useRuleLineState, useTypedSelector } from "../hooks";
 import { LineId } from "../types";
 import Select from "react-select";
 import { setRule } from "../redux/response";
 
 interface RuleSelectProps {
     id: LineId,
-    options: Array<{label: string, value: string}>
+    options: Array<{label: string, value: string, count: number}>
 }
 
 const RuleSelect = ({id, options}: RuleSelectProps) => {
@@ -17,6 +16,7 @@ const RuleSelect = ({id, options}: RuleSelectProps) => {
         return rule === null ? null : {
             value: rule,
             label: options.find(({value}) => value === rule).label,
+            count: options.find(({value}) => value === rule).count,
         }
     });
 
@@ -25,14 +25,14 @@ const RuleSelect = ({id, options}: RuleSelectProps) => {
     return <Select
         value={value}
         options={options}
-        onChange={(option) => dispatch(setRule({id, rule: option.value}))}
+        onChange={(option) => dispatch(setRule({id, rule: option.value, count: option.count}))}
     />
 
 }
 
 const RuleSelectOrNull = (props: RuleSelectProps) => {
-    const shouldRender = useTypedSelector(state => state.response.lines[props.id].rule !== undefined);
-    
+    const shouldRender = useRuleLineState(props.id);
+
     if(shouldRender) return <RuleSelect {...props} />
 
     return null;

@@ -1,5 +1,5 @@
 import { ActionReducerMapBuilder, createAction, nanoid } from "@reduxjs/toolkit";
-import { removeLine, setRule } from ".";
+import { removeLine } from ".";
 import type { Response } from "../../types";
 
 export const insertAbsurdity = createAction<{index: number, indentation: number}>("fcProof/addFalsum");
@@ -75,9 +75,6 @@ const builderCallback = (builder: ActionReducerMapBuilder<Response>) =>
         const deleted = state.ids.splice(index, removeCount);
 
         deleted.forEach((id) => delete state.lines[id]);
-    }).addCase(setRule, (state, action) => {
-        state.lines[action.payload.id].rule = action.payload.rule;
-        state.lines[action.payload.id].from = [null, null];
     })
 
 export default builderCallback;

@@ -1,25 +1,29 @@
 import LineWrapper from "../../LineWrapper"
 
-import {FiArrowRightCircle, FiArrowDownCircle} from "react-icons/fi";
+import {FiArrowRightCircle, FiArrowDownCircle, FiPlusCircle} from "react-icons/fi";
 import { LineId } from "../../../../types";
-import { useTypedSelector } from "../../../../hooks";
+import { usePremiseState, useTypedSelector } from "../../../../hooks";
 import DispatchActionButton from "../../../../components/DispatchActionButton";
-import { insertAbsurdity, insertAssumption, insertRuleLine } from "../../../../redux/response/fc_exercise";
+import { insertAbsurdity, insertAssumption, insertPremise, insertRuleLine } from "../../../../redux/response/fc_exercise";
 import Border from "./Border";
+import { isAssumption } from "../../../../utils";
 
 const Inserter = ({id}: {id: LineId}) => {
 
     const index = useTypedSelector(state => state.response.ids.indexOf(id));
 
     const indentation = useTypedSelector(state => state.response.lines[id].indentation);
+    
+    const premise = usePremiseState(id);
 
     const indentationDelta = useTypedSelector(state => {
 
         const next = state.response.lines[state.response.ids[index + 1]];
 
         if(next) {
-            if(next.rule === undefined && !next.from.length) {
-                return - indentation;
+            if(isAssumption(next)) {
+                if(next.indentation > indentation) return 0;
+                return -indentation
             }
             return next.indentation - indentation;
         }
@@ -40,6 +44,7 @@ const Inserter = ({id}: {id: LineId}) => {
                 <DispatchActionButton icon={FiArrowRightCircle} action={insertAssumption({index: index + 1, indentation: newIndentation + 1})}/>
                 <DispatchActionButton action={insertAbsurdity({index: index + 1, indentation: newIndentation})} content={"\u22A5"}/>
                 <DispatchActionButton icon={FiArrowDownCircle} action={insertRuleLine({index: index + 1, indentation: newIndentation})}/>
+                {premise && <DispatchActionButton icon={FiPlusCircle} action={insertPremise({index: index + 1})}/>}
             </div>
         </LineWrapper>
 

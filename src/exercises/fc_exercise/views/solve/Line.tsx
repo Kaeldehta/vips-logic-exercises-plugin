@@ -10,6 +10,7 @@ import Indent from "./Indent";
 import RuleSelectOrNull from "../../../../components/RuleSelect";
 import { propRulesOptions } from "../../types";
 import From from "../../../../components/From";
+import LabelOrNull from "./LabelOrNull";
 
 const Line = ({id}: {id: LineId}) => {
     
@@ -18,6 +19,7 @@ const Line = ({id}: {id: LineId}) => {
         <Indent id={id}/>
         <Formula id={id}/>
         <RuleSelectOrNull id={id} options={propRulesOptions}/>
+        <LabelOrNull id={id}/>
         <From id={id}/>
         <DispatchActionButton icon={FiMinusCircle} action={removeLine(id)}/>
     </LineWrapper>

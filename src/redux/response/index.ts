@@ -3,7 +3,7 @@ import type { LineId, Response } from "../../types";
 
 export const setFormula = createAction<{id: LineId, formula: string}>("line/setFormula");
 export const setFrom = createAction<{id: LineId, index: number, from: LineId}>("line/setFrom");
-export const setRule = createAction<{id: LineId, rule: string}>("line/setRule");
+export const setRule = createAction<{id: LineId, rule: string, count: number}>("line/setRule");
 export const removeLine = createAction<LineId>("line/removeLine");
 
 const createResponseReducer = async () => {
@@ -25,7 +25,13 @@ const createResponseReducer = async () => {
             state.lines[action.payload.id].formula = action.payload.formula;
         }).addCase(setFrom, (state, action) => {
             state.lines[action.payload.id].from![action.payload.index] = action.payload.from;
-        });
+        }).addCase(setRule, (state, action) => {
+            const oldRule = state.lines[action.payload.id].rule;
+            state.lines[action.payload.id].rule = action.payload.rule;
+            if(oldRule !== action.payload.rule) {
+                state.lines[action.payload.id].from = Array(action.payload.count).fill(null);
+            }
+        })
     });
 }
 
