@@ -61,8 +61,6 @@ const builderCallback = (builder: ActionReducerMapBuilder<Response>) =>
         }
 
         state.lines[action.payload].children = [newId1, newId2];
-    }).addCase(setRule, (state, action) => {
-        state.lines[action.payload.id].rule = action.payload.rule;
     })
 
 export default builderCallback;
