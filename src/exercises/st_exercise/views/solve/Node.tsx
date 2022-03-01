@@ -1,13 +1,13 @@
-import RuleSelect from "./RuleSelect";
-
 import {FiPlusCircle, FiArrowDownCircle, FiCircle} from "react-icons/fi";
 import type { LineId } from "../../../../types";
 import { useTypedSelector } from "../../../../hooks";
 import { addFalsum, addAssumption, addRuleLine, branch } from "../../../../redux/response/st_exercise";
 import Formula from "../../../../solve/Formula";
-import From from "../../../../solve/From";
 import LineNumber from "../../../../components/LineNumber";
 import DispatchActionButton from "../../../../components/DispatchActionButton";
+import From from "../../../../components/From";
+import RuleSelectOrNull from "../../../../components/RuleSelect";
+import { propRulesOptions } from "../../types";
 
 const AddLinesButtons = ({id}: {id: LineId}) => {
 
@@ -49,8 +49,8 @@ const NodeComponent = ({id}: {id: LineId}) => {
         <div className="flex items-center gap-2">
             <LineNumber id={id}/>
             <Formula id={id}/>
-
-            <RuleSelect id={id}/>
+            
+            <RuleSelectOrNull id={id} options={propRulesOptions} />
 
             <From id={id}/>
         </div>

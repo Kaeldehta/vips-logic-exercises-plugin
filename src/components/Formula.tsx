@@ -76,7 +76,6 @@ const Formula = ({selector, actionCreator, allowPred: propsAllowPred}: FormulaPr
         ref={ref}
         onChange={handleChange} 
         className="w-52 h-12 px-2 py-1" 
-        required aria-required 
         value={value}
     />
 }

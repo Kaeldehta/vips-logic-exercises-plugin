@@ -1,21 +1,17 @@
 import { ActionReducerMapBuilder, createAction, nanoid } from "@reduxjs/toolkit";
-import type { LineId, Response } from "../../types";
+import { removeLine, setRule } from ".";
+import type { Response } from "../../types";
 
 export const insertAbsurdity = createAction<{index: number, indentation: number}>("fcProof/addFalsum");
 export const insertAssumption = createAction<{index: number, indentation: number}>("fcProof/addAssumption");
 export const insertRuleLine = createAction<{index: number, indentation: number}>("fcProof/addRuleLine");
 export const insertPremise = createAction<{index: number}>("fcProof/addPremise");
-export const removeLine = createAction<LineId>("fcProof/removeLine");
 
 const builderCallback = (builder: ActionReducerMapBuilder<Response>) => 
     builder.addCase(insertAbsurdity, (state, action) => {
         const newId = nanoid();
 
-        const lower = state.ids.slice(0, action.payload.index)
-
-        const upper = state.ids.slice(action.payload.index)
-
-        state.ids = [...lower, newId, ...upper];
+        state.ids.splice(action.payload.index, 0, newId);
 
         state.lines[newId] = {
             from: [null, null],
@@ -25,11 +21,7 @@ const builderCallback = (builder: ActionReducerMapBuilder<Response>) =>
     }).addCase(insertAssumption, (state, action) => {
         const newId = nanoid();
 
-        const lower = state.ids.slice(0, action.payload.index)
-
-        const upper = state.ids.slice(action.payload.index)
-
-        state.ids = [...lower, newId, ...upper];
+        state.ids.splice(action.payload.index, 0, newId);
 
         state.lines[newId] = {
             formula: "",
@@ -40,11 +32,7 @@ const builderCallback = (builder: ActionReducerMapBuilder<Response>) =>
     }).addCase(insertRuleLine, (state, action) => {
         const newId = nanoid();
 
-        const lower = state.ids.slice(0, action.payload.index)
-
-        const upper = state.ids.slice(action.payload.index)
-
-        state.ids = [...lower, newId, ...upper];
+        state.ids.splice(action.payload.index, 0, newId);
 
         state.lines[newId] = {
             formula: "",
@@ -56,15 +44,10 @@ const builderCallback = (builder: ActionReducerMapBuilder<Response>) =>
     }).addCase(insertPremise, (state, action) => {
         const newId = nanoid();
 
-        const lower = state.ids.slice(0, action.payload.index)
-
-        const upper = state.ids.slice(action.payload.index)
-
-        state.ids = [...lower, newId, ...upper];
+        state.ids.splice(action.payload.index, 0, newId);
 
         state.lines[newId] = {
             formula: "",
-            rule: null,
             children: [],
             indentation: 0,
             from: [],
@@ -92,6 +75,9 @@ const builderCallback = (builder: ActionReducerMapBuilder<Response>) =>
         const deleted = state.ids.splice(index, removeCount);
 
         deleted.forEach((id) => delete state.lines[id]);
+    }).addCase(setRule, (state, action) => {
+        state.lines[action.payload.id].rule = action.payload.rule;
+        state.lines[action.payload.id].from = [null, null];
     })
 
 export default builderCallback;

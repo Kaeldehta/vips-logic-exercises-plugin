@@ -1,4 +1,5 @@
 import { ActionReducerMapBuilder, createAction, nanoid } from "@reduxjs/toolkit";
+import { setRule } from ".";
 import type { LineId, Response } from "../../types";
 
 export const start = createAction("semTree/start");
@@ -60,6 +61,8 @@ const builderCallback = (builder: ActionReducerMapBuilder<Response>) =>
         }
 
         state.lines[action.payload].children = [newId1, newId2];
+    }).addCase(setRule, (state, action) => {
+        state.lines[action.payload.id].rule = action.payload.rule;
     })
 
 export default builderCallback;
