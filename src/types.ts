@@ -26,5 +26,3 @@ export interface Store {
     response: Response
     answer: Answer
 }
-
-export type FromOption = {value: string, label: number} | null
