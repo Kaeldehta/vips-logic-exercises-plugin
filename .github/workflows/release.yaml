@@ -10,9 +10,10 @@ jobs:
             - name: Publish Release
               uses: release-drafter/release-drafter@v5
               id: release
-              publish: true
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  publish: true
             - name: Build
               run: npm run build
             - name: Create package.zip
