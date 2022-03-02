@@ -26,6 +26,7 @@ jobs:
                   add-paths: plugin.manifest
                   branch: bump-manifest
                   branch-suffix: random
+                  commit-message: Bump manifest version to ${{ steps.draft.outputs.tag_name }}
                   title: Bump manifest version to ${{ steps.draft.outputs.tag_name }}
                   body: Bump manifest version to ${{ steps.draft.outputs.tag_name }}
             - name: Enable Pull Request Automerge
