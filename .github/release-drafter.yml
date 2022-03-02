@@ -6,10 +6,13 @@ categories:
           - 'feature'
     - title: '🐛 Bug Fixes'
       labels:
-          - 'fix'
+          - 'bugfix'
     - title: '🧰 Maintenance'
       label: 'chore'
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
+exclude-labels:
+    - 'skip-changelog'
+    - 'bump-manifest'
 change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
 version-resolver:
     major:

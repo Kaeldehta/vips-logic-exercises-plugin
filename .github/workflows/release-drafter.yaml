@@ -4,11 +4,26 @@ on:
     push:
         branches:
             - main
+            - release/**
 jobs:
     update_release_draft:
         runs-on: ubuntu-latest
         steps:
-            - uses: release-drafter/release-drafter@v5
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Draft Release
+              uses: release-drafter/release-drafter@v5
               id: draft
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Update Plugin Version
+              run: sed -i 's/version=[0-9\.]*/version=${{ steps.draft.outputs.tag_name }}/g' plugin.manifest
+            - name: Create Update Version PR
+              uses: peter-evans/create-pull-request@v3
+              with:
+                  token: ${{ secrets.PAT }}
+                  add-paths: plugin.manifest
+                  branch: bump-manifest
+                  branch-suffix: random
+                  title: Bump manifest version to ${{ steps.draft.outputs.tag_name }}
+                  body: Bump manifest version to ${{ steps.draft.outputs.tag_name }}

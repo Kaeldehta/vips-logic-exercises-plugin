@@ -1,3 +1,4 @@
 feature: feature/*
-fix: fix/*
+bugfix: bugfix/*
 chore: chore/*
+bump-manifest: bump-manifest-*
