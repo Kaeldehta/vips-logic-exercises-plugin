@@ -19,6 +19,7 @@ jobs:
             - name: Update Plugin Version
               run: sed -i "s/version=[0-9\.]*/version=$(echo ${{ steps.draft.outputs.tag_name }} | sed 's/v//')/g" plugin.manifest
             - name: Create Update Version PR
+              id: cpr
               uses: peter-evans/create-pull-request@v3
               with:
                   token: ${{ secrets.PAT }}
@@ -27,3 +28,15 @@ jobs:
                   branch-suffix: random
                   title: Bump manifest version to ${{ steps.draft.outputs.tag_name }}
                   body: Bump manifest version to ${{ steps.draft.outputs.tag_name }}
+            - name: Enable Pull Request Automerge
+              if: steps.cpr.outputs.pull-request-operation == 'created'
+              uses: peter-evans/enable-pull-request-automerge@v1
+              with:
+                  token: ${{ secrets.PAT }}
+                  pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+            - name: Auto approve
+              if: steps.cpr.outputs.pull-request-operation == 'created'
+              uses: juliangruber/approve-pull-request-action@v1
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  number: ${{ steps.cpr.outputs.pull-request-number }}
