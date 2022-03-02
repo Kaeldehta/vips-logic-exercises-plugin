@@ -17,7 +17,7 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Update Plugin Version
-              run: sed -i 's/version=[0-9\.]*/version=${{ steps.draft.outputs.tag_name }}/g' plugin.manifest
+              run: sed -i "s/version=[0-9\.]*/version=$(echo ${{ steps.draft.outputs.tag_name }} | sed 's/v//')/g" plugin.manifest
             - name: Create Update Version PR
               uses: peter-evans/create-pull-request@v3
               with:
