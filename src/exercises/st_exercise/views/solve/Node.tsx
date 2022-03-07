@@ -1,4 +1,4 @@
-import {FiPlusCircle, FiArrowDownCircle, FiCircle} from "react-icons/fi";
+import {FiPlusCircle, FiArrowDownCircle, FiCircle, FiMinusCircle} from "react-icons/fi";
 import type { LineId } from "../../../../types";
 import { useTypedSelector } from "../../../../hooks";
 import { addFalsum, addAssumption, addRuleLine, branch } from "../../../../redux/response/st_exercise";
@@ -8,6 +8,8 @@ import DispatchActionButton from "../../../../components/DispatchActionButton";
 import From from "../../../../components/From";
 import RuleSelectOrNull from "../../../../components/RuleSelect";
 import { propRulesOptions } from "../../types";
+import LineWrapper from "../../../fc_exercise/LineWrapper";
+import { removeLine } from "../../../../redux/response";
 
 const AddLinesButtons = ({id}: {id: LineId}) => {
 
@@ -30,7 +32,7 @@ const RenderChildren = ({id}: {id: LineId}) => {
 
     return <div>
         <LineThing/>
-        <div className="flex gap-8">
+        <div className="flex gap-8 items-center">
             <NodeComponent id={children[0]}/>
             <NodeComponent id={children[1]}/>
         </div>
@@ -44,16 +46,17 @@ const LineThing = () => <svg className="h-12 w-full">
 
 const NodeComponent = ({id}: {id: LineId}) => {
 
-    return <div className="flex flex-col items-center justify-start">
+    return <div className="flex flex-col items-start w-fit">
         
-        <div className="flex items-center gap-2">
+        <LineWrapper>
             <LineNumber id={id}/>
             <Formula id={id}/>
             
             <RuleSelectOrNull id={id} options={propRulesOptions} />
 
             <From id={id}/>
-        </div>
+            <DispatchActionButton icon={FiMinusCircle} action={removeLine(id)}/>
+        </LineWrapper>
     
         <RenderChildren id={id}/>
     

@@ -1,5 +1,5 @@
 import { ActionReducerMapBuilder, createAction, nanoid } from "@reduxjs/toolkit";
-import { setRule } from ".";
+import { removeLine, setRule } from ".";
 import type { LineId, Response } from "../../types";
 
 export const start = createAction("semTree/start");
@@ -61,6 +61,15 @@ const builderCallback = (builder: ActionReducerMapBuilder<Response>) =>
         }
 
         state.lines[action.payload].children = [newId1, newId2];
+    }).addCase(removeLine, (state, action) => {
+        const index = state.ids.indexOf(action.payload);
+        state.ids.splice(index, 1);
+
+        const parent = state.ids.findIndex((id) => state.lines[id].children[0] == action.payload || state.lines[id].children[1] == action.payload);
+
+        state.lines[state.ids[parent]].children = [];
+
+        delete state.lines[action.payload];
     })
 
 export default builderCallback;
