@@ -1,4 +1,5 @@
 {
+  "private": true,
   "scripts": {
     "start": "NODE_ENV=development webpack --watch",
     "build": "NODE_ENV=production webpack"
@@ -12,6 +13,7 @@
     "react-select": "^5.2.2"
   },
   "devDependencies": {
+    "@google/semantic-release-replace-plugin": "^1.1.0",
     "@types/react": "^17.0.4",
     "@types/react-dom": "^17.0.3",
     "autoprefixer": "^10.4.2",
@@ -20,9 +22,46 @@
     "css-loader": "^6.6.0",
     "postcss": "^8.4.6",
     "postcss-loader": "^6.2.1",
+    "semantic-release": "^19.0.2",
     "style-loader": "^3.3.1",
     "tailwindcss": "^3.0.23",
     "webpack": "^5.69.1",
     "webpack-cli": "^4.9.2"
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      [
+        "@google/semantic-release-replace-plugin",
+        {
+          "replacements": [
+            {
+              "files": ["plugin.manifest"],
+              "from": "version=.*",
+              "to": "version=${nextRelease.version}",
+              "results": [
+                {
+                  "file": "plugin.manifest",
+                  "hasChanged": true,
+                  "numMatches": 1,
+                  "numReplacements": 1
+                }
+              ],
+              "countMatches": true
+            }
+          ]
+        }
+      ],
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/github",
+        {
+          "assets": {
+            "path": "package.zip",
+            "label": "Plugin Archive"
+          }
+        }
+      ]
+    ]
   }
 }
