@@ -20,7 +20,9 @@
     "autoprefixer": "^10.4.2",
     "babel-loader": "^8.2.3",
     "babel-preset-react-app": "^10.0.1",
+    "commitizen": "^4.2.4",
     "css-loader": "^6.6.0",
+    "cz-conventional-changelog": "^3.3.0",
     "postcss": "^8.4.6",
     "postcss-loader": "^6.2.1",
     "semantic-release": "^19.0.2",
@@ -72,5 +74,10 @@
         }
       ]
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
