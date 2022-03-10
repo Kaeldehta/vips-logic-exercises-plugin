@@ -6,10 +6,11 @@ import Submit from "../../../../solve/Submit";
 import LineWrapper from "../../LineWrapper";
 import DispatchActionButton from "../../../../components/DispatchActionButton";
 import Lines from "./Lines";
+import UndoHandler from "../../../../components/UndoRedoHandler";
 
 const Solve =  () => {
 
-    const empty = useTypedSelector(state => state.response.ids.length == 0);
+    const empty = useTypedSelector(state => state.response.present.ids.length == 0);
 
     if(empty) return <LineWrapper>
         <div className="h-12"/>
@@ -22,6 +23,8 @@ const Solve =  () => {
         <Submit />
 
         <Answer separator={<>{"\u22A2"}<sub>FC</sub></>}/>
+
+        <UndoHandler/>
 
         <Lines />
     </div>

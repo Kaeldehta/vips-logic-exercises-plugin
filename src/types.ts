@@ -1,3 +1,5 @@
+import { StateWithHistory } from "redux-undo";
+
 export interface Answer {
     consequence: string,
     statements: {
@@ -23,6 +25,6 @@ export interface Response {
 }
 
 export interface Store {
-    response: Response
+    response: StateWithHistory<Response>
     answer: Answer
 }

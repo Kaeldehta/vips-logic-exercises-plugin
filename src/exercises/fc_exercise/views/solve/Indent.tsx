@@ -3,7 +3,7 @@ import { LineId } from "../../../../types"
 import Border, { AssumptionBorder } from "./Border";
 
 const Indent = ({id}: {id: LineId}) => {
-    const indentation = useTypedSelector(state => state.response.lines[id].indentation);
+    const indentation = useTypedSelector(state => state.response.present.lines[id].indentation);
 
     const assumption = useAssumptionState(id);
 

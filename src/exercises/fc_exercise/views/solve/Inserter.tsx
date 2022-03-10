@@ -10,15 +10,15 @@ import { isAssumption } from "../../../../utils";
 
 const Inserter = ({id}: {id: LineId}) => {
 
-    const index = useTypedSelector(state => state.response.ids.indexOf(id));
+    const index = useTypedSelector(state => state.response.present.ids.indexOf(id));
 
-    const indentation = useTypedSelector(state => state.response.lines[id].indentation);
+    const indentation = useTypedSelector(state => state.response.present.lines[id].indentation);
     
     const premise = usePremiseState(id);
 
     const indentationDelta = useTypedSelector(state => {
 
-        const next = state.response.lines[state.response.ids[index + 1]];
+        const next = state.response.present.lines[state.response.present.ids[index + 1]];
 
         if(next) {
             if(isAssumption(next)) {

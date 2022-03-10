@@ -9,7 +9,7 @@ const Solve = () => {
 
     const dispatch = useDispatch();
 
-    const empty = useTypedSelector(state => state.response.ids.length === 0);
+    const empty = useTypedSelector(state => state.response.present.ids.length === 0);
 
     return <div>
             <Answer separator={"\u22A8"}/>

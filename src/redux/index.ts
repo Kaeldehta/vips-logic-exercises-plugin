@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit"
 import answer from "./answer";
 import createResponseReducer from "./response";
+import undoable from "redux-undo";
 
 const createStore = async () => {
 
@@ -9,7 +10,7 @@ const createStore = async () => {
     return configureStore({
         reducer: {
             answer,
-            response
+            response: undoable(response),
         }
     });
 }

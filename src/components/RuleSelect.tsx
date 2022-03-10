@@ -12,7 +12,7 @@ interface RuleSelectProps {
 const RuleSelect = ({id, options}: RuleSelectProps) => {
 
     const value = useTypedSelector(state => { 
-        const rule = state.response.lines[id].rule;
+        const rule = state.response.present.lines[id].rule;
         return rule === null ? null : {
             value: rule,
             label: options.find(({value}) => value === rule).label,

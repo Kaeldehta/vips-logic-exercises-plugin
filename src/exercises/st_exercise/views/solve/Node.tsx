@@ -1,6 +1,6 @@
-import {FiPlusCircle, FiArrowDownCircle, FiCircle, FiMinusCircle} from "react-icons/fi";
+import {FiPlusCircle, FiArrowDownCircle, FiMinusCircle} from "react-icons/fi";
 import type { LineId } from "../../../../types";
-import { useAbsurdityState, useTypedSelector } from "../../../../hooks";
+import { useTypedSelector } from "../../../../hooks";
 import { addFalsum, addAssumption, addRuleLine, branch } from "../../../../redux/response/st_exercise";
 import Formula from "../../../../solve/Formula";
 import LineNumber from "../../../../components/LineNumber";
@@ -24,7 +24,7 @@ const AddLinesButtons = ({id}: {id: LineId}) => {
 
 const RenderChildren = ({id}: {id: LineId}) => {
 
-    const children = useTypedSelector(state => state.response.lines[id].children);
+    const children = useTypedSelector(state => state.response.present.lines[id].children);
 
     // const absurdity = useAbsurdityState(id);
 
