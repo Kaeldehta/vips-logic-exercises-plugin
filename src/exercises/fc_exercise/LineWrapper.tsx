@@ -2,9 +2,10 @@ import type { ReactNode } from "react";
 
 interface Props {
     children: ReactNode
+    className?: string
 }
 
-export default ({children}: Props) => 
-<div className={"h-16 group flex justify-start gap-2 items-center"}>
+export default ({children, className=""}: Props) => 
+<div className={"h-16 group flex justify-start gap-2 items-center " + className}>
     {children}
 </div>

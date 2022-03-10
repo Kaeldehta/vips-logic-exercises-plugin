@@ -11,10 +11,10 @@ const Solve = () => {
 
     const empty = useTypedSelector(state => state.response.ids.length === 0);
 
-    return <div className="w-full">
+    return <div>
             <Answer separator={"\u22A8"}/>
             <Submit />
-            <div className="flex flex-col gap-1">
+            <div className="pb-96 flex flex-col gap-1 justify-start items-center">
                 {empty ? <button type="button" onClick={() => dispatch(start())}>Start Proof</button> : <Node id="root"/>}
             </div>
         </div>

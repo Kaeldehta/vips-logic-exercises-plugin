@@ -1,7 +1,11 @@
 module.exports = {
   content: ["./src/**/*.{tsx,ts}"],
   theme: {
-    extend: {},
+    extend: {
+      width: {
+        'line': '44rem',
+      }
+    },
   },
   plugins: [],
   corePlugins: {

@@ -1,6 +1,6 @@
 import {FiPlusCircle, FiArrowDownCircle, FiCircle, FiMinusCircle} from "react-icons/fi";
 import type { LineId } from "../../../../types";
-import { useTypedSelector } from "../../../../hooks";
+import { useAbsurdityState, useTypedSelector } from "../../../../hooks";
 import { addFalsum, addAssumption, addRuleLine, branch } from "../../../../redux/response/st_exercise";
 import Formula from "../../../../solve/Formula";
 import LineNumber from "../../../../components/LineNumber";
@@ -14,10 +14,10 @@ import { removeLine } from "../../../../redux/response";
 const AddLinesButtons = ({id}: {id: LineId}) => {
 
     return <div className="flex">
-        <DispatchActionButton show icon={FiCircle} action={addFalsum(id)} content={"\u22A5"}/>
+        <DispatchActionButton show action={addFalsum(id)} content={"\u22A5"}/>
         <DispatchActionButton show icon={FiPlusCircle} action={addAssumption(id)} />
         <DispatchActionButton show icon={FiArrowDownCircle} action={addRuleLine(id)} />
-        <DispatchActionButton show icon={FiCircle} action={branch(id)} content="B"/>
+        <DispatchActionButton show action={branch(id)} content="B"/>
     </div>
 
 }
@@ -26,17 +26,23 @@ const RenderChildren = ({id}: {id: LineId}) => {
 
     const children = useTypedSelector(state => state.response.lines[id].children);
 
+    // const absurdity = useAbsurdityState(id);
+
     if(children.length == 0) return <AddLinesButtons id={id}/>
 
     if(children.length == 1) return <NodeComponent id={children[0]}/>
 
-    return <div>
+    return <>
         <LineThing/>
-        <div className="flex gap-8 items-center">
-            <NodeComponent id={children[0]}/>
-            <NodeComponent id={children[1]}/>
+        <div className="flex gap-8">
+            <div className="flex flex-col gap-1 items-center justify-start">
+                <NodeComponent id={children[0]}/>
+            </div>
+            <div className="flex flex-col gap-1 items-center justify-start">
+                <NodeComponent id={children[1]}/>
+            </div>
         </div>
-    </div>
+    </>
 }
 
 const LineThing = () => <svg className="h-12 w-full">
@@ -46,21 +52,25 @@ const LineThing = () => <svg className="h-12 w-full">
 
 const NodeComponent = ({id}: {id: LineId}) => {
 
-    return <div className="flex flex-col items-start w-fit">
+    return <>
         
-        <LineWrapper>
+        <LineWrapper className="w-line">
             <LineNumber id={id}/>
             <Formula id={id}/>
             
             <RuleSelectOrNull id={id} options={propRulesOptions} />
 
             <From id={id}/>
-            <DispatchActionButton icon={FiMinusCircle} action={removeLine(id)}/>
+            <div className="ml-auto">
+                <DispatchActionButton icon={FiMinusCircle} action={removeLine(id)}/>
+            </div>
+
         </LineWrapper>
-    
+
         <RenderChildren id={id}/>
+        
     
-    </div>
+    </>
 
 }
 
