@@ -1,5 +1,5 @@
-import { useAssumptionState, usePremiseState } from "../../../../hooks"
-import { LineId } from "../../../../types"
+import { useAssumptionState, usePremiseState } from "../hooks"
+import { LineId } from "../types"
 
 const LabelOrNull = ({id}: {id: LineId}) => {
 

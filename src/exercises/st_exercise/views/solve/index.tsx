@@ -4,18 +4,20 @@ import { useDispatch } from "react-redux";
 import { useTypedSelector } from "../../../../hooks";
 import Submit from "../../../../solve/Submit";
 import { start } from "../../../../redux/response/st_exercise";
+import UndoRedo from "../../../../components/UndoRedoHandler";
 
 const Solve = () => {
 
     const dispatch = useDispatch();
 
-    const empty = useTypedSelector(state => state.response.present.ids.length === 0);
+    const root = useTypedSelector(state => state.response.present.root);
 
     return <div>
             <Answer separator={"\u22A8"}/>
             <Submit />
+            <UndoRedo />
             <div className="pb-96 flex flex-col gap-1 justify-start items-center">
-                {empty ? <button type="button" onClick={() => dispatch(start())}>Start Proof</button> : <Node id="root"/>}
+                {!root ? <button type="button" onClick={() => dispatch(start())}>Start Proof</button> : <Node id={root}/>}
             </div>
         </div>
 }

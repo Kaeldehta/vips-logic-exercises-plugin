@@ -22,6 +22,7 @@ export interface Line {
 export interface Response {
     lines: Record<LineId, Line>
     ids: Array<LineId>
+    root?: LineId
 }
 
 export interface Store {

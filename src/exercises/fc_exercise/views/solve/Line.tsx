@@ -10,7 +10,7 @@ import Indent from "./Indent";
 import RuleSelectOrNull from "../../../../components/RuleSelect";
 import { propRulesOptions } from "../../types";
 import From from "../../../../components/From";
-import LabelOrNull from "./LabelOrNull";
+import LabelOrNull from "../../../../components/LabelOrNull";
 
 const Line = ({id}: {id: LineId}) => {
     

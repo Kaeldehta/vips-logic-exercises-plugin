@@ -1,7 +1,7 @@
 import { Line } from "./types";
 
 export const isAssumption = (line: Line) => {
-    return line.formula !== undefined && !line.from.length && line.indentation > 0 && line.rule === undefined
+    return line.formula !== undefined && !line.from.length && (line.indentation > 0 || line.indentation === undefined) && line.rule === undefined
 }
 
 export const isPremise = (line: Line) => {

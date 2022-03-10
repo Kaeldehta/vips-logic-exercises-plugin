@@ -1,4 +1,4 @@
-import {FiPlusCircle, FiArrowDownCircle, FiMinusCircle} from "react-icons/fi";
+import {FiPlusCircle, FiArrowDownCircle} from "react-icons/fi";
 import type { LineId } from "../../../../types";
 import { useTypedSelector } from "../../../../hooks";
 import { addFalsum, addAssumption, addRuleLine, branch } from "../../../../redux/response/st_exercise";
@@ -9,7 +9,8 @@ import From from "../../../../components/From";
 import RuleSelectOrNull from "../../../../components/RuleSelect";
 import { propRulesOptions } from "../../types";
 import LineWrapper from "../../../fc_exercise/LineWrapper";
-import { removeLine } from "../../../../redux/response";
+import RemoveButton from "../../../../components/RemoveButton";
+import LabelOrNull from "../../../../components/LabelOrNull";
 
 const AddLinesButtons = ({id}: {id: LineId}) => {
 
@@ -57,12 +58,14 @@ const NodeComponent = ({id}: {id: LineId}) => {
         <LineWrapper className="w-line">
             <LineNumber id={id}/>
             <Formula id={id}/>
+
+            <LabelOrNull id={id}/>
             
             <RuleSelectOrNull id={id} options={propRulesOptions} />
 
             <From id={id}/>
             <div className="ml-auto">
-                <DispatchActionButton icon={FiMinusCircle} action={removeLine(id)}/>
+                <RemoveButton id={id}/>
             </div>
 
         </LineWrapper>
