@@ -1,6 +1,7 @@
 import { ActionReducerMapBuilder, createAction, nanoid } from "@reduxjs/toolkit";
 import { removeLine } from ".";
 import type { Response } from "../../types";
+import { isAssumption } from "../../utils";
 
 export const insertAbsurdity = createAction<{index: number, indentation: number}>("fcProof/addFalsum");
 export const insertAssumption = createAction<{index: number, indentation: number}>("fcProof/addAssumption");
@@ -56,7 +57,7 @@ const builderCallback = (builder: ActionReducerMapBuilder<Response>) =>
         const thisLine = state.lines[action.payload];
         const index = state.ids.indexOf(action.payload);
 
-        const assumption = !thisLine.from.length && thisLine.rule === undefined;
+        const assumption = isAssumption(thisLine);
         let removeCount = 1;
 
         if(assumption) {
@@ -64,7 +65,7 @@ const builderCallback = (builder: ActionReducerMapBuilder<Response>) =>
             for(let i = index + 1; i < state.ids.length; i++) {
                 const line = state.lines[state.ids[i]];
 
-                if(line.indentation !== indentation || (!line.from.length && line.rule === undefined)) {
+                if(line.indentation !== indentation || isAssumption(line)) {
                     break;
                 }
 
