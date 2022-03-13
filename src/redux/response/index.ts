@@ -16,6 +16,10 @@ const createResponseReducer = async () => {
         lines: {}
     };
 
+    if(Array.isArray(initialState.lines as unknown)) {
+        initialState.lines = {};
+    }
+
     const {type} = element.dataset;
 
     const {default: builderCallback}: {default: (builder: ActionReducerMapBuilder<Response>) => ActionReducerMapBuilder<Response>} = await import(`./${type}`);
