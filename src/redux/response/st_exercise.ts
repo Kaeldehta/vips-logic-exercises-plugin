@@ -31,7 +31,7 @@ const builderCallback = (builder: ActionReducerMapBuilder<Response>) =>
         state.ids.push(newId);
         state.lines[newId] = {
             formula: "",
-            children: [],
+            children: state.lines[action.payload].children,
             from: [],
         }
         state.lines[action.payload].children = [newId];
@@ -42,7 +42,7 @@ const builderCallback = (builder: ActionReducerMapBuilder<Response>) =>
             formula: "",
             from: [null],
             rule: null,
-            children: []
+            children: state.lines[action.payload].children
         }
         state.lines[action.payload].children = [newId];
     }).addCase(branch, (state, action) => {

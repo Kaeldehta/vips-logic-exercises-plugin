@@ -11,25 +11,13 @@ import { propRulesOptions } from "../../types";
 import LineWrapper from "../../../../components/LineWrapper";
 import RemoveButton from "../../../../components/RemoveButton";
 import LabelOrNull from "../../../../components/LabelOrNull";
-
-const AddLinesButtons = ({id}: {id: LineId}) => {
-
-    return <div className="flex">
-        <DispatchActionButton show action={addFalsum(id)} content={"\u22A5"}/>
-        <DispatchActionButton show icon={FiPlusCircle} action={addAssumption(id)} />
-        <DispatchActionButton show icon={FiArrowDownCircle} action={addRuleLine(id)} />
-        <DispatchActionButton show action={branch(id)} content="B"/>
-    </div>
-
-}
+import Inserter from "./Inserter";
 
 const RenderChildren = ({id}: {id: LineId}) => {
 
     const children = useTypedSelector(state => state.response.present.lines[id].children);
 
-    // const absurdity = useAbsurdityState(id);
-
-    if(children.length == 0) return <AddLinesButtons id={id}/>
+    if(children.length == 0) return null;
 
     if(children.length == 1) return <NodeComponent id={children[0]}/>
 
@@ -69,6 +57,8 @@ const NodeComponent = ({id}: {id: LineId}) => {
             </div>
 
         </LineWrapper>
+
+        <Inserter id={id}/>
 
         <RenderChildren id={id}/>
         
