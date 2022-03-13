@@ -8,7 +8,7 @@ import DispatchActionButton from "../../../../components/DispatchActionButton";
 import From from "../../../../components/From";
 import RuleSelectOrNull from "../../../../components/RuleSelect";
 import { propRulesOptions } from "../../types";
-import LineWrapper from "../../../fc_exercise/LineWrapper";
+import LineWrapper from "../../../../components/LineWrapper";
 import RemoveButton from "../../../../components/RemoveButton";
 import LabelOrNull from "../../../../components/LabelOrNull";
 

@@ -1,6 +1,6 @@
 import Formula from "../../../../solve/Formula";
 import type { LineId } from "../../../../types";
-import LineWrapper from "../../LineWrapper";
+import LineWrapper from "../../../../components/LineWrapper";
 import Inserter from "./Inserter";
 import LineNumber from "../../../../components/LineNumber";
 import DispatchActionButton from "../../../../components/DispatchActionButton";

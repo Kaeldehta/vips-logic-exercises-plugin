@@ -3,7 +3,7 @@ import Answer from "../../../../components/Answer";
 import { useTypedSelector } from "../../../../hooks";
 import { insertAssumption, insertPremise } from "../../../../redux/response/fc_exercise";
 import Submit from "../../../../solve/Submit";
-import LineWrapper from "../../LineWrapper";
+import LineWrapper from "../../../../components/LineWrapper";
 import DispatchActionButton from "../../../../components/DispatchActionButton";
 import Lines from "./Lines";
 import UndoRedo from "../../../../components/UndoRedoHandler";
@@ -11,7 +11,7 @@ import UndoRedo from "../../../../components/UndoRedoHandler";
 const Solve =  () => {
 
     const empty = useTypedSelector(state => state.response.present.ids.length == 0);
-    
+
     return <div className="w-full">
 
         <Submit />
