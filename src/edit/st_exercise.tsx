@@ -1,4 +1,4 @@
-import EditComponent from "../../../edit";
+import EditComponent from ".";
 
 const Edit =  () => <EditComponent separator={"\u22A8"}/>;
 

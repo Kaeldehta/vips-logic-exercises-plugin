@@ -1,5 +1,5 @@
-import { useAssumptionState, useTypedSelector } from "../../../../hooks"
-import { LineId } from "../../../../types"
+import { useAssumptionState, useTypedSelector } from "../../hooks"
+import { LineId } from "../../types"
 import Border, { AssumptionBorder } from "./Border";
 
 const Indent = ({id}: {id: LineId}) => {

@@ -1,9 +1,9 @@
 import { FiPlusCircle, FiArrowDownCircle } from "react-icons/fi";
-import DispatchActionButton from "../../../../components/DispatchActionButton";
-import LineWrapper from "../../../../components/LineWrapper"
-import { useAbsurdityState, useTypedSelector } from "../../../../hooks";
-import { addAssumption, addFalsum, addRuleLine, branch } from "../../../../redux/response/st_exercise";
-import { LineId } from "../../../../types";
+import DispatchActionButton from "../../components/DispatchActionButton";
+import LineWrapper from "../../components/LineWrapper"
+import { useAbsurdityState, useTypedSelector } from "../../hooks";
+import { addAssumption, addFalsum, addRuleLine, branch } from "../../redux/response/st_exercise";
+import { LineId } from "../../types";
 
 const Inserter = ({id}: {id: LineId}) => {
 

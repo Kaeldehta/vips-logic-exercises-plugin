@@ -1,12 +1,12 @@
-import LineWrapper from "../../../../components/LineWrapper"
+import LineWrapper from "../../components/LineWrapper"
 
 import {FiArrowRightCircle, FiArrowDownCircle, FiPlusCircle} from "react-icons/fi";
-import { LineId } from "../../../../types";
-import { usePremiseState, useTypedSelector } from "../../../../hooks";
-import DispatchActionButton from "../../../../components/DispatchActionButton";
-import { insertAbsurdity, insertAssumption, insertPremise, insertRuleLine } from "../../../../redux/response/fc_exercise";
+import { LineId } from "../../types";
+import { usePremiseState, useTypedSelector } from "../../hooks";
+import DispatchActionButton from "../../components/DispatchActionButton";
+import { insertAbsurdity, insertAssumption, insertPremise, insertRuleLine } from "../../redux/response/fc_exercise";
 import Border from "./Border";
-import { isAssumption } from "../../../../utils";
+import { isAssumption } from "../../utils";
 
 const Inserter = ({id}: {id: LineId}) => {
 

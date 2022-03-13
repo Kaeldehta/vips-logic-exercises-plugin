@@ -1,10 +1,10 @@
 import Node from "./Node";
-import Answer from "../../../../components/Answer";
+import Answer from "../../components/Answer";
 import { useDispatch } from "react-redux";
-import { useTypedSelector } from "../../../../hooks";
-import Submit from "../../../../solve/Submit";
-import { start } from "../../../../redux/response/st_exercise";
-import UndoRedo from "../../../../components/UndoRedoHandler";
+import { useTypedSelector } from "../../hooks";
+import Submit from "../Submit";
+import { start } from "../../redux/response/st_exercise";
+import UndoRedo from "../../components/UndoRedoHandler";
 
 const Solve = () => {
 

@@ -1,4 +1,4 @@
-import { useTypedSelector } from "../../../../hooks";
+import { useTypedSelector } from "../../hooks";
 import Line from "./Line";
 
 const Lines = () => {

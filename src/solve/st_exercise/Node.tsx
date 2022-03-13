@@ -1,16 +1,13 @@
-import {FiPlusCircle, FiArrowDownCircle} from "react-icons/fi";
-import type { LineId } from "../../../../types";
-import { useTypedSelector } from "../../../../hooks";
-import { addFalsum, addAssumption, addRuleLine, branch } from "../../../../redux/response/st_exercise";
-import Formula from "../../../../solve/Formula";
-import LineNumber from "../../../../components/LineNumber";
-import DispatchActionButton from "../../../../components/DispatchActionButton";
-import From from "../../../../components/From";
-import RuleSelectOrNull from "../../../../components/RuleSelect";
-import { propRulesOptions } from "../../types";
-import LineWrapper from "../../../../components/LineWrapper";
-import RemoveButton from "../../../../components/RemoveButton";
-import LabelOrNull from "../../../../components/LabelOrNull";
+import type { LineId } from "../../types";
+import { useTypedSelector } from "../../hooks";
+import Formula from "../../solve/Formula";
+import LineNumber from "../../components/LineNumber";
+import From from "../../components/From";
+import RuleSelectOrNull from "../../components/RuleSelect";
+import { propRulesOptions } from "../../rules/st_exercise";
+import LineWrapper from "../../components/LineWrapper";
+import RemoveButton from "../../components/RemoveButton";
+import LabelOrNull from "../../components/LabelOrNull";
 import Inserter from "./Inserter";
 
 const RenderChildren = ({id}: {id: LineId}) => {

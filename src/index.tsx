@@ -13,7 +13,7 @@ const main = async () => {
 
     const store = await createStore();
 
-    const {default: Component} = await import(`./exercises/${type}/views/${view}`);
+    const {default: Component} = await import(/* webpackInclude: /(solve|edit|correct)\/(st_exercise|fc_exercise)/ */`./${view}/${type}`);
 
     render(<Provider store={store}>
             <Component/>
