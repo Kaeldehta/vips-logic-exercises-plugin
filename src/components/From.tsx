@@ -44,7 +44,7 @@ const FromSelect = ({id, index}: FromSelectProps) => {
             }
 
             options.reverse()
-            
+
             return options;
         }
         const index = state.response.present.ids.indexOf(id);
@@ -58,6 +58,7 @@ const FromSelect = ({id, index}: FromSelectProps) => {
     return <Select
         options={options}
         value={value}
+        isSearchable={false}
         onChange={(option) => dispatch(setFrom({id: id, index, from: option.value}))}
     />
 }

@@ -25,6 +25,7 @@ const RuleSelect = ({id, options}: RuleSelectProps) => {
     return <Select
         value={value}
         options={options}
+        isSearchable={false}
         onChange={(option) => dispatch(setRule({id, rule: option.value, count: option.count}))}
     />
 

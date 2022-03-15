@@ -18,6 +18,7 @@ const DispatchActionButton = ({content, action, icon: Icon, show, title}: Dispat
         title={title}
         className={`${show? "flex" : "group-hover:flex hidden"} items-center justify-center w-10 h-10 p-0`}
         type="button"
+        tabIndex={-1}
         onClick={() => dispatch(action)}
     >{Icon && <Icon/>}{content}</button>
 }
