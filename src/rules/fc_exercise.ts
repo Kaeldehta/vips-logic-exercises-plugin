@@ -55,6 +55,6 @@ export const propRulesOptions: Array<{value: typeof propRules[number], label: st
     }
 ]
 
-export const predRulesOptions: Array<{value: typeof predRules[number], label: string}> = [
+export const predRulesOptions: Array<{value: typeof predRules[number], label: string, count: number}> = [
     ...propRulesOptions
 ]

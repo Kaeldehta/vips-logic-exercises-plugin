@@ -4,7 +4,7 @@ import Formula from "../../solve/Formula";
 import LineNumber from "../../components/LineNumber";
 import From from "../../components/From";
 import RuleSelectOrNull from "../../components/RuleSelect";
-import { propRulesOptions } from "../../rules/st_exercise";
+import { propRulesOptions, predRulesOptions } from "../../rules/st_exercise";
 import LineWrapper from "../../components/LineWrapper";
 import RemoveButton from "../../components/RemoveButton";
 import LabelOrNull from "../../components/LabelOrNull";
@@ -38,6 +38,8 @@ const LineThing = () => <svg className="h-12 w-full">
 
 const NodeComponent = ({id}: {id: LineId}) => {
 
+    const predicateLogic = useTypedSelector(state => state.answer.predicateLogic);
+
     return <>
         
         <LineWrapper className="w-line">
@@ -46,7 +48,7 @@ const NodeComponent = ({id}: {id: LineId}) => {
 
             <LabelOrNull id={id}/>
             
-            <RuleSelectOrNull id={id} options={propRulesOptions} />
+            <RuleSelectOrNull id={id} options={predicateLogic ? predRulesOptions : propRulesOptions} />
 
             <From id={id}/>
             <div className="ml-auto">
