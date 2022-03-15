@@ -1,6 +1,7 @@
 import { ActionReducerMapBuilder, createAction, nanoid } from "@reduxjs/toolkit";
 import { removeLine, setRule } from ".";
 import type { LineId, Response } from "../../types";
+import { findParent } from "../../utils";
 
 export const start = createAction("semTree/start");
 export const addFalsum = createAction<LineId>("semTree/addFalsum");
@@ -96,7 +97,9 @@ const builderCallback = (builder: ActionReducerMapBuilder<Response>) =>
             }
         }
         else {
-            const [parentId, {children: parentChildren}] = Object.entries(state.lines).find(([, {children: [child1, child2]}]) => child1 === id || child2 == id)
+            const parentId = findParent(id, state);
+
+            const parentChildren = state.lines[parentId].children;
 
             const childIndex = parentChildren.findIndex(child => child === id);
             
