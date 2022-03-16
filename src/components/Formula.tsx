@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useTypedSelector } from "../hooks";
 import { Store } from "../types";
-import { charToHtml, renderFormulaAsHTML } from "../utils";
+import { renderFormulaAsHTML } from "../utils";
 
 const propositionalLogicChars = /^[pqr12345789iklno\(\)]$/
 

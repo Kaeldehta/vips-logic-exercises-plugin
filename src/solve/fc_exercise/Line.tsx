@@ -6,12 +6,13 @@ import LineNumber from "../../components/LineNumber";
 import DispatchActionButton from "../../components/DispatchActionButton";
 import { FiMinusCircle } from "react-icons/fi";
 import { removeLine } from "../../redux/response";
-import Indent from "./Indent";
+import Indent from "../../components/Indent";
 import RuleSelectOrNull from "../../components/RuleSelect";
 import { propRulesOptions, predRulesOptions } from "../../rules/fc_exercise"
 import From from "../../components/From";
 import LabelOrNull from "../../components/LabelOrNull";
 import { useTypedSelector } from "../../hooks";
+import FromSelect from "../FromSelect";
 
 const Line = ({id}: {id: LineId}) => {
 
@@ -23,7 +24,7 @@ const Line = ({id}: {id: LineId}) => {
         <Formula id={id}/>
         <RuleSelectOrNull id={id} options={predicateLogic ? predRulesOptions : propRulesOptions}/>
         <LabelOrNull id={id}/>
-        <From id={id}/>
+        <From id={id} fromRender={FromSelect}/>
         <DispatchActionButton icon={FiMinusCircle} action={removeLine(id)}/>
     </LineWrapper>
     <Inserter id={id}/>

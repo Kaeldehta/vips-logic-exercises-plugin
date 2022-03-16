@@ -9,6 +9,7 @@ import LineWrapper from "../../components/LineWrapper";
 import RemoveButton from "../../components/RemoveButton";
 import LabelOrNull from "../../components/LabelOrNull";
 import Inserter from "./Inserter";
+import FromSelect from "../FromSelect";
 
 const RenderChildren = ({id}: {id: LineId}) => {
 
@@ -50,7 +51,7 @@ const NodeComponent = ({id}: {id: LineId}) => {
             
             <RuleSelectOrNull id={id} options={predicateLogic ? predRulesOptions : propRulesOptions} />
 
-            <From id={id}/>
+            <From id={id} fromRender={FromSelect}/>
             <div className="ml-auto">
                 <RemoveButton id={id}/>
             </div>

@@ -5,7 +5,7 @@ import { LineId } from "../../types";
 import { usePremiseState, useTypedSelector } from "../../hooks";
 import DispatchActionButton from "../../components/DispatchActionButton";
 import { insertAbsurdity, insertAssumption, insertPremise, insertRuleLine } from "../../redux/response/fc_exercise";
-import Border from "./Border";
+import Border from "../../components/Border";
 import { isAssumption } from "../../utils";
 
 const Inserter = ({id}: {id: LineId}) => {
