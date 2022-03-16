@@ -25,6 +25,8 @@ const RuleSelect = ({id, options}: RuleSelectProps) => {
     return <Select
         className="min-w-fit"
         value={value}
+        menuPlacement="auto"
+        placeholder="Rule"
         options={options}
         onChange={(option) => dispatch(setRule({id, rule: option.value, count: option.count}))}
     />

@@ -1,5 +1,4 @@
 import { ActionCreator, Selector } from "@reduxjs/toolkit";
-import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useTypedSelector } from "../hooks";
 import { Store } from "../types";

@@ -57,6 +57,8 @@ const FromSelect = ({id, index}: FromSelectProps) => {
 
     return <Select
         className="min-w-fit"
+        menuPlacement="auto"
+        placeholder="Line"
         options={options}
         value={value}
         onChange={(option) => dispatch(setFrom({id: id, index, from: option.value}))}
