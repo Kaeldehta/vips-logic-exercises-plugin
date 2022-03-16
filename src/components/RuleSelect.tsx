@@ -23,9 +23,9 @@ const RuleSelect = ({id, options}: RuleSelectProps) => {
     const dispatch = useDispatch();
 
     return <Select
+        className="min-w-fit"
         value={value}
         options={options}
-        isSearchable={false}
         onChange={(option) => dispatch(setRule({id, rule: option.value, count: option.count}))}
     />
 

@@ -21,11 +21,11 @@ export const findParent = (id: LineId, response: Response) => response.ids.find(
 );
 
 export const charToHtml = {
-    "i": <>&rarr;</>,
-    "k": <>&and;</>,
-    "l": <>&or;</>,
+    "i": <div className="mx-1">&rarr;</div>,
+    "k": <div className="mx-1">&and;</div>,
+    "l": <div className="mx-1">&or;</div>,
     "n": <>&not;</>,
-    "o": <>&harr;</>,
+    "o": <div className="mx-1">&harr;</div>,
     "u": <>&forall;</>,
     "e": <>&exist;</>,
     "1": <sub>1</sub>,

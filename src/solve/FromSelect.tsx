@@ -56,9 +56,9 @@ const FromSelect = ({id, index}: FromSelectProps) => {
     })
 
     return <Select
+        className="min-w-fit"
         options={options}
         value={value}
-        isSearchable={false}
         onChange={(option) => dispatch(setFrom({id: id, index, from: option.value}))}
     />
 }

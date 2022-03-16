@@ -6,6 +6,6 @@ interface Props {
 }
 
 export default ({children, className=""}: Props) => 
-<div className={"h-16 group flex justify-start gap-2 items-center " + className}>
+<div className={"h-16 group min-w-fit flex justify-start gap-2 items-center " + className}>
     {children}
 </div>

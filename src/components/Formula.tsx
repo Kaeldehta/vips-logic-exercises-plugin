@@ -23,16 +23,9 @@ const Formula = ({selector, actionCreator, allowPred: propsAllowPred}: FormulaPr
 
     const dispatch = useDispatch();
 
-    const ref = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        ref.current.focus()
-    }, [ref.current]);
-
     return <div
-    className="w-52 h-12 px-2 py-1 border-solid flex items-center justify-start overflow-auto cursor-pointer"
+    className="w-52 min-w-fit h-12 px-2 py-1 border-solid flex items-center justify-start cursor-pointer focus:outline-none focus:bg-gray-200"
     tabIndex={0}
-    ref={ref}
     onCopy={(e) => {
         e.preventDefault()
         console.log(e)
