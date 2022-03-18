@@ -1,11 +1,11 @@
-import { Line, LineId, Response } from "./types";
+import { FitchCalculusProofLine, Line, LineId, SemanticTree, Solution } from "./types";
 
 export const isAssumption = (line: Line) => {
-    return line.formula !== undefined && !line.from.length && (line.indentation > 0 || line.indentation === undefined) && line.rule === undefined
+    return line.formula !== undefined && !line.from.length && (line as FitchCalculusProofLine).indentation !== 0 && line.rule === undefined
 }
 
 export const isPremise = (line: Line) => {
-    return line.formula !== undefined && !line.from.length && line.indentation === 0 && line.rule === undefined
+    return line.formula !== undefined && !line.from.length && (line as FitchCalculusProofLine).indentation === 0 && line.rule === undefined
 }
 
 export const isAbsurdity = (line: Line) => {
@@ -16,14 +16,17 @@ export const isRuleLine = (line: Line) => {
     return line.rule !== undefined
 }
 
-export const findParent = (id: LineId, response: Response) => response.ids.find(
-    (parentId) => response.lines[parentId].children[0] === id || response.lines[parentId].children[1] === id
+export const findParent = (id: LineId, solution: Solution) => solution.ids.find(
+    (parentId) => solution.lines[parentId].children[0] === id || solution.lines[parentId].children[1] === id
 );
+
+export const isSemanticTree = (response: Solution): response is SemanticTree => (response as SemanticTree).root !== undefined;
 
 export const charToHtml = {
     "i": <div className="mx-1">&rarr;</div>,
     "k": <div className="mx-1">&and;</div>,
     "l": <div className="mx-1">&or;</div>,
+    "=": <div className="mx-1">=</div>,
     "n": <>&not;</>,
     "o": <div className="mx-1">&harr;</div>,
     "u": <>&forall;</>,
@@ -40,5 +43,5 @@ export const charToHtml = {
 }
 
 export const renderFormulaAsHTML = (formula: string) => {
-    return Array.from(formula).map((c, index) => <div key={index}>{charToHtml[c]?? c}</div>)
+    return Array.from(formula).map((c, index) => <div className="last:group-focus:text-red-500" key={index}>{charToHtml[c]?? c}</div>)
 }

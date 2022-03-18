@@ -1,23 +1,15 @@
-import type { ReactNode } from "react";
-import Formula from "../components/Formula";
-import { setConsequence } from "../redux/answer";
+import Conclusion from "./Conclusion";
 import Statements from "./Statements";
 import Submit from "./Submit";
 
-interface Props {
-    separator: ReactNode
-}
-
-const Edit= ({separator}: Props) => {
-
-    return <>
+const Edit = () => <div>
         <div className="flex flex-row items-center gap-1">
         <Submit/>
         <Statements/>
-        {separator}
-        <Formula allowPred selector={state => state.answer.consequence} actionCreator={setConsequence}/>
+        {"TODO"}
+        <Conclusion/>
         </div>
-    </>
-}
+    </div>
 
 export default Edit;
+export {default as store} from "./redux";

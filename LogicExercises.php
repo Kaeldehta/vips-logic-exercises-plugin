@@ -7,12 +7,8 @@ class LogicExercises extends StudIPPlugin implements SystemPlugin
         parent::__construct();
 
         if (class_exists('Exercise')) {
-            StudipAutoloader::addClassLookup('LogicExercise', __DIR__ . '/LogicExercise.php');
-            StudipAutoloader::addClassLookup('st_exercise', __DIR__ . '/st_exercise.php');
-            Exercise::addExerciseType('Semantic Tree', 'st_exercise', 'semantic-tree');
-
-            StudipAutoloader::addClassLookup('fc_exercise', __DIR__ . '/fc_exercise.php');
-            Exercise::addExerciseType('Fitch-style Syntactic Proof', 'fc_exercise', 'fc-proof');
+            StudipAutoloader::addClassLookup('logic_exercise', __DIR__ . '/logic_exercise.php');
+            Exercise::addExerciseType('Logic Exercise', 'logic_exercise', 'logic-exercise');
         }
     }
 }

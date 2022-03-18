@@ -1,15 +1,15 @@
 import { FiPlusCircle, FiArrowDownCircle } from "react-icons/fi";
 import DispatchActionButton from "../../components/DispatchActionButton";
 import LineWrapper from "../../components/LineWrapper"
-import { useAbsurdityState, useTypedSelector } from "../../hooks";
-import { addAssumption, addFalsum, addRuleLine, branch } from "../../redux/response/st_exercise";
+import { useAbsurdityState } from "../../hooks";
 import { LineId } from "../../types";
+import { addFalsum, addAssumption, addRuleLine, branch, useTypedSelector } from "./redux";
 
 const Inserter = ({id}: {id: LineId}) => {
 
-    const hasChildren = useTypedSelector(state => !!state.response.present.lines[id].children.length);
+    const hasChildren = useTypedSelector(state => !!state.solution.present.lines[id].children.length);
 
-    const absurdity = useAbsurdityState(id);
+    const absurdity = useAbsurdityState(state => state.solution.present, id);
 
     if(absurdity) return null;
 

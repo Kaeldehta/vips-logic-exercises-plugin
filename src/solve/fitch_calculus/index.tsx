@@ -1,22 +1,21 @@
 import { FiArrowRightCircle, FiPlusCircle } from "react-icons/fi";
-import Answer from "../../components/Answer";
-import { useTypedSelector } from "../../hooks";
-import { insertAssumption, insertPremise } from "../../redux/response/fc_exercise";
-import Submit from "../../solve/Submit";
+import Submit from "../Submit";
 import LineWrapper from "../../components/LineWrapper";
 import DispatchActionButton from "../../components/DispatchActionButton";
 import Lines from "./Lines";
-import UndoRedo from "../../components/UndoRedoHandler";
+import UndoRedo from "../UndoRedoHandler";
+import Task from "../../components/Task";
+import { insertPremise, insertAssumption, useTypedSelector } from "./redux";
 
 const Solve =  () => {
 
-    const empty = useTypedSelector(state => state.response.present.ids.length == 0);
+    const empty = useTypedSelector(state => state.solution.present.ids.length == 0);
 
     return <div className="w-full">
 
         <Submit />
 
-        <Answer separator={<>{"\u22A2"}<sub>FC</sub></>}/>
+        <Task/>
 
         <UndoRedo/>
 

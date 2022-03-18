@@ -1,7 +1,7 @@
 import { FiMinusCircle } from "react-icons/fi";
-import { removeLine } from "../redux/response";
+import { removeLine } from "./redux";
 import { LineId } from "../types";
-import DispatchActionButton from "./DispatchActionButton";
+import DispatchActionButton from "../components/DispatchActionButton";
 
 const RemoveButton = ({id}: {id: LineId}) => {
 

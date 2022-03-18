@@ -1,11 +1,11 @@
-import { useAssumptionState, usePremiseState } from "../hooks"
+import { SolutionSelector, useAssumptionState, usePremiseState } from "../hooks"
 import { LineId } from "../types"
 
-const LabelOrNull = ({id}: {id: LineId}) => {
+const LabelOrNull = ({solutionSelector, id}: {id: LineId, solutionSelector: SolutionSelector}) => {
 
-    const premise = usePremiseState(id);
+    const premise = usePremiseState(solutionSelector, id);
 
-    const assumption = useAssumptionState(id);
+    const assumption = useAssumptionState(solutionSelector, id);
 
     if(premise) return <div>Prem.</div>
 

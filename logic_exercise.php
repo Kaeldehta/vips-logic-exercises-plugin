@@ -1,6 +1,6 @@
 <?php
 
-abstract class LogicExercise extends Exercise
+class logic_exercise extends Exercise
 {
 
     public function responseFromRequest($request)
@@ -12,32 +12,9 @@ abstract class LogicExercise extends Exercise
     {
         parent::initFromRequest($request);
 
-        $answer = json_decode($request["answer"], true);
+        $task = json_decode($request["task"], true);
 
-        $consequence = $answer["consequence"];
-        $statements = $answer["statements"];
-
-        $predicateLogic = false;
-
-        if (preg_match("/[\x{2200}\x{2003}abcFGHxyz]/u", $consequence)) {
-            $predicateLogic = true;
-        }
-
-        // foreach ($statements["entries"] as $statement) {
-        //     if (preg_match("/[\x{2200}\x{2003}abcFGHxyz]/u", $statement)) {
-        //         $predicateLogic = true;
-        //     }
-        // }
-
-        $this->task = [
-            "answers" => [
-                0 => [
-                    "consequence" => $consequence,
-                    "statements" => $statements,
-                    "predicateLogic" => $predicateLogic
-                ]
-            ]
-        ];
+        $this->task = $task;
     }
 
     public function evaluateItems($solution)

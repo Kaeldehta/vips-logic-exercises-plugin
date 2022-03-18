@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
-import { useRuleLineState, useTypedSelector } from "../hooks";
 import { LineId } from "../types";
 import Select from "react-select";
-import { setRule } from "../redux/response";
+import { useRuleLineState } from "../hooks";
+import { setRule, useTypedSelector } from "./redux";
 
 interface RuleSelectProps {
     id: LineId,
@@ -12,7 +12,7 @@ interface RuleSelectProps {
 const RuleSelect = ({id, options}: RuleSelectProps) => {
 
     const value = useTypedSelector(state => { 
-        const rule = state.response.present.lines[id].rule;
+        const rule = state.solution.present.lines[id].rule;
         return rule === null ? null : {
             value: rule,
             label: options.find(({value}) => value === rule).label,
@@ -34,7 +34,7 @@ const RuleSelect = ({id, options}: RuleSelectProps) => {
 }
 
 const RuleSelectOrNull = (props: RuleSelectProps) => {
-    const shouldRender = useRuleLineState(props.id);
+    const shouldRender = useRuleLineState(state => state.solution.present, props.id);
 
     if(shouldRender) return <RuleSelect {...props} />
 

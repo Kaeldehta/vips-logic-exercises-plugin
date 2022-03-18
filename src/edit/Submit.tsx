@@ -1,10 +1,10 @@
-import { useTypedSelector } from "../hooks"
+import { useTypedSelector } from "./redux";
 
 const Submit = () => {
 
-    const answer = useTypedSelector(state => state.answer);
+    const task = useTypedSelector(state => state);
 
-    return <input name="answer" type="hidden" value={JSON.stringify(answer)}/>
+    return <input name="task" type="hidden" value={JSON.stringify(task)}/>
 }
 
 export default Submit;

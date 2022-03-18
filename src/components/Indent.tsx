@@ -1,13 +1,27 @@
-import { useAssumptionState, useTypedSelector } from "../hooks"
-import { LineId } from "../types"
-import Border, { AssumptionBorder } from "./Border";
+import { Selector } from "@reduxjs/toolkit";
+import { useAnySelector, useAssumptionState, useLastPremiseState } from "../hooks"
+import { FitchCalculusProof, LineId } from "../types"
+import Border, { AssumptionBorder, LastPremiseBorder } from "./Border";
 
-const Indent = ({id}: {id: LineId}) => {
-    const indentation = useTypedSelector(state => state.response.present.lines[id].indentation);
+import { RootState as CorrectRootState } from "../correct/fitch_calculus/redux";
+import { RootState as SolveRootState } from "../solve/fitch_calculus/redux";
 
-    const assumption = useAssumptionState(id);
+interface IndentProps {
+    id: LineId;
+    solutionSelector: Selector<CorrectRootState, FitchCalculusProof> | Selector<SolveRootState, FitchCalculusProof>;
+}
 
-    return <>{Array(indentation + 1).fill(0).map((_, index) => (assumption && index === indentation) ? <AssumptionBorder key={index}/> : <Border key={index}/>)}</>
+const Indent = ({id, solutionSelector}: IndentProps) => {
+    const indentation = useAnySelector(state => solutionSelector(state).lines[id].indentation);
+
+    const assumption = useAssumptionState(solutionSelector, id);
+    const lastPremise = useLastPremiseState(solutionSelector, id);
+
+    return <>{Array(indentation + 1).fill(0).map((_, index) => {
+        if (assumption && index === indentation) return <AssumptionBorder key={index}/>
+        if(lastPremise) return <LastPremiseBorder key={index}/>
+        return <Border key={index}/>
+    })}</>
 }
 
 export default Indent;

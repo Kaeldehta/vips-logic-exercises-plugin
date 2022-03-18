@@ -1,5 +1,5 @@
 export const propRules = ["b-intro" , "i-intro" , "i-elim" , "raa" , "c-intro", "b-elim", "c-elim", "d-intro", "dn", "d-elim"];
-export const predRules = [...propRules];
+export const predRules = [...propRules, 'u-elim', 'u-intro', 'e-intro', 'e-elim', 'id-intro','id-elim'];
 
 export const propRulesOptions: Array<{value: typeof propRules[number], label: string, count: number}> = 
 [
@@ -41,7 +41,7 @@ export const propRulesOptions: Array<{value: typeof propRules[number], label: st
     {
         value: "d-elim",
         label: "\u2228-Elim",
-        count: 4
+        count: 5
     },
     {
         value: "raa",
@@ -56,5 +56,36 @@ export const propRulesOptions: Array<{value: typeof propRules[number], label: st
 ]
 
 export const predRulesOptions: Array<{value: typeof predRules[number], label: string, count: number}> = [
-    ...propRulesOptions
+    ...propRulesOptions,
+    {
+        value: 'u-intro',
+        label: '\u2200-Intro',
+        count: 1
+    },
+    {
+        value: 'u-elim',
+        label: '\u2200-Elim',
+        count: 1
+    },
+    {
+        value: 'e-intro',
+        label: '\u2203-Intro',
+        count: 1
+    },
+    {
+        value: 'e-elim',
+        label: '\u2203-Elim',
+        count: 3
+    },
+    {
+        value: 'id-intro',
+        label: '=-Intro',
+        count: 0
+    },
+    {
+        value: 'id-elim',
+        label: '=-Elim',
+        count: 2
+    },
+
 ]

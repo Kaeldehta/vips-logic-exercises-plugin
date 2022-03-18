@@ -1,12 +1,10 @@
 import { ReactNode } from "react"
-import Answer from "../components/Answer"
+import Task from "../components/Task";
 
-
-const CorrectComponent = ({separator, children}: {children: ReactNode, separator: ReactNode}) => {
-
+const CorrectComponent = ({children}: {children: ReactNode}) => {
 
     return <div>
-        <Answer separator={separator}/>
+        <Task/>
 
         {children}
     </div>

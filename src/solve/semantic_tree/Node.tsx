@@ -1,19 +1,19 @@
 import type { LineId } from "../../types";
-import { useTypedSelector } from "../../hooks";
-import Formula from "../../solve/Formula";
+import Formula from "../Formula";
 import LineNumber from "../../components/LineNumber";
 import From from "../../components/From";
-import RuleSelectOrNull from "../../components/RuleSelect";
+import RuleSelectOrNull from "../RuleSelect";
 import { propRulesOptions, predRulesOptions } from "../../rules/st_exercise";
 import LineWrapper from "../../components/LineWrapper";
-import RemoveButton from "../../components/RemoveButton";
+import RemoveButton from "../RemoveButton";
 import LabelOrNull from "../../components/LabelOrNull";
 import Inserter from "./Inserter";
 import FromSelect from "../FromSelect";
+import { useTypedSelector } from "./redux";
 
 const RenderChildren = ({id}: {id: LineId}) => {
 
-    const children = useTypedSelector(state => state.response.present.lines[id].children);
+    const children = useTypedSelector(state => state.solution.present.lines[id].children);
 
     if(children.length == 0) return null;
 
@@ -39,19 +39,19 @@ const LineThing = () => <svg className="h-12 w-full">
 
 const NodeComponent = ({id}: {id: LineId}) => {
 
-    const predicateLogic = useTypedSelector(state => state.answer.predicateLogic);
+    const predicateLogic = useTypedSelector(state => state.task.predicateLogic);
 
     return <>
         
         <LineWrapper className="w-line">
-            <LineNumber id={id}/>
+            <LineNumber solutionSelector={state => state.solution.present} id={id}/>
             <Formula id={id}/>
 
-            <LabelOrNull id={id}/>
+            <LabelOrNull solutionSelector={state => state.solution.present} id={id}/>
             
             <RuleSelectOrNull id={id} options={predicateLogic ? predRulesOptions : propRulesOptions} />
 
-            <From id={id} fromRender={FromSelect}/>
+            <From solutionSelector={state => state.solution.present} id={id} fromRender={FromSelect}/>
             <div className="ml-auto">
                 <RemoveButton id={id}/>
             </div>

@@ -1,15 +1,17 @@
-import { setFormula } from "../redux/response";
+import { setFormula, useTypedSelector } from "./redux";
 import Formula from "../components/Formula";
 import type { LineId } from "../types";
-import { useTypedSelector } from "../hooks";
+import { useDispatch } from "react-redux";
 
 const FormulaOrAbs = ({id}: {id: LineId}) => {
 
-    const absurdity = useTypedSelector(state => state.response.present.lines[id].formula === undefined);
+    const value = useTypedSelector(state => state.solution.present.lines[id].formula);
 
-    if(absurdity) return <input disabled className="w-52 h-12 " value={"\u22A5"}/>
+    const dispatch = useDispatch();
 
-    return <Formula selector={state => state.response.present.lines[id].formula} actionCreator={(formula: string) => setFormula({id: id, formula})}/>
+    if(value === undefined) return <div className="w-56 h-12 pl-2 flex items-center justify-start">{"\u22A5"}</div>
+
+    return <Formula value={value} setValue={(formula: string) => dispatch(setFormula({id: id, formula}))}/>
 }
 
 export default FormulaOrAbs;

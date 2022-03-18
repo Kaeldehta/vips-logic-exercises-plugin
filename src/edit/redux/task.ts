@@ -1,10 +1,11 @@
 import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
-import type { Answer} from "../types";
+import { getViewData } from "../../";
+import type { Task} from "../../types";
 
-const element = document.getElementById("exercise-container");
+const {task} = getViewData();
 
-
-const initialAnswerState: Answer = element?.dataset.answer? JSON.parse(element.dataset.answer) : {
+export const defaultTask: Task = {
+    type: "semantic_tree",
     consequence: "",
     statements: {
         ids: [],
@@ -13,13 +14,16 @@ const initialAnswerState: Answer = element?.dataset.answer? JSON.parse(element.d
     predicateLogic: false
 };
 
-if(Array.isArray(initialAnswerState.statements.entries as unknown)) {
-    initialAnswerState.statements.entries = {};
+const initialState = task?? defaultTask;
+
+
+if(Array.isArray(initialState.statements.entries as unknown)) {
+    initialState.statements.entries = {};
 }
 
-const answerSlice = createSlice({
-    name: "answer",
-    initialState: initialAnswerState,
+const taskSlice = createSlice({
+    name: "task",
+    initialState,
     reducers: {
         setConsequence(state, action: PayloadAction<string>) {
             state.consequence = action.payload
@@ -40,6 +44,6 @@ const answerSlice = createSlice({
     }
 })
 
-export const {setConsequence, setStatement, addStatement, removeStatement} = answerSlice.actions;
+export const actions = taskSlice.actions;
 
-export default answerSlice.reducer;
+export default taskSlice.reducer;
