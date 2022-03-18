@@ -29,3 +29,5 @@ const Solve =  () => {
 }
 
 export default Solve;
+
+export {default as store} from "./redux"
