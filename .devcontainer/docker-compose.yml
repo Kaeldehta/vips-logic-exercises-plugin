@@ -1,0 +1,12 @@
+services:
+  db:
+    image: mariadb
+    ports:
+      - '5433:5432'
+  web:
+    build: .
+    volumes:
+     - "./config_local.inc.php:/usr/local/studip/config/config_local.inc.php"
+     - "..:/usr/local/studip/public/plugins_packages/fstutzy/LogicExercises"
+    ports:
+     - "1234:80"

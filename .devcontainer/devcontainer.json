@@ -1,4 +1,5 @@
 {
-    "build": {"dockerfile": "Dockerfile"},
-    "forwardPorts": ["1234:80", "1235:22"]
+    "service": "web",
+    "dockerComposeFile": "docker-compose.yml",
+    "workspaceFolder": "/usr/local/studip/public/plugins_packages/fstutzy/LogicExercises"
 }
