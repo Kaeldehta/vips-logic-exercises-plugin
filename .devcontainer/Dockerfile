@@ -4,15 +4,21 @@ WORKDIR /usr/local
 
 RUN apt-get update
 
-RUN apt-get install -y git unzip wget 
+RUN apt-get install -y git unzip wget libzip-dev
 
 RUN docker-php-ext-install gettext
+
+RUN docker-php-ext-install pdo_mysql
+
+RUN docker-php-ext-install zip
 
 RUN wget https://sourceforge.net/projects/studip/files/Stud.IP/4.6/studip-4.6.3.zip
 
 RUN unzip studip-4.6.3.zip
 
 RUN mv 4.6.3 studip
+
+RUN chmod 777 studip/public/plugins_packages
 
 WORKDIR /usr/local/studip/config
 

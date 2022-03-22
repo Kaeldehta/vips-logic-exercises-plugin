@@ -1,5 +1,5 @@
 {
     "service": "web",
     "dockerComposeFile": "docker-compose.yml",
-    "workspaceFolder": "/usr/local/studip/public/plugins_packages/fstutzy/LogicExercises"
+    "workspaceFolder": "/usr/local/studip/public/plugins_packages/fstutzky/LogicExercises"
 }

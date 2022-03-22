@@ -1,12 +1,23 @@
 services:
   db:
-    image: mariadb
+    platform: linux/amd64
+    image: mysql:5.7
+    environment:
+      - MYSQL_DATABASE=studip
+      - MYSQL_USER=studip
+      - MYSQL_PASSWORD=studip
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - "./sql:/docker-entrypoint-initdb.d:ro"
+      - "./my-sql.cnf:/etc/mysql/conf.d/my-sql.cnf:ro"
     ports:
-      - '5433:5432'
+      - '3306:3306'
   web:
     build: .
     volumes:
      - "./config_local.inc.php:/usr/local/studip/config/config_local.inc.php"
-     - "..:/usr/local/studip/public/plugins_packages/fstutzy/LogicExercises"
+     - "..:/usr/local/studip/public/plugins_packages/fstutzky/LogicExercises"
     ports:
      - "1234:80"
+    depends_on:
+     - db
