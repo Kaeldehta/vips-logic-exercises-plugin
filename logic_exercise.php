@@ -12,9 +12,9 @@ class logic_exercise extends Exercise
     {
         parent::initFromRequest($request);
 
-        $task = json_decode($request["task"], true);
+        $answer = json_decode($request["task"], true);
 
-        $this->task = $task;
+        $this->task["answers"][0] = $answer;
     }
 
     public function evaluateItems($solution)
