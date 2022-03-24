@@ -15,6 +15,7 @@ A Studip plugin that adds Vips exercises needed for the Intro to Logic course at
 5. Open new terminal in VS Code and run npm start to start Webpack Watch
 4. Go to localhost:1234/studip
 5. Login with credentials: root@studip, testing
+6. Go to Migration Page and run missing migrations
 6. Go to Plugin Management
 7. Install Vips Plugin
 8. Go to Register Existing Plugins
