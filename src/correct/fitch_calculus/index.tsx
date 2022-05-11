@@ -2,7 +2,7 @@ import CorrectComponent from "..";
 import From from "../../components/From";
 import Indent from "../../components/Indent";
 import LabelOrNull from "../../components/LabelOrNull";
-import LineNumber from "../../components/LineNumber";
+import LineNumber from "../../components/LineNumberWrapper";
 import LineWrapper from "../../components/LineWrapper";
 import MiddleIndent from "./MiddleIndent";
 import { predRulesOptions } from "../../rules/fc_exercise";

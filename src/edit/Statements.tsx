@@ -1,20 +1,26 @@
-import { FiMinusCircle, FiPlusCircle } from "react-icons/fi";
-import DispatchActionButton from "../components/DispatchActionButton";
-import { addStatement, removeStatement, useTypedSelector } from "./redux";
+import { Fragment } from "react";
+import Button from "../components/Button";
+import useStatements from "../stores/statements";
 import Statement from "./Statement";
+import { FiMinusCircle, FiPlusCircle } from "react-icons/fi";
+
 
 const Statements = () => {
 
-    const statements = useTypedSelector(state => state.statements.ids);
+    const ids = useStatements(state => state.ids);
 
-    return <>
-        {statements.map((id) => 
-        <div key={id} className="flex items-center">
-            <Statement id={id}/>
-            <DispatchActionButton show action={removeStatement(id)} icon={FiMinusCircle}/>
-        </div>)}
-        <DispatchActionButton show icon={FiPlusCircle} action={addStatement()}/>
+    const add = useStatements(state => state.add);
+    
+    const remove = useStatements(state => state.remove);
+
+    return <>{ids.map((id, index) => <div className="flex items-center" key={id}>
+        <input type="hidden" name={`statements[ids][${index}]`} value={id} />
+        <Statement id={id}/>
+        <Button show icon={FiMinusCircle} onClick={() => remove(id)} />
+    </div>)}
+    <Button show icon={FiPlusCircle} onClick={() => add(ids.length)}/>
     </>
+
 }
 
 export default Statements;

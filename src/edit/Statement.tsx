@@ -1,14 +1,14 @@
-import { useDispatch } from "react-redux";
-import Formula from "../components/Formula"
-import { setStatement, useTypedSelector } from "./redux";
+import Formula from "../components/Formula";
+import useStatements from "../stores/statements";
+
 
 const Statement = ({id}: {id: string}) => {
 
-    const value = useTypedSelector(state => state.statements.entries[id]);
+    const value = useStatements(state => state.entries[id]);
 
-    const dispatch = useDispatch();
+    const set = useStatements(state => state.set);
 
-    return <Formula allowPred value={value} setValue={(statement) => dispatch(setStatement({id, statement}))}/>
+    return <Formula allowPred name={`statements[entries][${id}]`} value={value} setValue={(value) => set(id, value)}/>
 }
 
 export default Statement;

@@ -1,5 +1,5 @@
 module.exports = {
-  content: ["./src/**/*.{tsx,ts}"],
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       width: {
@@ -9,6 +9,6 @@ module.exports = {
   },
   plugins: [],
   corePlugins: {
-    preflight: false,
+    preFlight: false
   }
 }

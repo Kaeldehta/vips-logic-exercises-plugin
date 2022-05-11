@@ -1,17 +1,11 @@
-import { useDispatch } from "react-redux"
-import { ActionCreators } from "redux-undo";
-import { useTypedSelector } from "./redux";
-
 const UndoRedo = () => {
 
-    const dispatch = useDispatch();
-
-    const canUndo = useTypedSelector(state => !!state.solution.past.length);
-    const canRedo = useTypedSelector(state => !!state.solution.future.length);
+    const canUndo = /*TODO*/true
+    const canRedo = /*TODO*/true
 
     return <div>
-            <button disabled={!canUndo} type="button" onClick={() => dispatch(ActionCreators.undo())}>Undo</button>
-            <button disabled={!canRedo} type="button" onClick={() => dispatch(ActionCreators.redo())}>Redo</button>
+            <button disabled={!canUndo} type="button" onClick={() => {}}>Undo</button>
+            <button disabled={!canRedo} type="button" onClick={() => {}}>Redo</button>
         </div>
 }
 

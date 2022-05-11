@@ -8,11 +8,14 @@ interface FormulaProps {
     value: string
     setValue: (newValue: string) => void
     allowPred?: boolean
+    name?: string
 }
 
-const Formula = ({value, setValue, allowPred}: FormulaProps) => {
+const Formula = ({value, setValue, allowPred, name}: FormulaProps) => {
 
-    return <div
+    return <>
+    <input type="hidden" name={name} value={value}/>
+    <div
     className="group shrink-0 w-52 min-w-fit h-12 px-2 py-1 border-solid flex items-center justify-start cursor-pointer focus:outline-none focus:bg-gray-200"
     tabIndex={0}
     onKeyPress={e => {
@@ -28,6 +31,7 @@ const Formula = ({value, setValue, allowPred}: FormulaProps) => {
     >
     {renderFormulaAsHTML(value)}
     </div>
+    </>
 }
 
 export default Formula;
