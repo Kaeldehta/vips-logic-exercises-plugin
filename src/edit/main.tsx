@@ -1,4 +1,5 @@
 import { ComponentType, lazy, useState } from "react";
+import render from "../render";
 import TaskTypeSelect from "../components/TaskTypeSelect";
 import { Task, ViewType } from "../types";
 import { getTask } from "../utils";
@@ -21,4 +22,4 @@ const EditView: ViewType = () => {
     return <Component />
 }
 
-export default EditView;
+render(EditView);

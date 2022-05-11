@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Task } from "./types";
+import { Task } from "../types";
 
 export const getElement = () => document.getElementById("root")!;
 

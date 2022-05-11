@@ -1,67 +1,89 @@
 import { nanoid } from "nanoid";
 import create from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { getSolution, getTask } from "../utils";
+import { FCSolution } from "../types/fc";
+import { getSolution } from "../utils";
+import { isAssumption } from "../utils/fc";
 
-interface FCTaskStore {
-    task: {
-        type: "fc"
-        consequence: string
-        statements: {
-            ids: Array<string>
-            entries: Record<string, string>
-        }
-        predicate: boolean
-    },
-    setConsequence: (value: string) => void
-    setStatement: (id: string, value: string) => void
-    addStatement: (index: number) => void
+type InsertFunction = (index: number, indentation: number) => void
+
+interface FCSolutionStore extends FCSolution {
+    insertAssumption: InsertFunction
+    insertRuleLine: InsertFunction
+    insertPremise: (index: number) => void
+    insertAbsurdity: InsertFunction
+    removeLine: (id: string) => void
 }
 
-const defaultTask: FCTaskStore["task"] = getTask() as FCTaskStore["task"] | null ?? {
-    type: "fc", 
-    predicate: false, 
-    consequence: "", 
-    statements: {
-        ids: [], 
-        entries: {}
-    }
-};
+const defaultSolution: FCSolution = getSolution<FCSolution>() ?? {
+    ids: [],
+    lines: {},
+}
 
-export const useFCTask = create<FCTaskStore>()(immer((set, get) => ({
-    task: defaultTask,
-    setConsequence: (value) => set(state => {
-        state.task.consequence = value
+const useFCSolution = create<FCSolutionStore>()(immer((set, get) => ({
+    ...defaultSolution,
+    insertAbsurdity: (index, indentation) => set(state => {
+        const newId = nanoid();
+        state.ids.splice(index, 0, newId);
+        state.lines[newId] = {
+            from: [null, null],
+            indentation,
+        }
     }),
-    setStatement: (id, value) => set(state => {
-        state.task.statements.entries[id] = value
+    insertAssumption: (index, indentation) => set(state => {
+        const newId = nanoid();
+        state.ids.splice(index, 0, newId);
+        state.lines[newId] = {
+            formula: "",
+            indentation,
+            from: [],
+        }
     }),
-    addStatement: (index) => set(state => {
-        const id = nanoid()
-        state.task.statements.ids.splice(index, 0, id);
-        state.task.statements.entries[id] = ""
+    insertPremise: (index) => set(state => {
+        const newId = nanoid();
+        state.ids.splice(index, 0, newId);
+        state.lines[newId] = {
+            formula: "",
+            indentation: 0,
+            from: [],
+        }
+    }),
+    insertRuleLine: (index, indentation) => set(state => {
+        const newId = nanoid();
+        state.ids.splice(index, 0, newId);
+        state.lines[newId] = {
+            formula: "",
+            rule: null,
+            indentation,
+            from: [],
+        }
+    }),
+    removeLine: (id) => set(state => {
+
+        const thisLine = state.lines[id];
+        const index = state.ids.indexOf(id);
+
+        const assumption = isAssumption(thisLine);
+        let removeCount = 1;
+
+        if(assumption) {
+            const indentation = thisLine.indentation
+            for(let i = index + 1; i < state.ids.length; i++) {
+                const line = state.lines[state.ids[i]];
+
+                if(line.indentation !== indentation || isAssumption(line)) {
+                    break;
+                }
+
+                removeCount++;
+            }
+        }
+
+        const deleted = state.ids.splice(index, removeCount);
+
+        deleted.forEach((id) => delete state.lines[id]);
+
     })
 })))
 
-interface FCSolutionStore {
-    solution: {
-        ids: Array<string>
-        entries: Record<string, {
-            formula?: string
-            indentation: number
-            rule?: string | null
-            children: []
-            from: Array<string | null>
-        }>
-    }
-
-}
-
-const defaultSolution: FCSolutionStore["solution"] = getSolution() ?? {
-    ids: [],
-    entries: {},
-}
-
-export const useFCSolution = create<FCSolutionStore>()(immer((set, get) => ({
-    solution: defaultSolution,
-})))
+export default useFCSolution;
