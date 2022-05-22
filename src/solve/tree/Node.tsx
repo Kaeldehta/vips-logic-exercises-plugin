@@ -1,5 +1,5 @@
 import Formula from "../Formula";
-import LineNumber from "../../components/LineNumberWrapper";
+import LineNumber from "../../components/LineNumber";
 import From from "../../components/From";
 import RuleSelectOrNull from "../RuleSelect";
 import { propRulesOptions, predRulesOptions } from "../../rules/tree";
@@ -8,12 +8,13 @@ import RemoveButton from "../fc/RemoveButton";
 import LabelOrNull from "../../components/LabelOrNull";
 import Inserter from "./Inserter";
 import FromSelect from "../FromSelect";
-import useTreeSolution from "../../stores/tree";
 import { getTask } from "../../utils";
+import { useAtomValue } from "jotai";
+import { childrenAtom } from "../atoms/tree";
 
 const RenderChildren = ({id}: {id: string}) => {
 
-    const children = useTreeSolution(state => state.lines[id].children);
+    const children = useAtomValue(childrenAtom(id));
 
     if(children.length == 0) return null;
 

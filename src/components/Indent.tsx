@@ -1,4 +1,6 @@
-// import { FitchCalculusProof, LineId } from "../types"
+import { useAtomValue } from "jotai";
+import { indentationAtom } from "../solve/atoms/fc";
+import { FCProof, FCProofLine } from "../types/fc";
 import Border, { AssumptionBorder, LastPremiseBorder } from "./Border";
 
 
@@ -7,9 +9,9 @@ interface IndentProps {
 }
 
 const Indent = ({id}: IndentProps) => {
-    const indentation = 1;
+    const indentation = useAtomValue(indentationAtom(id));
 
-    const assumption = true
+    const assumption = true;
     const lastPremise = true
 
     return <>{Array(indentation + 1).fill(0).map((_, index) => {

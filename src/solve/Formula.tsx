@@ -1,12 +1,17 @@
+import { useAtom, WritableAtom } from "jotai";
 import Formula from "../components/Formula";
 
-const FormulaOrAbs = ({id}: {id: string}) => {
+interface FormulaProps {
+    formulaAtom: WritableAtom<string | undefined, string>
+}
 
-    const value = /*TODO*/ ""
+const FormulaOrAbs = ({formulaAtom}: FormulaProps) => {
 
-    if(value === undefined) return <div className="w-56 h-12 pl-2 flex items-center justify-start">{"\u22A5"}</div>
+    const [formula, setFormula] = useAtom(formulaAtom);
 
-    return <Formula value={value} setValue={() => {}}/>
+    if(!formula) return <div className="w-56 h-12 pl-2 flex items-center justify-start">{"\u22A5"}</div>
+
+    return <Formula value={formula} setValue={(newValue) => setFormula(newValue)}/>
 }
 
 export default FormulaOrAbs;

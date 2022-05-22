@@ -1,15 +1,14 @@
-import useFCSolution from "../../stores/fc";
+import { useAtomValue } from "jotai";
+import { idsAtom } from "../atoms/fc";
 import Line from "./Line";
+
 
 const Lines = () => {
 
-    const lineIds = useFCSolution(state => state.ids);
+    const ids = useAtomValue(idsAtom);
 
     return <div>
-        {lineIds.map((id, index) => <div key={id}>
-            <input type="hidden" name={`ids[${index}]`} value={id}/>
-            <Line id={id}/>
-        </div>)}
+        {ids.map((id) => <Line id={id} key={id} />)}
     </div>
 
 }

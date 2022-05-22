@@ -1,31 +1,35 @@
+import { useAtomValue, useSetAtom } from "jotai";
 import { FiArrowRightCircle, FiPlusCircle } from "react-icons/fi";
 import Button from "../../components/Button";
 import LineWrapper from "../../components/LineWrapper";
 import render from "../../render";
-import useFCSolution from "../../stores/fc";
 import { ViewType } from "../../types";
+import { insertAssumptionAtom, insertPremiseAtom, noLinesAtom } from "../atoms/fc";
 import Lines from "./Lines";
 
 const FCSolveView: ViewType = () => {
 
-    const empty = useFCSolution(state => !state.ids.length)
+    const noLines = useAtomValue(noLinesAtom);
 
-    const insertPremise = useFCSolution(state => state.insertPremise);
+    const insertPremise = useSetAtom(insertPremiseAtom);
 
-    const insertAssumption = useFCSolution(state => state.insertAssumption);
-    
+    const insertAssumption = useSetAtom(insertAssumptionAtom);
+
     return <div className="w-full">
 
         {/* <Task/> */}
 
         {/* <UndoRedo/> */}
 
-        {empty ? <LineWrapper>
+        {noLines && <LineWrapper>
         <div className="h-12"/>
             <Button icon={FiPlusCircle} onClick={() => insertPremise(0)}/>
-            <Button icon={FiArrowRightCircle} onClick={() => insertAssumption(0, 1)}/>
-        </LineWrapper> : <Lines/>}
+            <Button icon={FiArrowRightCircle} onClick={() => insertAssumption({index: 0, indentation: 1})}/>
+        </LineWrapper>
+        }
 
+        {!noLines && <Lines />}
+        
     </div>
 }
 

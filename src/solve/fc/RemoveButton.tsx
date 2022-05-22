@@ -1,12 +1,17 @@
+import { useSetAtom } from "jotai";
 import { FiMinusCircle } from "react-icons/fi";
 import Button from "../../components/Button";
-import useFCSolution from "../../stores/fc";
+import { removeAtom } from "../atoms/fc";
 
-const RemoveButton = ({id}: {id: string}) => {
+interface RemoveButtonProps {
+    id: string
+}
 
-    const removeLine = useFCSolution(state => state.removeLine);
+const RemoveButton = ({id}: RemoveButtonProps) => {
 
-    return <Button icon={FiMinusCircle} onClick={() => removeLine(id)} title="Remove"/>
+    const remove = useSetAtom(removeAtom);
+
+    return <Button icon={FiMinusCircle} onClick={() => remove(id)} title="Remove"/>
 }
 
 export default RemoveButton;

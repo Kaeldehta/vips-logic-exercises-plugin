@@ -1,13 +1,15 @@
-import useTreeSolution from "../../stores/tree";
+import { useAtomValue, useSetAtom } from "jotai";
+import render from "../../render";
 import { ViewType } from "../../types";
+import { rootAtom, startAtom } from "../atoms/tree";
 import NodeComponent from "./Node";
 
 
 const TreeSolveView: ViewType = () => {
 
-    const root = useTreeSolution(state => state.root);
+    const root = useAtomValue(rootAtom);
 
-    const start = useTreeSolution(state => state.start);
+    const start = useSetAtom(startAtom);
 
     return <div>
         {/* <Task/> */}
@@ -19,3 +21,5 @@ const TreeSolveView: ViewType = () => {
 }
 
 export default TreeSolveView;
+
+render(TreeSolveView);

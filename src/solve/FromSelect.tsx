@@ -1,8 +1,10 @@
 import Select from "react-select";
+import { WritableAtom } from "jotai";
 
 interface FromSelectProps {
     id: string
     index: number
+    fromAtom: any
 }
 
 const FromSelect = ({id, index}: FromSelectProps) => {

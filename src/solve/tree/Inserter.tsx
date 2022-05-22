@@ -1,19 +1,20 @@
+import { useAtomValue, useSetAtom } from "jotai";
 import { FiPlusCircle, FiArrowDownCircle } from "react-icons/fi";
 import Button from "../../components/Button";
 import LineWrapper from "../../components/LineWrapper"
-import useTreeSolution from "../../stores/tree";
+import { addAssumptionAtom, addFalsumAtom, addRuleLineAtom, branchAtom, hasChildrenAtom } from "../atoms/tree";
 
 const Inserter = ({id}: {id: string}) => {
 
-    const hasChildren = useTreeSolution(state => !!state.lines[id].children.length);
+    const hasChildren = useAtomValue(hasChildrenAtom(id));
 
-    const addFalsum = useTreeSolution(state => state.addFalsum);
+    const addFalsum = useSetAtom(addFalsumAtom);
 
-    const addAssumption = useTreeSolution(state => state.addAssumption);
+    const addAssumption = useSetAtom(addAssumptionAtom);
 
-    const addRuleLine = useTreeSolution(state => state.addRuleLine);
+    const addRuleLine = useSetAtom(addRuleLineAtom);
 
-    const branch = useTreeSolution(state => state.branch);
+    const branch = useSetAtom(branchAtom);
 
     const absurdity = /* TODO */ true;
 

@@ -1,4 +1,4 @@
-import ReactDOM from "react-dom/client";
+import ReactDOM from "react-dom";
 import React, { Suspense } from "react";
 import { getElement } from "./utils";
 import "./index.css"
@@ -9,13 +9,14 @@ const render = (View: ViewType) => {
 
     const element = getElement();
 
-    ReactDOM.createRoot(element).render(
+    ReactDOM.render(
         <React.StrictMode>
             <Suspense fallback="Loading">
                 <View/>
             </Suspense>
-        </React.StrictMode>
-    )    
+        </React.StrictMode>, 
+        element
+    )
 }
 
 export default render;

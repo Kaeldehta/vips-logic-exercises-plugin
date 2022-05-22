@@ -1,45 +1,34 @@
 import LineWrapper from "../../components/LineWrapper"
-
-import {FiArrowRightCircle, FiArrowDownCircle, FiPlusCircle} from "react-icons/fi";
+import { FiArrowRightCircle, FiArrowDownCircle, FiPlusCircle } from "react-icons/fi";
 import Border from "../../components/Border";
-import useFCSolution from "../../stores/fc";
 import Button from "../../components/Button";
-import { isAssumption, isPremise } from "../../utils/fc";
+import { useAtomValue, useSetAtom } from "jotai";
+import { indentationAtom, indentationDeltaAtom, indexAtom, insertAbsurdityAtom, insertAssumptionAtom, insertPremiseAtom, insertRuleLineAtom, isPremiseAtom } from "../atoms/fc";
 
-const Inserter = ({id}: {id: string}) => {
+interface InserterProps {
+    id: string
+}
 
-    const index = useFCSolution(state => state.ids.indexOf(id));
+const Inserter = ({id}: InserterProps) => {
 
-    const indentation = useFCSolution(state => state.lines[id].indentation);
+    const index = useAtomValue(indexAtom(id));
 
-    const insertAbsurdity = useFCSolution(state => state.insertAbsurdity)
+    const insertAssumption = useSetAtom(insertAssumptionAtom);
 
-    const insertAssumption = useFCSolution(state => state.insertAssumption);
+    const insertPremise = useSetAtom(insertPremiseAtom);
 
-    const insertRuleLine = useFCSolution(state => state.insertRuleLine);
+    const insertAbsurdity = useSetAtom(insertAbsurdityAtom);
 
-    const insertPremise = useFCSolution(state => state.insertPremise);
+    const insertRuleLine = useSetAtom(insertRuleLineAtom);
+
+    const indentation = useAtomValue(indentationAtom(id));
     
-    const premise = useFCSolution(state => isPremise(state.lines[id]));
+    const premise = useAtomValue(isPremiseAtom(id));
 
     const lastPremise = /* TODO */ true;
 
-    const indentationDelta = useFCSolution(state => {
-
-        const next = state.lines[state.ids[index + 1]];
-
-        if(next) {
-            if(isAssumption(next)) {
-                if(next.indentation > indentation) return 0;
-                return -indentation
-            }
-            return next.indentation - indentation;
-        }
-
-        return -indentation;
-
-    });
-
+    const indentationDelta = useAtomValue(indentationDeltaAtom(id));
+    
     return <>
     {Array(-Math.min(indentationDelta, 0) + 1).fill(0).map((_, indentationOffset) => {
 
@@ -49,9 +38,9 @@ const Inserter = ({id}: {id: string}) => {
             <div className="w-12"/>
             {Array(newIndentation + 1).fill(0).map((_, index) => <Border key={index}/>)}
             <div className="w-52 border-2 p-1 border-white border-solid flex justify-evenly">
-                {(!premise || lastPremise) && <><Button icon={FiArrowRightCircle} onClick={() => insertAssumption(index + 1, newIndentation + 1)}/>
-                <Button onClick={() => insertAbsurdity(index + 1, newIndentation)} content={"\u22A5"}/>
-                <Button icon={FiArrowDownCircle} onClick={() => insertRuleLine(index + 1, newIndentation)}/></>}
+                {(!premise || lastPremise) && <><Button icon={FiArrowRightCircle} onClick={() => insertAssumption({index: index + 1, indentation: newIndentation + 1} )}/>
+                <Button onClick={() => insertAbsurdity({index: index + 1, indentation: newIndentation})} content={"\u22A5"}/>
+                <Button icon={FiArrowDownCircle} onClick={() => insertRuleLine({index: index + 1, indentation: newIndentation})}/></>}
                 {premise && <Button icon={FiPlusCircle} onClick={() => insertPremise(index + 1)}/>}
             </div>
         </LineWrapper>
