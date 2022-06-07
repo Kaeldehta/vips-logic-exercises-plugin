@@ -1,5 +1,5 @@
 import { Component, createContext, JSX, useContext } from "solid-js";
-import { createStore, produce, DeepReadonly } from "solid-js/store"
+import { createStore, produce } from "solid-js/store"
 import { FitchProof, FitchProofLine } from "../types";
 
 
@@ -16,13 +16,11 @@ const makeFitchProofContext = (initialProof: FitchProof = []) => {
         insertPremise: (index: number) => insertLine(index, {
             type: "prem",
             indentation: 0,
-            from: [],
             formula: ""
         }),
         insertAssumption: (index: number, indentation: number) => insertLine(index, {
             type: "ass",
             indentation,
-            from: [],
             formula: ""
         }),
         insertRuleLine: (index: number, indentation: number) => insertLine(index, {
@@ -40,8 +38,24 @@ const makeFitchProofContext = (initialProof: FitchProof = []) => {
         removeLine: (index: number) => setState(produce(state => {
             state.splice(index, 1)
         })),
-        setFormula: (index: number, value: string) => setState(index, "formula", value),
-        setFrom: (index: number, fromIndex: number, value: number) => setState(index, "from", fromIndex, value)
+        setFormula: (index: number, value: string) => setState(index, produce(state => {
+            if (state.type === "abs") {
+                throw new Error("Can not set formula on absurdity")
+            }
+            state.formula = value
+        })),
+        setFrom: (index: number, fromIndex: number, value: number) => setState(index, produce(state => {
+            if (!(state.type === "abs" || state.type === "rule")) {
+                throw new Error("Can not set from on non rule line or absurdity")
+            }
+            state.from[fromIndex] = value
+        })),
+        setRule: (index: number, value: string) => setState(index, produce(state => {
+            if (state.type !== "rule") {
+                throw new Error("Can not set rule on non rule line")
+            }
+            state.rule = value
+        }))
     }] as const;
 }
 

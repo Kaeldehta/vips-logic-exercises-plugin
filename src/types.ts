@@ -1,46 +1,40 @@
-export type SemanticTree = Array<SemanticTreeNode>;
+export type SemanticTree = Array<SemanticTreeNode | undefined>
 
-export interface SemanticTreeNode {
-  id: string;
-  formula?: string;
-}
-
-export type FitchProof = Array<FitchProofLine>;
+export type FitchProof = Array<FitchProofLine>
 
 interface Indentation {
-  indentation: number;
+  readonly indentation: number
 }
 
-interface From {
-  from: Array<number>;
+interface Children {
+  children: [] | [number] | [number, number]
 }
 
-interface Formula {
-  formula: string;
+export interface From {
+  from: Array<number>
 }
 
-interface Assumption extends Indentation, Formula {
-  type: "ass";
+export interface Formula {
+  formula: string
 }
 
-interface Premise extends Indentation, Formula {
-  type: "prem";
-  indentation: 0;
+interface Assumption extends Formula {
+  readonly type: "ass"
 }
 
-interface RuleLine extends Indentation, Formula, From {
-  type: "rule";
-  rule: string | null;
+interface Premise extends Formula {
+  readonly type: "prem"
 }
 
-interface Absurdity extends Indentation, From {
-  type: "abs";
+interface RuleLine<T = string> extends Formula, From {
+  readonly type: "rule"
+  rule: T | null
 }
 
-export interface FitchProofLine {
-  type: "ass" | "rule" | "prem" | "abs";
-  indentation: number;
-  formula?: string;
-  from: Array<number>;
-  rule?: string | null;
+interface Absurdity extends From {
+  readonly type: "abs",
 }
+
+export type FitchProofLine = (Absurdity | RuleLine | (Premise & {indentation: 0}) | Assumption) & Indentation
+export type SemanticTreeNode = (Assumption | RuleLine | Absurdity)
+// export type SemanticTreeNode = ChildlessSemanticTreeNode & Children

@@ -1,15 +1,13 @@
-import { defineConfig } from 'vite';
-import solidPlugin from 'vite-plugin-solid';
-import fg from "fast-glob";
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
+// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [solidPlugin()],
+  plugins: [react()],
   build: {
-    // rollupOptions: {
-    //   input: fg.sync("./src/views/**/*.tsx"),
-    // },
+    rollupOptions: {
+      input: "src/main.tsx"
+    },
     manifest: true,
-    target: 'esnext',
-    polyfillDynamicImport: false,
   },
-});
+})

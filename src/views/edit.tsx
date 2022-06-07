@@ -1,9 +1,6 @@
-import { Component } from "solid-js";
-import render from "../render";
+import Edit from "../components/Edit";
+import FormProvider from "../components/FormProvider";
+import { taskSchema } from "../schemas";
+import { TASK } from "../utils";
 
-const View: Component = () => {
-
-    return <div class="bg-red-100"></div>
-}
-
-render(<View/>);
+export default () => <FormProvider defaultValues={TASK} schema={taskSchema}><Edit /></FormProvider>

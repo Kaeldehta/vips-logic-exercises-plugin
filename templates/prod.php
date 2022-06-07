@@ -1,0 +1,1 @@
+<script type="module" src="<?= PluginEngine::getPlugin("LogicExercises")->getPluginURL() . "/dist/" . json_decode(file_get_contents(realpath(__DIR__ . "/../manifest.json")), true)["src/main.tsx"]["file"] ?>"></script>

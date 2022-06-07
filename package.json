@@ -1,28 +1,91 @@
 {
-  "name": "vite-template-solid",
+  "name": "vips-logic-exercises-plugin",
   "version": "0.0.0",
   "description": "",
   "scripts": {
-    "start": "vite",
-    "dev": "vite",
-    "build": "vite build",
+    "start": "vite --host",
+    "dev": "vite --host",
+    "build": "vite build && ts-node --project tsconfig.node.json build.ts",
     "serve": "vite preview"
   },
   "license": "MIT",
   "devDependencies": {
     "@google/semantic-release-replace-plugin": "^1.1.0",
     "@semantic-release/exec": "^6.0.3",
+    "@types/archiver": "^5.3.1",
+    "@types/fs-extra": "^9.0.13",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@vitejs/plugin-react": "^1.3.0",
+    "archiver": "^5.3.1",
     "autoprefixer": "^10.4.7",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
     "fast-glob": "^3.2.11",
+    "fs-extra": "^10.1.0",
+    "postcss-nested": "^5.0.6",
+    "replace-in-file": "^6.3.5",
     "semantic-release": "^19.0.2",
     "tailwindcss": "^3.0.24",
+    "ts-node": "^10.8.1",
     "typescript": "^4.6.3",
-    "vite": "^2.8.6",
-    "vite-plugin-solid": "^2.2.6"
+    "vite": "^2.9.9"
   },
   "dependencies": {
-    "solid-js": "^1.4.2"
+    "@hookform/resolvers": "^2.8.10",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-hook-form": "^7.31.2",
+    "react-icons": "^4.4.0",
+    "zod": "^3.17.3"
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      [
+        "@google/semantic-release-replace-plugin",
+        {
+          "replacements": [
+            {
+              "files": [
+                "plugin.manifest"
+              ],
+              "from": "version=.*",
+              "to": "version=${nextRelease.version}",
+              "results": [
+                {
+                  "file": "plugin.manifest",
+                  "hasChanged": true,
+                  "numMatches": 1,
+                  "numReplacements": 1
+                }
+              ],
+              "countMatches": true
+            }
+          ]
+        }
+      ],
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/exec",
+        {
+          "prepareCmd": "npm run build"
+        }
+      ],
+      [
+        "@semantic-release/github",
+        {
+          "assets": {
+            "path": "package.zip",
+            "label": "Plugin Archive"
+          }
+        }
+      ]
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

@@ -1,79 +1,49 @@
-import { Component, For, Show } from "solid-js"
-import { DeepReadonly } from "solid-js/store"
-import { useFitchProof } from "../state/fitch"
-import { FitchProofLine } from "../types"
-import Border from "./Border"
+import { useEffect } from "react";
+import { UseFieldArrayInsert, useWatch } from "react-hook-form";
+import { FitchProofType } from "../schemas";
+import Border from "./Border";
+import { FiArrowDownCircle, FiArrowRightCircle, FiPlusCircle } from "react-icons/fi"
 
 interface InserterProps {
-    line: DeepReadonly<FitchProofLine>
-    index: number
+  index: number
+  insert: UseFieldArrayInsert<FitchProofType>
 }
 
-const Inserter: Component<InserterProps> = (props) => {
+const InserterButton = (props: React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>) => {
 
-    const [proof, {
-        insertAbsurdity, 
-        insertAssumption, 
-        insertPremise, 
-        insertRuleLine
-    }] = useFitchProof();
+  return <button {...props} type="button" className="group-hover:flex hidden items-center justify-center w-10 h-10"></button>
+}
 
-    // Don't track indentation cause it can't change
-    const indentation = props.line.indentation;
+const Inserter = ({ index, insert }: InserterProps) => {
 
-    // Don't track premise state
-    const premise = props.line.type === "prem";
+  const indentation = useWatch<FitchProofType>({ name: `proof.${index}.indentation` }) as number;
 
-    const next = () => proof[props.index + 1]
+  const type = useWatch<FitchProofType>({ name: `proof.${index}.type` });
 
-    const lastPremise = () => premise && (next()?.type !== "prem")
+  const nextType = useWatch<FitchProofType>({ name: `proof.${index + 1}.type` });
 
-    // Track indentationDelta
-    const indentationDelta = () => {
+  const nextIndentation = useWatch<FitchProofType>({ name: `proof.${index + 1}.indentation` }) as number;
 
-        const nextLine = next()
+  const indentationDelta = nextType ? (nextType === "ass" ? (nextIndentation > indentation ? 0 : -indentation) : nextIndentation - indentation) : -indentation;
 
-        if(nextLine) {
+  return <>
+    {Array(-Math.min(indentationDelta, 0) + 1).fill(0).map((_, indentationOffset) => {
+      const newIndentation = indentation - indentationOffset;
 
-            const nextIndentation = nextLine.indentation;
-
-            if(nextLine.type === "ass") {
-                if(nextIndentation > indentation) return 0;
-
-                return -indentation;
-            }
-
-            return nextIndentation - indentation;
-        }
-
-        return -indentation;
-    }
-
-    return <>
-    <For each={Array(-Math.min(indentationDelta(), 0) + 1).fill(0)}>{
-        (_, indentationOffset) => {
-        
-            const newIndentation = () => indentation - indentationOffset();
-
-        return <div class="h-16 group min-w-fit flex justify-start gap-2 items-center">
-            <div class="w-12"/>
-            <For each={Array(newIndentation() + 1).fill(0)}>{
-                () => <Border />
-            }</For>
-            <div class="w-52 border-2 p-1 border-white border-solid flex justify-evenly">
-                <Show when={!premise || lastPremise()}>
-                    <button onClick={() => insertAssumption(props.index + 1, newIndentation() + 1)}>Ass</button>
-                    <button onClick={() => insertAbsurdity(props.index + 1, newIndentation())}>Abs</button>
-                    <button onClick={() => insertRuleLine(props.index + 1, newIndentation())}>RuleLine</button>
-                </Show>
-                <Show when={premise}>
-                <button onClick={() => insertPremise(props.index + 1)}>Prem</button>
-                </Show>
-            </div>
+      return <div key={indentationOffset} className="h-16 group min-w-fit flex justify-start gap-2 items-center">
+        <div className="w-12"></div>
+        {Array(newIndentation + 1).fill(0).map((_, index) => <Border key={index} />)}
+        <div className="w-52 border-2 p-1 border-white border-solid flex justify-evenly">
+          {(type !== "prem" || nextType !== "prem") && <>
+            <InserterButton onClick={() => insert(index + 1, { type: "ass", indentation: newIndentation + 1 })}><FiArrowRightCircle /></InserterButton>
+            <InserterButton type="button" onClick={() => insert(index + 1, { type: "rule", indentation: newIndentation })}><FiArrowDownCircle /></InserterButton>
+            {newIndentation > 0 && <InserterButton type="button" onClick={() => insert(index + 1, { type: "abs", indentation: newIndentation })}>{"\u22A5"}</InserterButton>}
+          </>}
+          {type === "prem" && <InserterButton type="button" onClick={() => insert(index + 1, { type: "prem", indentation: 0 })}><FiPlusCircle /></InserterButton>}
         </div>
-        }
-    }</For>
-    </>
+      </div>
+    })}
+  </>
 }
 
 export default Inserter;

@@ -1,18 +1,25 @@
-import { Component, createEffect, createSignal, For, onCleanup } from "solid-js"
-import { createStore } from "solid-js/store";
-import { useFitchProof } from "../state/fitch";
+import { Fragment, useEffect } from "react";
+import { useFieldArray } from "react-hook-form"
+import { FitchProofType } from "../schemas";
+import { TASK } from "../utils";
+import FieldArrayProvider from "./FieldArrayProvider";
 import FitchProofLine from "./FitchProofLine";
+import Inserter from "./Inserter";
 
 
-const FitchProof: Component = () => {
+const FitchProof = () => {
 
-    const [proof, {insertPremise}] = useFitchProof();
+  const { fields, remove, insert, append } = useFieldArray<FitchProofType>({ name: "proof" });
 
-    return <><For each={proof}>{
-        (line, i) => <FitchProofLine line={line} index={i()}/>
-    }</For>
-    <button onClick={() => insertPremise(0)}>Add</button>
-    </>
+  return <FieldArrayProvider fields={fields}>
+    {fields.map((field, index) => <Fragment key={field.id}>
+      <FitchProofLine index={index} remove={remove} />
+      <Inserter index={index} insert={insert} />
+    </Fragment>)}
+    {/* {!fields.length && <Inserter index={-1} insert={insert} />} */}
+    {!fields.length && <button onClick={() => append({ type: "prem", indentation: 0 })} type="button">Add</button>}
+  </FieldArrayProvider>
+
 }
 
 export default FitchProof;

@@ -1,31 +1,18 @@
-import { Component, createEffect, createSignal, For } from "solid-js";
-import { useFitchProof } from "../state/fitch";
+import { forwardRef, useEffect } from "react";
+import { FieldArrayWithId } from "react-hook-form";
+import { useFieldArrayContext } from "./FieldArrayProvider";
 
-interface FromSelectProps {
-    lineIndex: number
-    index: number
-    from: number
+interface FromSelectProps extends React.DetailedHTMLProps<React.SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement> {
+  options: Array<FieldArrayWithId>
 }
 
-const FromSelect: Component<FromSelectProps> = (props) => {
 
-    const [proof, {setFrom}] = useFitchProof();
+const FromSelect = forwardRef<HTMLSelectElement, FromSelectProps>(({ options, ...props }, ref) => {
 
-    const [fromLine, setFromLine] = createSignal(proof[props.from]);
-
-    const fromLineIndex = () => proof.indexOf(fromLine());
-
-    createEffect(() => {
-        setFrom(props.lineIndex, props.index, fromLineIndex());
-    })
-
-    return <select onChange={(e) => setFromLine(proof[parseInt(e.currentTarget.value)])}>
-        <option selected={fromLineIndex() === -1} hidden></option>
-        <For each={proof.slice(0, props.lineIndex)}>{
-            (line, id) => <option selected={fromLineIndex() == id()} value={id()}>{id() + 1}</option>
-        }</For>
-    </select>
-
-}
+  return <select {...props} ref={ref} className="w-20">
+    <option hidden value={-1} />
+    {options.map(({ id }, index) => <option key={id} value={index}>{index + 1}</option>)}
+  </select>
+})
 
 export default FromSelect;

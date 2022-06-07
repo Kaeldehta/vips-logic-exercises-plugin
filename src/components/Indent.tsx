@@ -1,30 +1,28 @@
-import { Component, For, Index, Match, Switch } from "solid-js";
-import { DeepReadonly } from "solid-js/store";
-import { useFitchProof } from "../state/fitch";
-import { FitchProofLine } from "../types";
+import { useWatch } from "react-hook-form";
+import { FitchProofType } from "../schemas";
 import Border, { AssumptionBorder, LastPremiseBorder } from "./Border";
 
 interface IndentProps {
-    line: DeepReadonly<FitchProofLine>
-    index: number
+  index: number
 }
 
-const Indent: Component<IndentProps> = (props) => {
+const Indent = ({ index }: IndentProps) => {
 
-    const [proof] = useFitchProof();
+  const indentation = useWatch<FitchProofType>({ name: `proof.${index}.indentation` }) as number;
 
-    const lastPremise = () => props.line.type === "prem" && (proof[props.index + 1]?.type !== "prem");
+  const type = useWatch<FitchProofType>({ name: `proof.${index}.type` });
 
-    return <Index each={Array(props.line.indentation + 1).fill(0)}>{
-        (_, index) => <Switch fallback={<Border/>}>
-            <Match when={props.line.type === "ass" && index == props.line.indentation}>
-                <AssumptionBorder/>
-            </Match>
-            <Match when={lastPremise()}>
-                <LastPremiseBorder/>
-            </Match>
-        </Switch>
-    }</Index>
+  const nextType = useWatch<FitchProofType>({ name: `proof.${index + 1}.type` });
+
+  const lastPremise = type === "prem" && nextType !== "prem";
+
+  return <>
+    {Array(indentation + 1).fill(0).map((_, index) => {
+      if (lastPremise) return <LastPremiseBorder key={index} />
+      if (type === "ass" && index == indentation) return <AssumptionBorder key={index} />
+      return <Border key={index} />
+    })}
+  </>
 }
 
 export default Indent;

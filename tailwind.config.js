@@ -7,8 +7,5 @@ module.exports = {
       }
     },
   },
-  plugins: [],
-  corePlugins: {
-    preFlight: false
-  }
+  plugins: []
 }

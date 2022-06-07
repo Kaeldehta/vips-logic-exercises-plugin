@@ -1,87 +1,40 @@
-import { For, Index, Match, Switch } from "solid-js";
-import { JSX } from "solid-js/jsx-runtime";
-import { Dynamic } from "solid-js/web";
-
-
-interface FormulaProps {
-  allowPred: boolean
-  setValue: (newValue: string) => void
-  value: string
-}
+import { Controller } from "react-hook-form";
+import { renderFormulaAsHTML, TASK, VIEW } from "../utils";
 
 const propositionalLogicChars = /^[pqr12345789iklno\(\)]$/
 
 const predicateLogicChars = /^[abcFGHxyzue=]$/;
 
-const charToHtml: Record<string, JSX.Element> = {
-  "i": <div class="mx-1">&rarr;</div>,
-  "k": <div class="mx-1">&and;</div>,
-  "l": <div class="mx-1">&or;</div>,
-  "=": <div class="mx-1">=</div>,
-  "n": <>&not;</>,
-  "o": <div class="mx-1">&harr;</div>,
-  "u": <>&forall;</>,
-  "e": <>&exist;</>,
-  "1": <sub>1</sub>,
-  "2": <sub>2</sub>,
-  "3": <sub>3</sub>,
-  "4": <sub>4</sub>,
-  "5": <sub>5</sub>,
-  "6": <sub>6</sub>,
-  "7": <sub>7</sub>,
-  "8": <sub>8</sub>,
-  "9": <sub>9</sub>,
+interface FormulaProps {
+  value: string | undefined
+  setValue: (newValue: string) => void
+  allowPred?: boolean
 }
 
+const Formula = ({ value, setValue }: FormulaProps) => {
 
-const Formula = (props: FormulaProps) => {
+  const allowPred = VIEW === "edit" || TASK.predicate
 
   return <div
-    // contentEditable
-    class="group shrink-0 w-52 min-w-fit h-12 px-2 py-1 border-solid flex items-center justify-start cursor-pointer focus:outline-none focus:bg-gray-200"
+    className="group shrink-0 w-52 min-w-fit h-12 px-2 py-1 border border-solid flex items-center justify-start cursor-text focus:outline-none focus:ring"
     tabIndex={0}
     onKeyPress={e => {
-        if(e.key.match(propositionalLogicChars) || (props.allowPred && e.key.match(predicateLogicChars))) {
-            props.setValue(props.value + e.key);
-        }
+      if (e.key.match(propositionalLogicChars) || (allowPred && e.key.match(predicateLogicChars))) {
+        setValue((value ?? "") + e.key);
+      }
     }}
     onKeyDown={e => {
-        if(e.key === "Backspace") {
-            props.setValue(props.value.slice(0, -1));
-        }
+      if (e.key === "Backspace") {
+        setValue((value ?? "").slice(0, -1));
+      }
     }}
-    >
-    <For each={Array.from(props.value)}>{
-      (c) => <div class="last:group-focus:text-red-500">
-        <Switch fallback={c}>
-          <Match when={c === "i"}>
-            <div class="mx-1">&rarr;</div>
-          </Match>
-          <Match when={c === "k"}>
-            <div class="mx-1">&and;</div>
-          </Match>
-          <Match when={c === "l"}>
-            <div class="mx-1">&or;</div>
-          </Match>
-          <Match when={c === "="}>
-            <div class="mx-1">=</div>
-          </Match>
-          <Match when={c === "n"}>
-            &not;
-          </Match>
-          <Match when={c === "o"}>
-            <div class="mx-1">&harr;</div>
-          </Match>
-          <Match when={c === "u"}>
-            &forall;
-          </Match>
-          <Match when={parseInt(c)}>
-            <sub>{c}</sub>
-          </Match>
-        </Switch>
-      </div>
-    }</For>
+  >
+    {renderFormulaAsHTML(value ?? "")}
   </div>
 }
 
-export default Formula;
+const FormulaWrapped = ({ name }: { name: string }) => {
+  return <Controller name={name} render={({ field: { value, onChange } }) => <Formula value={value} setValue={onChange} />} />
+}
+
+export default FormulaWrapped;

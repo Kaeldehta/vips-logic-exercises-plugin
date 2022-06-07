@@ -1,5 +1,6 @@
 import FitchProof from "../../components/FitchProof";
-import render from "../../render";
-import { FitchProofProvider } from "../../state/fitch";
+import FormProvider from "../../components/FormProvider";
+import { fitchProofSchema } from "../../schemas";
 
-render(<FitchProofProvider><FitchProof/></FitchProofProvider>);
+
+export default () => <FormProvider schema={fitchProofSchema} ><FitchProof /></FormProvider>
