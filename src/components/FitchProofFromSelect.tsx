@@ -20,7 +20,7 @@ const FitchProofFromSelect = ({ index, path }: FitchProofFromSelectProps) => {
 
   const value = useWatch<FitchProofType>({ name: `proof.${index}.${path}` }) as number;
 
-  const [selectedId, setId] = useState(value > -1 ? fields[value].id : undefined);
+  const [selectedId, setId] = useState(value > -1 ? fields[value]?.id : undefined);
 
   useEffect(() => {
     setValue(`proof.${index}.${path}`, fields.findIndex(({ id }) => id === selectedId))

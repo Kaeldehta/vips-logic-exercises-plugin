@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { Controller } from "react-hook-form";
 import { renderFormulaAsHTML, TASK, VIEW } from "../utils";
 
@@ -8,12 +9,11 @@ const predicateLogicChars = /^[abcFGHxyzue=]$/;
 interface FormulaProps {
   value: string | undefined
   setValue: (newValue: string) => void
-  allowPred?: boolean
 }
 
-const Formula = ({ value, setValue }: FormulaProps) => {
+const allowPred = VIEW === "edit" || TASK.predicate
 
-  const allowPred = VIEW === "edit" || TASK.predicate
+const Formula = ({ value, setValue }: FormulaProps) => {
 
   return <div
     className="group shrink-0 w-52 min-w-fit h-12 px-2 py-1 border border-solid flex items-center justify-start cursor-text focus:outline-none focus:ring"

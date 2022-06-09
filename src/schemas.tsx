@@ -32,7 +32,7 @@ const rule = z.object({
   from
 })
 
-export const fitchProofSchema = z.object({ proof: z.array(z.discriminatedUnion("type", [abs, prem, rule, ass])) })
+export const fitchProofSchema = z.object({ proof: z.array(z.discriminatedUnion("type", [abs, prem, rule, ass])).min(1) })
 
 export type FitchProofType = z.infer<typeof fitchProofSchema>
 
@@ -41,6 +41,8 @@ const fitchProofTask = z.object({
   consequence: formula,
   statements: z.array(z.object({ statement: formula }))
 })
+
+export type FitchProofTask = z.infer<typeof fitchProofTask>
 
 const semanticTreeTask = z.object({
   type: z.literal("tree"),
