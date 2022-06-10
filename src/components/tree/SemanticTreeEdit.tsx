@@ -1,5 +1,5 @@
-import Formula from "./Formula";
-import Statements from "./Statements";
+import Formula from "../Formula";
+import Statements from "../Statements";
 
 
 const SemanticTreeEdit = () => {

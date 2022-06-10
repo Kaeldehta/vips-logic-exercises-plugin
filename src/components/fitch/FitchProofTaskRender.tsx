@@ -1,8 +1,7 @@
 import { Fragment } from "react"
 import { render } from "react-dom"
-import { FitchProofTask } from "../schemas"
-import { TASK } from "../utils"
-import { renderFormulaAsHTML } from "../utils"
+import { FitchProofTask } from "../../schemas/edit"
+import { renderFormulaAsHTML, TASK } from "../../utils"
 
 
 const FitchProofTaskRender = () => {

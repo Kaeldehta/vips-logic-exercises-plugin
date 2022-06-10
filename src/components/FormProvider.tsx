@@ -12,7 +12,7 @@ interface FormProviderProps<T> {
 
 const FormProvider = <T,>({ schema, defaultValues, children }: FormProviderProps<T>) => {
 
-  const methods = useForm<T>({ resolver: zodResolver(schema) });
+  const methods = useForm<T>({ resolver: zodResolver(schema), defaultValues });
 
   const input = useRef<HTMLInputElement>(null);
 
@@ -35,11 +35,11 @@ const FormProvider = <T,>({ schema, defaultValues, children }: FormProviderProps
     return () => form.current?.removeEventListener("submit", onSubmit)
   }, [])
 
-  useEffect(() => {
-    if (defaultValues) {
-      methods.reset(defaultValues, { keepDefaultValues: true })
-    }
-  }, [defaultValues, methods])
+  // useEffect(() => {
+  //   if (defaultValues) {
+  //     methods.reset(defaultValues, { keepDefaultValues: true })
+  //   }
+  // }, [defaultValues, methods])
 
   return <RootFormProvider {...methods}>
     <input type="hidden" ref={input} name="react_form_values" />

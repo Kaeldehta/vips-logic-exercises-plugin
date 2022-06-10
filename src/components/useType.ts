@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form"
-import { FitchProofType } from "../schemas";
+import { FitchProofType } from "../schemas/solve";
 
 
 const useType = (index: number) => {

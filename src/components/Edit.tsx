@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
-import { TaskType } from "../schemas";
-import FitchProofEdit from "./FitchProofEdit";
-import SemanticTreeEdit from "./SemanticTreeEdit";
+import { TaskType } from "../schemas/edit";
+import FitchProofEdit from "./fitch/FitchProofEdit";
+import SemanticTreeEdit from "./tree/SemanticTreeEdit";
 
 
 const Edit = () => {

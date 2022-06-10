@@ -1,8 +1,7 @@
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import { useFieldArray } from "react-hook-form"
-import { FitchProofType } from "../schemas";
-import { TASK } from "../utils";
-import FieldArrayProvider from "./FieldArrayProvider";
+import { FitchProofType } from "../../schemas/solve";
+import FieldArrayProvider from "../FieldArrayProvider";
 import FitchProofLine from "./FitchProofLine";
 import Inserter from "./Inserter";
 

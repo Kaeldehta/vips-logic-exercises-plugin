@@ -1,8 +1,12 @@
-export const propRules = ["b-intro" , "i-intro" , "i-elim" , "raa" , "c-intro", "b-elim", "c-elim", "d-intro", "dn", "d-elim"] as const;
-export const predRules = [...propRules, 'u-elim', 'u-intro', 'e-intro', 'e-elim', 'id-intro','id-elim'] as const;
+import { TASK } from "../utils";
+
+const propRules = ["b-intro" , "i-intro" , "i-elim" , "raa" , "c-intro", "b-elim", "c-elim", "d-intro", "dn", "d-elim"] as const;
+const predRules = [...propRules, 'u-elim', 'u-intro', 'e-intro', 'e-elim', 'id-intro','id-elim'] as const;
 
 
-export const propRulesOptions: Record<typeof propRules[number], {label: string, count: number}> = {
+export const fitchRules = TASK.predicate ? predRules : propRules;
+
+const propRulesOptions: Record<typeof propRules[number], {label: string, count: number}> = {
     "i-intro": {
         label: "\u2192-Intro",
         count: 2,
@@ -45,7 +49,7 @@ export const propRulesOptions: Record<typeof propRules[number], {label: string, 
     }
 }
 
-export const predRulesOptions: Record<typeof predRules[number], {label: string, count: number}> = {
+const predRulesOptions: Record<typeof predRules[number], {label: string, count: number}> = {
     ...propRulesOptions,
     'u-intro': {
         label: '\u2200-Intro',
@@ -72,3 +76,7 @@ export const predRulesOptions: Record<typeof predRules[number], {label: string, 
         count: 2
     },
 }
+
+const fitchRuleOptions =  TASK.predicate ? predRulesOptions : propRulesOptions
+
+export default fitchRuleOptions;

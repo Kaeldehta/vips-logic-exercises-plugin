@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { Controller } from "react-hook-form";
 import { renderFormulaAsHTML, TASK, VIEW } from "../utils";
 

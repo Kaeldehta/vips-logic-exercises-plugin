@@ -1,12 +1,12 @@
 import { UseFieldArrayRemove, useFormContext } from "react-hook-form";
 import { FiMinusCircle } from "react-icons/fi";
-import { FitchProofType } from "../schemas";
+import { FitchProofType } from "../../schemas/solve";
 import FitchProofFromSelect from "./FitchProofFromSelect";
-import Formula from "./Formula";
-import FromArrayRule from "./FromArrayRule";
-import IconButton from "./IconButton";
+import Formula from "../Formula";
+import FromArrayRule from "./FitchProofFromArrayRule";
+import IconButton from "../IconButton";
 import Indent from "./Indent";
-import useType from "./useType";
+import useType from "../useType";
 
 interface FitchProofLineProps {
   index: number,

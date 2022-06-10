@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useFieldArray, useFormContext, UseFormRegister, useWatch } from "react-hook-form";
-import { FitchProofType } from "../schemas";
-import { useFieldArrayContext } from "./FieldArrayProvider";
-import FromSelect from "./FromSelect";
+import { useFormContext, useWatch } from "react-hook-form";
+import { FitchProofType } from "../../schemas/solve";
+import { useFieldArrayContext } from "../FieldArrayProvider";
+import FromSelect from "../FromSelect";
 
 
 interface FitchProofFromSelectProps {

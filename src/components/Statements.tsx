@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { useFieldArray } from "react-hook-form";
 import { FiMinusCircle, FiPlusCircle } from "react-icons/fi";
-import { TaskType } from "../schemas";
+import { TaskType } from "../schemas/edit";
 import Formula from "./Formula";
 
 

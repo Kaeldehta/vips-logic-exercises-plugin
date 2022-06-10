@@ -1,7 +1,7 @@
-import FitchProof from "../../components/FitchProof";
-import FitchProofTaskRender from "../../components/FitchProofTaskRender";
+import FitchProof from "../../components/fitch/FitchProof";
+import FitchProofTaskRender from "../../components/fitch/FitchProofTaskRender";
 import FormProvider from "../../components/FormProvider";
-import { fitchProofSchema } from "../../schemas";
+import { fitchProofSchema } from "../../schemas/solve";
 import { RESPONSE } from "../../utils";
 
 

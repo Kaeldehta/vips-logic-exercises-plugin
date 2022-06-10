@@ -1,5 +1,5 @@
 import { useWatch } from "react-hook-form";
-import { FitchProofType } from "../schemas";
+import { FitchProofType } from "../../schemas/solve";
 import Border, { AssumptionBorder, LastPremiseBorder } from "./Border";
 
 interface IndentProps {
