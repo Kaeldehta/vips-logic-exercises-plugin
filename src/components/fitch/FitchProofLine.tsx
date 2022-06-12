@@ -7,6 +7,8 @@ import IconButton from "../IconButton";
 import Indent from "./Indent";
 import useFitchProofStoreContext from "../../contexts/fitch";
 import { produce } from "solid-js/store";
+import MinusCircle from "../icons/MinusCircle";
+import Tag from "../icons/Tag";
 
 interface FitchProofLineProps {
   index: number,
@@ -52,7 +54,8 @@ const FitchProofLine = (props: FitchProofLineProps) => {
       <FitchProofFromSelect index={props.index} value={props.line.from0} setValue={(v) => set(props.index, "from0" as any, v)} />
       <FitchProofFromSelect index={props.index} value={props.line.from1} setValue={(v) => set(props.index, "from1" as any, v)} />
     </>}
-    <IconButton onClick={remove}>-</IconButton>
+    <IconButton title="Annotate"><Tag /></IconButton>
+    <IconButton tile="Remove" onClick={remove}><MinusCircle /></IconButton>
   </div>
 }
 

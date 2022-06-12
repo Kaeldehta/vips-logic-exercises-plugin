@@ -4,6 +4,9 @@ import IconButton from "../IconButton";
 import useFitchProofStoreContext from "../../contexts/fitch";
 import { Index, Show } from "solid-js";
 import { produce } from "solid-js/store";
+import ArrowRightCircle from "../icons/ArrowRightCircle";
+import ArrowDownCircle from "../icons/ArrowDownCircle";
+import PlusCircle from "../icons/PlusCircle";
 
 interface InserterProps {
   index: number
@@ -36,14 +39,14 @@ const Inserter = (props: InserterProps) => {
         </Index>
         <div class="w-52 border-2 p-1 border-white border-solid flex justify-evenly">
           <Show when={props.type !== "prem" || nextType() !== "prem"}>
-            <IconButton onClick={() => insert(props.index + 1, { type: "ass", indentation: newIndentation + 1, formula: "" })}>-&gt;</IconButton>
-            <IconButton type="button" onClick={() => insert(props.index + 1, { type: "rule", indentation: newIndentation, formula: "", rule: "" as any, from: [] })}>|</IconButton>
+            <IconButton title="Add Assumption" onClick={() => insert(props.index + 1, { type: "ass", indentation: newIndentation + 1, formula: "" })}><ArrowRightCircle /></IconButton>
+            <IconButton title="Add Rule Line" onClick={() => insert(props.index + 1, { type: "rule", indentation: newIndentation, formula: "", rule: "" as any, from: [] })}><ArrowDownCircle /></IconButton>
             <Show when={newIndentation > 0}>
-              <IconButton type="button" onClick={() => insert(props.index + 1, { type: "abs", indentation: newIndentation, from0: -1, from1: -1 })}>{"\u22A5"}</IconButton>
+              <IconButton title="Add Absurdity" onClick={() => insert(props.index + 1, { type: "abs", indentation: newIndentation, from0: -1, from1: -1 })}>{"\u22A5"}</IconButton>
             </Show>
           </Show>
           <Show when={props.type === "prem"}>
-            <IconButton type="button" onClick={() => insert(props.index + 1, { type: "prem", indentation: 0, formula: "" })}>+</IconButton>
+            <IconButton title="Add Premise" onClick={() => insert(props.index + 1, { type: "prem", indentation: 0, formula: "" })}><PlusCircle /></IconButton>
           </Show>
         </div>
       </div>
