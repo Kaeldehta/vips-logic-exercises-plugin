@@ -10,6 +10,7 @@ const run = async () => {
 
   archive.directory("dist/", false);
   archive.file("plugin.manifest", { name: "plugin.manifest" });
+  archive.directory("templates/", "templates/");
   archive.file("logic_exercise.php", { name: "logic_exercise.php" });
   archive.file("LogicExercises.php", { name: "LogicExercises.php" });
 
