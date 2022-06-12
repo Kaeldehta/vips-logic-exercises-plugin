@@ -1,6 +1,3 @@
-
-import { UseFieldArrayInsert, useFormContext } from "react-hook-form";
-import { FiPlusCircle, FiArrowDownCircle } from "react-icons/fi";
 import IconButton from "../IconButton";
 
 interface InserterProps {

@@ -1,17 +1,23 @@
-import { Fragment } from "react";
-import { useFieldArray } from "react-hook-form";
-import { FiMinusCircle, FiPlusCircle } from "react-icons/fi";
-import { TaskType } from "../schemas/edit";
 import Formula from "./Formula";
-
+import { For } from "solid-js";
+import useTaskStoreContext from "../contexts/edit";
+import { produce } from "solid-js/store"
 
 const Statements = () => {
 
-  const { fields, append, remove } = useFieldArray<TaskType>({ name: "statements" });
+  const [store, set] = useTaskStoreContext();
 
-  return <>
-    {fields.map(({ id }, index) => <div className="flex items-center" key={id}><Formula name={`statements.${index}.statement`} /><button type="button" onClick={() => remove(index)}><FiMinusCircle /></button></div>)}
-    <button type="button" onClick={() => append({})}><FiPlusCircle /></button>
+  return <><For each={store.statements}>
+    {(statement, index) => <div class="flex items-center">
+      <Formula value={statement.statement} setValue={(v) => set("statements", index(), { statement: v })} />
+      <button type="button" onClick={() => set(produce(state => {
+        state.statements.splice(index(), 1)
+      }))}>-</button>
+    </div>}
+  </For>
+    <button type="button" onClick={() => set(produce(state => {
+      state.statements.push({ statement: "" })
+    }))}>+</button>
   </>
 
 }

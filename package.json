@@ -5,7 +5,7 @@
   "scripts": {
     "start": "vite --host",
     "dev": "vite --host",
-    "build": "vite build && ts-node --project tsconfig.node.json build.ts",
+    "build": "vite build && ts-node createArchive.ts",
     "serve": "vite preview"
   },
   "license": "MIT",
@@ -48,6 +48,22 @@
               ],
               "from": "version=.*",
               "to": "version=${nextRelease.version}",
+              "results": [
+                {
+                  "file": "plugin.manifest",
+                  "hasChanged": true,
+                  "numMatches": 1,
+                  "numReplacements": 1
+                }
+              ],
+              "countMatches": true
+            },
+            {
+              "files": [
+                "templates/index.php"
+              ],
+              "from": "src=\".*\"",
+              "to": "src=\"<?= PluginEngine::getPlugin(\"LogicExercises\")->getPluginURL() . \"/dist/\" . json_decode(file_get_contents(realpath(__DIR__ . \"/../manifest.json\")), true)[\"src/main.tsx\"][\"file\"] ?>\"",
               "results": [
                 {
                   "file": "plugin.manifest",

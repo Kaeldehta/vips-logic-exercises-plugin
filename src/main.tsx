@@ -8,7 +8,9 @@ const run = async () => {
     throw new Error("Can not determine view")
   }
 
-  const { default: ViewComponent } = VIEW === "edit" ? await import("./views/edit") : await import(`./views/${VIEW}/${TASK_TYPE}.tsx`)
+  // const { default: ViewComponent } = VIEW === "edit" ? await import("./views/edit") : await import(`./views/${VIEW}/${TASK_TYPE}.tsx`)
+
+  const { default: ViewComponent } = VIEW === "edit" ? await import("./views/edit") : await import(`./views/solve/fitch`)
 
   render(ViewComponent, ELEMENT);
 }

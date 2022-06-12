@@ -1,5 +1,3 @@
-import { useEffect, useMemo } from "react";
-import { useFormContext, useWatch } from "react-hook-form"
 import { SemanticTreeType } from "../../schemas/solve";
 
 const calcNumber = (tree: SemanticTreeType) => {

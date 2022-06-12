@@ -1,21 +1,15 @@
-import { useEffect, useState } from "react";
-import { useFormContext, useWatch } from "react-hook-form";
-import { createEffect, createSignal, Index } from "solid-js";
+import { createEffect, createSignal, For } from "solid-js";
 import useFitchProofStoreContext from "../../contexts/fitch";
-import { FitchProofType } from "../../schemas/solve";
-import { useFieldArrayContext } from "../FieldArrayProvider";
-import FromSelect from "../FromSelect";
-
 
 interface FitchProofFromSelectProps {
   index: number
   value: number
-  accessor: ["from0", "from1"] | ["from", number]
+  setValue: (newValue: number) => void
 }
 
 const FitchProofFromSelect = (props: FitchProofFromSelectProps) => {
 
-  const [proof, set] = useFitchProofStoreContext();
+  const [proof] = useFitchProofStoreContext();
 
   const options = () => proof.filter((_, i) => i < props.index);
 
@@ -24,18 +18,18 @@ const FitchProofFromSelect = (props: FitchProofFromSelectProps) => {
   const index = () => proof.indexOf(selected())
 
   createEffect(() => {
-    set(props.index, index())
+    props.setValue(index())
   })
 
-
   return <select class="w-20" onChange={(e) => {
-    setSelected(options()[e.currentTarget.])
+    const index = parseInt(e.currentTarget.value);
+    setSelected(options()[index])
   }}>
-  <option hidden value={-1} />
-  <Index each={options()}>
-  {(_, index) => <option value={index}>{index + 1}</option>}
-  </Index>
-</select>
+    <option hidden value={-1} />
+    <For each={options()}>
+      {(_, index) => <option value={index()}>{index() + 1}</option>}
+    </For>
+  </select>
 }
 
 export default FitchProofFromSelect;

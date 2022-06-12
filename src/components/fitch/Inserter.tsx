@@ -1,45 +1,54 @@
-import { useEffect } from "react";
-import { UseFieldArrayInsert, useWatch } from "react-hook-form";
 import { FitchProofType } from "../../schemas/solve";
 import Border from "./Border";
-import { FiArrowDownCircle, FiArrowRightCircle, FiPlusCircle } from "react-icons/fi"
 import IconButton from "../IconButton";
+import useFitchProofStoreContext from "../../contexts/fitch";
+import { Index, Show } from "solid-js";
+import { produce } from "solid-js/store";
 
 interface InserterProps {
   index: number
-  line: FitchProofType[number]
+  indentation: FitchProofType[number]["indentation"]
+  type: FitchProofType[number]["type"]
 }
 
-const Inserter = ({ index, insert }: InserterProps) => {
+const Inserter = (props: InserterProps) => {
 
-  const indentation = useWatch<FitchProofType>({ name: `proof.${index}.indentation` }) as number;
+  const [store, set] = useFitchProofStoreContext();
 
-  const type = useWatch<FitchProofType>({ name: `proof.${index}.type` });
+  const insert = (index: number, line: FitchProofType[number]) => set(produce(state => {
+    state.splice(index, 0, line);
+  }))
 
-  const nextType = useWatch<FitchProofType>({ name: `proof.${index + 1}.type` });
+  const nextType = () => store[props.index + 1]?.type;
 
-  const nextIndentation = useWatch<FitchProofType>({ name: `proof.${index + 1}.indentation` }) as number;
+  const nextIndentation = () => store[props.index + 1]?.indentation
 
-  const indentationDelta = nextType ? (nextType === "ass" ? (nextIndentation > indentation ? 0 : -indentation) : nextIndentation - indentation) : -indentation;
+  const indentationDelta = () => nextType() ? (nextType() === "ass" ? (nextIndentation() > props.indentation ? 0 : -props.indentation) : nextIndentation() - props.indentation) : -props.indentation;
 
-  return <>
-    {Array(-Math.min(indentationDelta, 0) + 1).fill(0).map((_, indentationOffset) => {
-      const newIndentation = indentation - indentationOffset;
+  return <Index each={Array(-Math.min(indentationDelta(), 0) + 1).fill(0)}>
+    {(_, indentationOffset) => {
+      const newIndentation = props.indentation - indentationOffset;
 
-      return <div key={indentationOffset} className="h-16 group min-w-fit flex justify-start gap-2 items-center">
-        <div className="w-12"></div>
-        {Array(newIndentation + 1).fill(0).map((_, index) => <Border key={index} />)}
-        <div className="w-52 border-2 p-1 border-white border-solid flex justify-evenly">
-          {(type !== "prem" || nextType !== "prem") && <>
-            <IconButton onClick={() => insert(index + 1, { type: "ass", indentation: newIndentation + 1, formula: "" })}><FiArrowRightCircle /></IconButton>
-            <IconButton type="button" onClick={() => insert(index + 1, { type: "rule", indentation: newIndentation, formula: "", rule: undefined, from: undefined })}><FiArrowDownCircle /></IconButton>
-            {newIndentation > 0 && <IconButton type="button" onClick={() => insert(index + 1, { type: "abs", indentation: newIndentation, from0: undefined, from1: undefined })}>{"\u22A5"}</IconButton>}
-          </>}
-          {type === "prem" && <IconButton type="button" onClick={() => insert(index + 1, { type: "prem", indentation: 0, formula: "" })}><FiPlusCircle /></IconButton>}
+      return <div class="h-16 group min-w-fit flex justify-start gap-2 items-center">
+        <div class="w-12"></div>
+        <Index each={Array(newIndentation + 1).fill(0)}>
+          {() => <Border />}
+        </Index>
+        <div class="w-52 border-2 p-1 border-white border-solid flex justify-evenly">
+          <Show when={props.type !== "prem" || nextType() !== "prem"}>
+            <IconButton onClick={() => insert(props.index + 1, { type: "ass", indentation: newIndentation + 1, formula: "" })}>-&gt;</IconButton>
+            <IconButton type="button" onClick={() => insert(props.index + 1, { type: "rule", indentation: newIndentation, formula: "", rule: "" as any, from: [] })}>|</IconButton>
+            <Show when={newIndentation > 0}>
+              <IconButton type="button" onClick={() => insert(props.index + 1, { type: "abs", indentation: newIndentation, from0: -1, from1: -1 })}>{"\u22A5"}</IconButton>
+            </Show>
+          </Show>
+          <Show when={props.type === "prem"}>
+            <IconButton type="button" onClick={() => insert(props.index + 1, { type: "prem", indentation: 0, formula: "" })}>+</IconButton>
+          </Show>
         </div>
       </div>
-    })}
-  </>
+    }}
+  </Index>
 }
 
 export default Inserter;

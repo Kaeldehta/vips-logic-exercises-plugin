@@ -1,29 +1,38 @@
-import { useFieldArray, useFormContext } from "react-hook-form";
-import fitchRuleOptions from "../../rules/fitch";
-import { FitchProofType } from "../../schemas/solve";
+import useFitchProofStoreContext from "../../contexts/fitch";
+import fitchRuleOptions, { fitchRules } from "../../rules/fitch";
+import { FitchProofType, FitchRuleType } from "../../schemas/solve";
 import FitchProofFromSelect from "./FitchProofFromSelect";
+import { Index } from "solid-js";
 
 interface FromArrayProps {
   index: number
+  rule: FitchRuleType["rule"]
+  from: FitchRuleType["from"]
 }
 
-const FromArrayRule = ({ index }: FromArrayProps) => {
+const FromArrayRule = (props: FromArrayProps) => {
 
-  const { register } = useFormContext<FitchProofType>();
+  const [_, set] = useFitchProofStoreContext();
 
-  const { fields, replace } = useFieldArray<FitchProofType>({ name: `proof.${index}.from` })
+  const onChange = (e: Event & {
+    currentTarget: HTMLSelectElement;
+    target: Element;
+  }) => {
+    const rule = e.currentTarget.value as keyof (typeof fitchRuleOptions);
+    set(props.index, "rule" as any, e.currentTarget.value)
+    set(props.index, "from" as any, Array(fitchRuleOptions[rule].count).fill(-1))
+  }
 
   return <>
-    <select className="w-32" {...register(`proof.${index}.rule`, {
-      onChange: (e) => {
-        const rule = e.target.value as keyof typeof fitchRuleOptions;
-        replace(Array(fitchRuleOptions[rule].count).fill({}));
-      }
-    })}>
+    <select onChange={onChange} class="w-32">
       <option hidden></option>
-      {Object.entries(fitchRuleOptions).map(([key, { label }]) => <option key={key} value={key}>{label}</option>)}
+      <Index each={Object.entries(fitchRuleOptions)}>
+        {(value) => <option value={value()[0]}>{value()[1].label}</option>}
+      </Index>
     </select>
-    {fields.map((field, fromIndex) => <FitchProofFromSelect key={field.id} index={index} path={`from.${fromIndex}.line`} />)}
+    <Index each={props.from}>
+      {(from, index) => <FitchProofFromSelect index={props.index} value={from()} setValue={(v) => set(props.index, "from" as any, index, v)} />}
+    </Index>
   </>
 }
 

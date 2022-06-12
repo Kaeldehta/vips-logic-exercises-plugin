@@ -11,17 +11,23 @@ const fitchAbs = z.object({
   from1: z.number().min(0)
 })
 
+export type FitchAbsurdityType = z.infer<typeof fitchAbs>
+
 const fitchPrem = z.object({
   type: z.literal("prem"),
   indentation: z.literal(0),
   formula
 })
 
+export type FitchPremiseType = z.infer<typeof fitchPrem>
+
 const fitchAss = z.object({
   type: z.literal("ass"),
   indentation: indentation.positive(),
   formula
 })
+
+export type FitchAssumptionType = z.infer<typeof fitchAss>
 
 const fitchRule = z.object({
   type: z.literal("rule"),
@@ -31,7 +37,9 @@ const fitchRule = z.object({
   from
 })
 
-export const fitchProofSchema = z.array(z.discriminatedUnion("type", [fitchAbs, fitchPrem, fitchRule, fitchAss])).min(1)
+export type FitchRuleType = z.infer<typeof fitchRule>
+
+export const fitchProofSchema = z.array(z.discriminatedUnion("type", [fitchAbs, fitchPrem, fitchRule, fitchAss])).min(1);
 
 export type FitchProofType = z.infer<typeof fitchProofSchema>
 

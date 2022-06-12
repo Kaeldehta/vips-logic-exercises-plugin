@@ -1,9 +1,9 @@
 import { createContext, useContext} from "solid-js"
 import { FitchProofType } from "../schemas/solve"
 import storeFactory from "../storeFactory";
-import { TASK } from "../utils";
+import { RESPONSE } from "../utils";
 
-const FitchProofContext = createContext(storeFactory(TASK as FitchProofType));
+const FitchProofContext = createContext(storeFactory<FitchProofType>(RESPONSE ?? []));
 
 const useFitchProofStoreContext = () => useContext(FitchProofContext);
 

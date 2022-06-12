@@ -1,5 +1,3 @@
-import { UseFieldArrayInsert, UseFieldArrayRemove, useFormContext } from "react-hook-form"
-import { FiMinusCircle } from "react-icons/fi"
 import FormulaWrapped from "../Formula"
 import IconButton from "../IconButton"
 import Inserter from "./Inserter"

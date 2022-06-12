@@ -1,5 +1,3 @@
-import { Fragment, useEffect } from "react";
-import { useFieldArray, useFormContext } from "react-hook-form";
 import IconButton from "../IconButton";
 import Inserter from "./Inserter";
 import SemanticTreeLine from "./SemanticTreeLine";

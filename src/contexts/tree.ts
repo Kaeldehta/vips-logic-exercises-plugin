@@ -1,9 +1,9 @@
 import { createContext, useContext} from "solid-js"
 import { SemanticTreeType } from "../schemas/solve"
 import storeFactory from "../storeFactory";
-import { TASK } from "../utils";
+import { RESPONSE } from "../utils";
 
-const SemanticTreeStoreContext = createContext(storeFactory(TASK as SemanticTreeType));
+const SemanticTreeStoreContext = createContext(storeFactory(RESPONSE as SemanticTreeType));
 
 const useSemanticTreeStoreContext = () => useContext(SemanticTreeStoreContext);
 
