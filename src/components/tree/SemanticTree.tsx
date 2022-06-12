@@ -1,34 +1,25 @@
+import { Show } from "solid-js";
+import useSemanticTreeStoreContext from "../../contexts/tree";
+import { semanticTreeSchema } from "../../schemas/solve";
+import tree from "../../views/solve/tree";
 import IconButton from "../IconButton";
+import Submitter from "../Submitter";
 import Inserter from "./Inserter";
 import SemanticTreeLine from "./SemanticTreeLine";
 
 
-const SemanticTree = ({ prefix = "" }: { prefix?: string }) => {
+const SemanticTree = () => {
 
-  const { watch } = useFormContext();
+  const [store, set] = useSemanticTreeStoreContext();
 
-  const { fields, remove, insert, append } = useFieldArray({ name: `${prefix}lines` });
-
-
-  // useEffect(() => {
-  //   console.log(prefix, fields.length)
-  // }, [fields.length])
-
-  const branch = watch(`${prefix}branch`);
-
-  return <div className="flex flex-col gap-1 justify-start items-center">
-    {fields.map((field, index) => <Fragment key={field.id}>
-      <SemanticTreeLine prefix={prefix} index={index} remove={remove} />
-      <Inserter prefix={prefix} index={index} insert={insert} noBranch={index === fields.length - 1 && branch === undefined} />
-    </Fragment>
-    )}
-    {!fields.length && <div className="group w-20 h-10"><IconButton onClick={() => append({ type: "ass" })}>Start</IconButton></div>}
-    {branch && <div className="flex gap-8">
-      <SemanticTree prefix={`${prefix}branch.left.`} />
-      <SemanticTree prefix={`${prefix}branch.right.`} />
+  return <>
+    <div class="flex flex-col gap-1 justify-start items-center">
+      <Show when={store.length} fallback={<button type="button" onClick={() => set([{ type: "ass", formula: "" }])}>Start</button>}>
+        <SemanticTreeLine index={0} line={store[0]} end={store.length - 1} />
+      </Show>
     </div>
-    }
-  </div>
+    <Submitter values={store} schema={semanticTreeSchema} />
+  </>
 }
 
 export default SemanticTree;

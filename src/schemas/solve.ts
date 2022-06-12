@@ -46,34 +46,21 @@ export type FitchProofType = z.infer<typeof fitchProofSchema>
 const treeAss = z.object({
   formula,
   type: z.literal("ass"),
+  right: z.number().optional()
 })
 
 const treeRule = z.object({
   formula,
   type: z.literal("rule"),
+  right: z.number().optional()
 })
 
 const treeAbs = z.object({
   type: z.literal("abs"),
+  right: z.number().optional()
 })
 
-const lines = z.array(z.discriminatedUnion("type", [treeAss, treeRule, treeAbs])).min(1)
-
-interface Tree {
-  lines: z.infer<typeof lines>
-  branch?: {
-    left: Tree
-    right: Tree
-  }
-}
-
-export const semanticTreeSchema: z.ZodType<Tree> = z.lazy(() => z.object({
-  lines,
-  branch: z.object({
-    left: semanticTreeSchema,
-    right: semanticTreeSchema
-  }).optional(),
-}))
+export const semanticTreeSchema = z.array(z.discriminatedUnion("type", [treeAss, treeRule, treeAbs])).min(1)
 
 export type SemanticTreeType = z.infer<typeof semanticTreeSchema>
 

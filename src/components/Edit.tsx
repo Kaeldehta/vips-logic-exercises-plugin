@@ -1,8 +1,9 @@
 import useTaskStoreContext from "../contexts/edit";
-import { TaskType } from "../schemas/edit";
+import { taskSchema } from "../schemas/edit";
 import FitchProofEdit from "./fitch/FitchProofEdit";
 import SemanticTreeEdit from "./tree/SemanticTreeEdit";
 import { Switch, Match } from "solid-js"
+import Submitter from "./Submitter";
 
 
 const Edit = () => {
@@ -21,7 +22,7 @@ const Edit = () => {
         <SemanticTreeEdit />
       </Match>
     </Switch>
-    <input type="hidden" value={JSON.stringify(store)} name="react_form_values" />
+    <Submitter values={store} schema={taskSchema} />
   </div>
 }
 
