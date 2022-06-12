@@ -1,44 +1,43 @@
-import { UseFieldArrayRemove, useFormContext } from "react-hook-form";
-import { FiMinusCircle } from "react-icons/fi";
+// import { FiMinusCircle } from "react-icons/fi";
 import { FitchProofType } from "../../schemas/solve";
 import FitchProofFromSelect from "./FitchProofFromSelect";
 import Formula from "../Formula";
 import FromArrayRule from "./FitchProofFromArrayRule";
 import IconButton from "../IconButton";
 import Indent from "./Indent";
-import useType from "../useType";
+import { untrack, Match } from "solid-js";
+import useFitchProofStoreContext from "../../contexts/fitch";
+import { produce } from "solid-js/store";
 
 interface FitchProofLineProps {
   index: number,
-  remove: UseFieldArrayRemove
+  line: FitchProofType[number]
 }
 
-const FitchProofLine = ({ index, remove }: FitchProofLineProps) => {
+const FitchProofLine = (props: FitchProofLineProps) => {
 
-  const { getValues } = useFormContext<FitchProofType>();
+  const [lines, set] = useFitchProofStoreContext();
 
-  const type = useType(index);
-
-  return <div className="group h-16 group min-w-fit flex justify-start gap-2 items-center">
-    <div className="shrink-0 flex items-center w-12">{index + 1}</div>
-    <Indent index={index} />
-    {type !== "abs" ? <Formula name={`proof.${index}.formula`} /> : <span className="w-52 ">{"\u22A5"}</span>}
-    {type === "rule" && <FromArrayRule index={index} />}
-    {type === "prem" && <div>Prem.</div>}
-    {type === "ass" && <div>Ass.</div>}
-    {type === "abs" && <>
-      <FitchProofFromSelect index={index} path="from0" />
-      <FitchProofFromSelect index={index} path="from1" />
+  return <div class="group h-16 group min-w-fit flex justify-start gap-2 items-center">
+    <div class="shrink-0 flex items-center w-12">{props.index + 1}</div>
+    <Indent index={props.index} />
+    {props.line.type !== "abs" ? <Formula name={`proof.${index}.formula`} /> : <span class="w-52 ">{"\u22A5"}</span>}
+    {props.line.type === "rule" && <FromArrayRule index={index} />}
+    {props.line.type === "prem" && <div>Prem.</div>}
+    {props.line.type === "ass" && <div>Ass.</div>}
+    {props.line.type === "abs" && <>
+      <FitchProofFromSelect index={props.index} path="from0" />
+      <FitchProofFromSelect index={props.index} path="from1" />
     </>}
     <IconButton onClick={() => {
-      const lines = getValues("proof");
 
-      const line = lines[index];
+      const line = lines[props.index];
+
+      let deleteOffset = 0;
 
       if (line.type === "ass") {
-        let indices = [index];
         const indentation = line.indentation;
-        for (let i = index + 1; i < lines.length; i++) {
+        for (let i = props.index + 1; i < lines.length; i++) {
 
           const current = lines[i];
 
@@ -46,13 +45,11 @@ const FitchProofLine = ({ index, remove }: FitchProofLineProps) => {
             break;
           }
 
-          indices.push(i);
+          deleteOffset++;
         }
-        remove(indices);
-      } else {
-        remove(index)
       }
-    }}><FiMinusCircle /></IconButton>
+      set({from: props.index, to: props.index + deleteOffset}, undefined as any);
+    }}>-</IconButton>
   </div>
 }
 

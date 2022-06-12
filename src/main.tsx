@@ -1,6 +1,5 @@
 import 'vite/modulepreload-polyfill'
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import { render } from "solid-js/web";
 import './index.css'
 import { ELEMENT, TASK_TYPE, VIEW } from './utils'
 
@@ -11,11 +10,7 @@ const run = async () => {
 
   const { default: ViewComponent } = VIEW === "edit" ? await import("./views/edit") : await import(`./views/${VIEW}/${TASK_TYPE}.tsx`)
 
-  ReactDOM.createRoot(ELEMENT).render(
-    <React.StrictMode>
-      <ViewComponent />
-    </React.StrictMode>
-  )
+  render(ViewComponent, ELEMENT);
 }
 
 run()

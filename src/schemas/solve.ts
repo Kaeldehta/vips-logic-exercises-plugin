@@ -31,7 +31,7 @@ const fitchRule = z.object({
   from
 })
 
-export const fitchProofSchema = z.object({ proof: z.array(z.discriminatedUnion("type", [fitchAbs, fitchPrem, fitchRule, fitchAss])).min(1) })
+export const fitchProofSchema = z.array(z.discriminatedUnion("type", [fitchAbs, fitchPrem, fitchRule, fitchAss])).min(1)
 
 export type FitchProofType = z.infer<typeof fitchProofSchema>
 

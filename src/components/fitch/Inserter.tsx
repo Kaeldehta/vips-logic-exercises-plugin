@@ -7,7 +7,7 @@ import IconButton from "../IconButton";
 
 interface InserterProps {
   index: number
-  insert: UseFieldArrayInsert<FitchProofType>
+  line: FitchProofType[number]
 }
 
 const Inserter = ({ index, insert }: InserterProps) => {

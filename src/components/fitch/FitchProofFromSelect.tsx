@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
+import { createEffect, createSignal, Index } from "solid-js";
+import useFitchProofStoreContext from "../../contexts/fitch";
 import { FitchProofType } from "../../schemas/solve";
 import { useFieldArrayContext } from "../FieldArrayProvider";
 import FromSelect from "../FromSelect";
@@ -7,30 +9,33 @@ import FromSelect from "../FromSelect";
 
 interface FitchProofFromSelectProps {
   index: number
-  path: "from0" | "from1" | `from.${number}.line`
+  value: number
+  accessor: ["from0", "from1"] | ["from", number]
 }
 
-const FitchProofFromSelect = ({ index, path }: FitchProofFromSelectProps) => {
+const FitchProofFromSelect = (props: FitchProofFromSelectProps) => {
 
-  const { register, setValue } = useFormContext<FitchProofType>();
+  const [proof, set] = useFitchProofStoreContext();
 
-  const fields = useFieldArrayContext();
+  const options = () => proof.filter((_, i) => i < props.index);
 
-  const options = fields.filter((_, i) => i < index);
+  const [selected, setSelected] = createSignal(proof[props.value]);
 
-  const value = useWatch<FitchProofType>({ name: `proof.${index}.${path}` }) as number;
+  const index = () => proof.indexOf(selected())
 
-  const [selectedId, setId] = useState(value > -1 ? fields[value]?.id : undefined);
+  createEffect(() => {
+    set(props.index, index())
+  })
 
-  useEffect(() => {
-    setValue(`proof.${index}.${path}`, fields.findIndex(({ id }) => id === selectedId))
-  }, [fields, selectedId])
 
-  return <FromSelect {...register(`proof.${index}.${path}`, {
-    valueAsNumber: true, onChange: (e) => {
-      setId(fields[e.target.value].id)
-    }
-  })} options={options} />
+  return <select class="w-20" onChange={(e) => {
+    setSelected(options()[e.currentTarget.])
+  }}>
+  <option hidden value={-1} />
+  <Index each={options()}>
+  {(_, index) => <option value={index}>{index + 1}</option>}
+  </Index>
+</select>
 }
 
 export default FitchProofFromSelect;
