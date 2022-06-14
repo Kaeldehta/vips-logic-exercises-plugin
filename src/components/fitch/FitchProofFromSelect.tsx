@@ -1,4 +1,4 @@
-import { createEffect, createSignal, For } from "solid-js";
+import { Index } from "solid-js";
 import useFitchProofStoreContext from "../../contexts/fitch";
 
 interface FitchProofFromSelectProps {
@@ -13,22 +13,14 @@ const FitchProofFromSelect = (props: FitchProofFromSelectProps) => {
 
   const options = () => proof.filter((_, i) => i < props.index);
 
-  const [selected, setSelected] = createSignal(proof[props.value]);
-
-  const index = () => proof.indexOf(selected())
-
-  createEffect(() => {
-    props.setValue(index())
-  })
-
-  return <select class="w-20" onChange={(e) => {
+  return <select value={props.value} class="w-20" onChange={(e) => {
     const index = parseInt(e.currentTarget.value);
-    setSelected(options()[index])
+    props.setValue(index)
   }}>
     <option hidden value={-1} />
-    <For each={options()}>
-      {(_, index) => <option value={index()}>{index() + 1}</option>}
-    </For>
+    <Index each={options()}>
+      {(_, index) => <option value={index}>{index + 1}</option>}
+    </Index>
   </select>
 }
 

@@ -2,7 +2,7 @@ import { FitchProofType } from "../../schemas/solve";
 import Border from "./Border";
 import IconButton from "../IconButton";
 import useFitchProofStoreContext from "../../contexts/fitch";
-import { Index, Show } from "solid-js";
+import { batch, Index, Show } from "solid-js";
 import { produce } from "solid-js/store";
 import ArrowRightCircle from "../icons/ArrowRightCircle";
 import ArrowDownCircle from "../icons/ArrowDownCircle";
@@ -18,9 +18,14 @@ const Inserter = (props: InserterProps) => {
 
   const [store, set] = useFitchProofStoreContext();
 
-  const insert = (index: number, line: FitchProofType[number]) => set(produce(state => {
-    state.splice(index, 0, line);
-  }))
+  const insert = (index: number, line: FitchProofType[number]) => batch(() => {
+    set(produce(state => {
+      state.splice(index, 0, line);
+    }))
+    set(line => line.type === "rule", "from" as any, from => from >= index, from => from + 1)
+    set(line => line.type == "abs" && line.from0 >= index, "from0" as any, from => from + 1)
+    set(line => line.type == "abs" && line.from1 >= index, "from1" as any, from => from + 1)
+  })
 
   const nextType = () => store[props.index + 1]?.type;
 

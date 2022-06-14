@@ -2,7 +2,7 @@ import useFitchProofStoreContext from "../../contexts/fitch";
 import fitchRuleOptions, { fitchRules } from "../../rules/fitch";
 import { FitchProofType, FitchRuleType } from "../../schemas/solve";
 import FitchProofFromSelect from "./FitchProofFromSelect";
-import { Index } from "solid-js";
+import { batch, Index } from "solid-js";
 
 interface FromArrayProps {
   index: number
@@ -19,12 +19,11 @@ const FromArrayRule = (props: FromArrayProps) => {
     target: Element;
   }) => {
     const rule = e.currentTarget.value as keyof (typeof fitchRuleOptions);
-    set(props.index, "rule" as any, e.currentTarget.value)
-    set(props.index, "from" as any, Array(fitchRuleOptions[rule].count).fill(-1))
+    set(props.index, { rule, from: Array(fitchRuleOptions[rule].count).fill(-1) })
   }
 
   return <>
-    <select onChange={onChange} class="w-32">
+    <select value={props.rule} onChange={onChange} class="w-32">
       <option hidden></option>
       <Index each={Object.entries(fitchRuleOptions)}>
         {(value) => <option value={value()[0]}>{value()[1].label}</option>}
