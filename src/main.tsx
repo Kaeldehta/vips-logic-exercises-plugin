@@ -2,20 +2,15 @@ import "vite/modulepreload-polyfill";
 import { render } from "solid-js/web";
 import "./index.css";
 import { ELEMENT, TASK_TYPE, VIEW } from "./utils";
+import { lazy } from "solid-js";
 
-const run = async () => {
-  if (!VIEW) {
-    throw new Error("Can not determine view");
-  }
+const ViewComponent = lazy(
+  () =>
+    (VIEW === "edit"
+      ? import("./views/edit")
+      : import(`./views/${VIEW}/${TASK_TYPE}.tsx`)) as Promise<{
+      default: () => Element;
+    }>
+);
 
-  const { default: ViewComponent } =
-    VIEW === "edit"
-      ? ((await import("./views/edit")) as { default: () => Element })
-      : ((await import(`./views/${VIEW}/${TASK_TYPE ?? ""}.tsx`)) as {
-          default: () => Element;
-        });
-
-  render(ViewComponent, ELEMENT);
-};
-
-void run();
+render(ViewComponent, ELEMENT);

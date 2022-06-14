@@ -16,8 +16,16 @@ export const RESPONSE = responseString
   ? (JSON.parse(responseString) as FitchProofType | SemanticTreeType)
   : undefined;
 
-type TaskTypeType = "tree" | "fitch" | undefined;
+type TaskTypeType = "tree" | "fitch";
 export const TASK_TYPE = ELEMENT.dataset.type as TaskTypeType;
 
-type ViewType = "edit" | "solve" | "correct" | undefined;
+type ViewType = "edit" | "solve" | "correct";
 export const VIEW = ELEMENT.dataset.view as ViewType;
+
+if (!VIEW) {
+  throw new Error("Can not determine task type");
+}
+
+if (VIEW !== "edit" && !TASK_TYPE) {
+  throw new Error("Can not determine task type");
+}
