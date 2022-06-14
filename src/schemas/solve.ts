@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { fitchRules } from "../rules/fitch";
+import { treeRules } from "../rules/tree";
 import { formula, from } from "../schemas/common";
 
 const indentation = z.number().min(0);
@@ -7,8 +8,7 @@ const indentation = z.number().min(0);
 const fitchAbs = z.object({
   type: z.literal("abs"),
   indentation,
-  from0: z.number().min(0),
-  from1: z.number().min(0)
+  from: from.length(2)
 })
 
 export type FitchAbsurdityType = z.infer<typeof fitchAbs>
@@ -43,21 +43,26 @@ export const fitchProofSchema = z.array(z.discriminatedUnion("type", [fitchAbs, 
 
 export type FitchProofType = z.infer<typeof fitchProofSchema>
 
+const right = z.number().optional()
+
 const treeAss = z.object({
   formula,
   type: z.literal("ass"),
-  right: z.number().optional()
+  right
 })
 
 const treeRule = z.object({
   formula,
   type: z.literal("rule"),
-  right: z.number().optional()
+  right,
+  rule: z.enum(treeRules),
+  from: from.length(2)
 })
 
 const treeAbs = z.object({
   type: z.literal("abs"),
-  right: z.number().optional()
+  right,
+  from: from.length(2)
 })
 
 export const semanticTreeSchema = z.array(z.discriminatedUnion("type", [treeAss, treeRule, treeAbs])).min(1)

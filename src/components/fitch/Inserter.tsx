@@ -22,9 +22,7 @@ const Inserter = (props: InserterProps) => {
     set(produce(state => {
       state.splice(index, 0, line);
     }))
-    set(line => line.type === "rule", "from" as any, from => from >= index, from => from + 1)
-    set(line => line.type == "abs" && line.from0 >= index, "from0" as any, from => from + 1)
-    set(line => line.type == "abs" && line.from1 >= index, "from1" as any, from => from + 1)
+    set(line => line.type === "rule" || line.type == "abs", "from" as any, from => from >= index, from => from + 1)
   })
 
   const nextType = () => store[props.index + 1]?.type;
@@ -47,7 +45,7 @@ const Inserter = (props: InserterProps) => {
             <IconButton title="Add Assumption" onClick={() => insert(props.index + 1, { type: "ass", indentation: newIndentation + 1, formula: "" })}><ArrowRightCircle /></IconButton>
             <IconButton title="Add Rule Line" onClick={() => insert(props.index + 1, { type: "rule", indentation: newIndentation, formula: "", rule: "" as any, from: [] })}><ArrowDownCircle /></IconButton>
             <Show when={newIndentation > 0}>
-              <IconButton title="Add Absurdity" onClick={() => insert(props.index + 1, { type: "abs", indentation: newIndentation, from0: -1, from1: -1 })}>{"\u22A5"}</IconButton>
+              <IconButton title="Add Absurdity" onClick={() => insert(props.index + 1, { type: "abs", indentation: newIndentation, from: [-1, -1] })}>{"\u22A5"}</IconButton>
             </Show>
           </Show>
           <Show when={props.type === "prem"}>

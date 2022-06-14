@@ -40,8 +40,8 @@ const FitchProofLine = (props: FitchProofLineProps) => {
       }
     }
     batch(() => {
-      set(state => state.type === "rule", "from" as any, from => from >= props.index && from < props.index + deleteCount, -1)
-      set(state => state.type === "rule", "from" as any, from => from >= props.index + deleteCount, from => from - deleteCount);
+      set(state => state.type === "rule" || state.type === "abs", "from" as any, from => from >= props.index && from < props.index + deleteCount, -1)
+      set(state => state.type === "rule" || state.type === "abs", "from" as any, from => from >= props.index + deleteCount, from => from - deleteCount);
       set(produce(state => {
         state.splice(props.index, deleteCount);
       }))
@@ -57,8 +57,8 @@ const FitchProofLine = (props: FitchProofLineProps) => {
     {props.line.type === "prem" && <div>Prem.</div>}
     {props.line.type === "ass" && <div>Ass.</div>}
     {props.line.type === "abs" && <>
-      <FitchProofFromSelect index={props.index} value={props.line.from0} setValue={(from0) => set(props.index, { from0 })} />
-      <FitchProofFromSelect index={props.index} value={props.line.from1} setValue={(from1) => set(props.index, { from1 })} />
+      <FitchProofFromSelect index={props.index} value={props.line.from[0]} setValue={(from) => set(props.index, "from" as any, 0, from)} />
+      <FitchProofFromSelect index={props.index} value={props.line.from[1]} setValue={(from) => set(props.index, "from" as any, 1, from)} />
     </>}
     <IconButton title="Annotate"><Tag /></IconButton>
     <IconButton tile="Remove" onClick={remove}><MinusCircle /></IconButton>
