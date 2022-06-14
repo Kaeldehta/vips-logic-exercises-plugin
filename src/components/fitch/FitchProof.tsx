@@ -12,10 +12,10 @@ const FitchProof = () => {
 
   return <>
     <For each={store} fallback={<button onClick={() => set([{ type: "prem", indentation: 0, formula: "" }])} type="button">Add</button>}>
-      {(line, i) => <>
+      {(line, i) => <div class="flex flex-col group hover:bg-gray-100 rounded-md">
         <FitchProofLine index={i()} line={line} />
         <Inserter index={i()} type={line.type} indentation={line.indentation} />
-      </>
+      </div>
       }
     </For>
     <Submitter values={store} schema={fitchProofSchema} />

@@ -49,7 +49,7 @@ const FitchProofLine = (props: FitchProofLineProps) => {
 
   }
 
-  return <div class="group h-16 group min-w-fit flex justify-start gap-2 items-center">
+  return <div class="h-16 min-w-fit flex justify-start gap-2 items-center">
     <div class="shrink-0 flex items-center w-12">{props.index + 1}</div>
     <Indent index={props.index} indentation={props.line.indentation} type={props.line.type} />
     {props.line.type !== "abs" ? <Formula value={props.line.formula} setValue={(formula) => set(props.index, { formula })} /> : <span class="w-52 ">{"\u22A5"}</span>}
@@ -61,7 +61,7 @@ const FitchProofLine = (props: FitchProofLineProps) => {
       <FitchProofFromSelect index={props.index} value={props.line.from[1]} setValue={(from) => set(props.index, "from" as any, 1, from)} />
     </>}
     <IconButton title="Annotate"><Tag /></IconButton>
-    <IconButton tile="Remove" onClick={remove}><MinusCircle /></IconButton>
+    <IconButton title="Remove" onClick={remove} class="text-red-600"><MinusCircle /></IconButton>
   </div>
 }
 

@@ -35,12 +35,12 @@ const Inserter = (props: InserterProps) => {
     {(_, indentationOffset) => {
       const newIndentation = props.indentation - indentationOffset;
 
-      return <div class="h-16 group min-w-fit flex justify-start gap-2 items-center">
+      return <div class="h-16 min-w-fit flex justify-start gap-2 items-center">
         <div class="w-12"></div>
         <Index each={Array(newIndentation + 1).fill(0)}>
           {() => <Border />}
         </Index>
-        <div class="w-52 border-2 p-1 border-white border-solid flex justify-evenly">
+        <div class="w-52 p-1 flex justify-center">
           <Show when={props.type !== "prem" || nextType() !== "prem"}>
             <IconButton title="Add Assumption" onClick={() => insert(props.index + 1, { type: "ass", indentation: newIndentation + 1, formula: "" })}><ArrowRightCircle /></IconButton>
             <IconButton title="Add Rule Line" onClick={() => insert(props.index + 1, { type: "rule", indentation: newIndentation, formula: "", rule: "" as any, from: [] })}><ArrowDownCircle /></IconButton>
