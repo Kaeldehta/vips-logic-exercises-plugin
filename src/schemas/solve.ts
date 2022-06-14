@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { fitchRules } from "../rules/fitch";
-import { treeRules } from "../rules/tree";
+import treeRulesOptions from "../rules/tree";
 import { formula, from } from "../schemas/common";
 
 const indentation = z.number().min(0);
@@ -55,9 +55,11 @@ const treeRule = z.object({
   formula,
   type: z.literal("rule"),
   right,
-  rule: z.enum(treeRules),
-  from: from.length(2)
+  rule: z.enum(treeRulesOptions),
+  from: from.length(1)
 })
+
+export type TreeRuleType = z.infer<typeof treeRule>
 
 const treeAbs = z.object({
   type: z.literal("abs"),

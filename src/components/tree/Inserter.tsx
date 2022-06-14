@@ -36,17 +36,17 @@ const Inserter = (props: InserterProps) => {
 
     return <div class="group h-16 group w-40 flex justify-center gap-2 items-center">
         <Show when={props.index === props.end}>
-            <IconButton onClick={() => insert(props.index + 1, { type: "abs" })}>{"\u22A5"}</IconButton>
+            <IconButton onClick={() => insert(props.index + 1, { type: "abs", from: [-1, -1] })}>{"\u22A5"}</IconButton>
             <IconButton onClick={() => batch(() => {
                 updateRight(props.index + 1, 2)
                 set(produce(state => {
-                    state.splice(props.index + 1, 0, { type: "rule", formula: "" }, { type: "rule", formula: "" });
+                    state.splice(props.index + 1, 0, { type: "rule", formula: "", from: [-1], rule: "" as any }, { type: "rule", formula: "", from: [-1], rule: "" as any });
                     state[props.index].right = props.index + 2;
                 }))
             })}>B</IconButton>
         </Show>
         <IconButton onClick={() => insert(props.index + 1, { type: "ass", formula: "" })} ><PlusCircle /></IconButton>
-        <IconButton onClick={() => insert(props.index + 1, { type: "rule", formula: "" })}><ArrowDownCircle /></IconButton>
+        <IconButton onClick={() => insert(props.index + 1, { type: "rule", formula: "", from: [-1], rule: "" as any })}><ArrowDownCircle /></IconButton>
     </div>
 }
 
