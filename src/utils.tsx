@@ -1,14 +1,23 @@
-export const ELEMENT = document.getElementById('exercise-container') as HTMLElement;
+import { TaskType } from "./schemas/edit";
+import { FitchProofType, SemanticTreeType } from "./schemas/solve";
 
-const taskString = ELEMENT.dataset.task
-const responseString = ELEMENT.dataset.response
+export const ELEMENT = document.getElementById(
+  "exercise-container"
+) as HTMLElement;
 
-export const TASK = taskString ? JSON.parse(taskString) : undefined
+const taskString = ELEMENT.dataset.task;
+const responseString = ELEMENT.dataset.response;
 
-export const RESPONSE = responseString ? JSON.parse(responseString) : undefined
+export const TASK = taskString
+  ? (JSON.parse(taskString) as TaskType)
+  : undefined;
 
-type TaskTypeType = "tree" | "fitch" | undefined
+export const RESPONSE = responseString
+  ? (JSON.parse(responseString) as FitchProofType | SemanticTreeType)
+  : undefined;
+
+type TaskTypeType = "tree" | "fitch" | undefined;
 export const TASK_TYPE = ELEMENT.dataset.type as TaskTypeType;
 
-type ViewType = "edit" | "solve" | "correct" | undefined
+type ViewType = "edit" | "solve" | "correct" | undefined;
 export const VIEW = ELEMENT.dataset.view as ViewType;

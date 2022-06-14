@@ -1,7 +1,7 @@
 import { createWriteStream } from "fs-extra";
 import archiver from "archiver";
-const run = async () => {
 
+const run = async () => {
   const output = createWriteStream("package.zip");
 
   const archive = archiver("zip");
@@ -17,4 +17,4 @@ const run = async () => {
   await archive.finalize();
 };
 
-run();
+void run().then(() => console.log("Archive created"));

@@ -8,66 +8,75 @@ const indentation = z.number().min(0);
 const fitchAbs = z.object({
   type: z.literal("abs"),
   indentation,
-  from: from.length(2)
-})
+  from: from.length(2),
+});
 
-export type FitchAbsurdityType = z.infer<typeof fitchAbs>
+export type FitchAbsurdityType = z.infer<typeof fitchAbs>;
 
 const fitchPrem = z.object({
   type: z.literal("prem"),
   indentation: z.literal(0),
-  formula
-})
+  formula,
+});
 
-export type FitchPremiseType = z.infer<typeof fitchPrem>
+export type FitchPremiseType = z.infer<typeof fitchPrem>;
 
 const fitchAss = z.object({
   type: z.literal("ass"),
   indentation: indentation.positive(),
-  formula
-})
+  formula,
+});
 
-export type FitchAssumptionType = z.infer<typeof fitchAss>
+export type FitchAssumptionType = z.infer<typeof fitchAss>;
 
 const fitchRule = z.object({
   type: z.literal("rule"),
   indentation,
   formula,
   rule: z.enum(fitchRules),
-  from
-})
+  from,
+});
 
-export type FitchRuleType = z.infer<typeof fitchRule>
+export type FitchRuleType = z.infer<typeof fitchRule>;
 
-export const fitchProofSchema = z.array(z.discriminatedUnion("type", [fitchAbs, fitchPrem, fitchRule, fitchAss])).min(1);
+export const fitchProofSchema = z
+  .array(
+    z.discriminatedUnion("type", [fitchAbs, fitchPrem, fitchRule, fitchAss])
+  )
+  .min(1);
 
-export type FitchProofType = z.infer<typeof fitchProofSchema>
+export type FitchProofType = z.infer<typeof fitchProofSchema>;
 
-const right = z.number().optional()
+const right = z.number().optional();
 
 const treeAss = z.object({
   formula,
   type: z.literal("ass"),
-  right
-})
+  right,
+});
+
+export type TreeAssumptionType = z.infer<typeof treeAss>;
 
 const treeRule = z.object({
   formula,
   type: z.literal("rule"),
   right,
   rule: z.enum(treeRulesOptions),
-  from: from.length(1)
-})
+  from: from.length(1),
+});
 
-export type TreeRuleType = z.infer<typeof treeRule>
+export type TreeRuleType = z.infer<typeof treeRule>;
 
 const treeAbs = z.object({
   type: z.literal("abs"),
   right,
-  from: from.length(2)
-})
+  from: from.length(2),
+});
 
-export const semanticTreeSchema = z.array(z.discriminatedUnion("type", [treeAss, treeRule, treeAbs])).min(1)
+export type TreeAbsurdityType = z.infer<typeof treeAbs>;
 
-export type SemanticTreeType = z.infer<typeof semanticTreeSchema>
+export const semanticTreeSchema = z
+  .array(z.discriminatedUnion("type", [treeAss, treeRule, treeAbs]))
+  .min(1);
 
+export type SemanticTreeType = z.infer<typeof semanticTreeSchema>;
