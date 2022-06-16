@@ -1,14 +1,20 @@
-import { JSX } from "solid-js";
+import { Component, JSX } from "solid-js";
 
-const IconButton = (props: JSX.ButtonHTMLAttributes<HTMLButtonElement>) => {
+interface IconButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
+  show?: boolean;
+}
+
+const IconButton: Component<IconButtonProps> = (props) => {
   return (
     <button
-      tabIndex={-1}
       {...props}
+      tabIndex={-1}
       type="button"
-      class={`group-hover:flex hidden items-center justify-center w-10 h-10 ${
-        props.class ?? ""
-      }`}
+      class={`items-center justify-center w-10 h-10 ${props.class ?? ""}`}
+      classList={{
+        "group-hover:flex hidden": !props.show,
+        flex: props.show,
+      }}
     ></button>
   );
 };

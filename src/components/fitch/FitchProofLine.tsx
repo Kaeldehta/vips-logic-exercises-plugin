@@ -102,9 +102,27 @@ const FitchProofLine = (props: FitchProofLineProps) => {
           />
         </>
       )}
-      <IconButton title="Annotate">
-        <Tag />
-      </IconButton>
+      {props.line.annotation !== undefined ? (
+        <input
+          class="h-12 border-gray-100 border border-solid px-1"
+          value={props.line.annotation}
+          onInput={(e) =>
+            set(
+              props.index,
+              "annotation",
+              e.currentTarget.value === "" ? undefined : e.currentTarget.value
+            )
+          }
+        />
+      ) : (
+        <IconButton
+          title="Annotate"
+          onClick={() => set(props.index, "annotation", "")}
+        >
+          <Tag />
+        </IconButton>
+      )}
+
       <IconButton title="Remove" onClick={remove} class="text-red-600">
         <MinusCircle />
       </IconButton>

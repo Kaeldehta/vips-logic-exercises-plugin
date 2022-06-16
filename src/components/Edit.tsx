@@ -22,6 +22,7 @@ const Edit = () => {
               Semantic Tree
             </button>
             <button
+              class="bg-gray-300 hover:bg-gray-200 rounded px-1 py-1"
               type="button"
               onClick={() =>
                 set({ type: "fitch", statements: [], consequence: "" })

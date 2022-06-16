@@ -1,4 +1,11 @@
-<div id="exercise-container" class="tailwind" data-view=<?= $reactView ?> <? if ($exercise->task["answers"][0]) : ?> data-task=<?= json_encode($exercise->task["answers"][0]) ?> data-type=<?= $exercise->task["answers"][0]["type"] ?> <? endif ?> <? if ($response) : ?> data-response=<?= json_encode($response) ?><? endif ?>>
+<div id="exercise-container" class="tailwind">
 </div>
+
+<script>
+  const RESPONSE = <? if ($response) :?> <?= json_encode($response) ?> <? else: ?> undefined  <? endif ?>;
+  const TASK = <? if ($exercise->task["answers"][0]) : ?><?= json_encode($exercise->task["answers"][0]) ?> <? else: ?> undefined <? endif ?>;
+  const VIEW = "<?= $reactView ?>";
+</script>
+
 
 <script type="module" src="http://localhost:3000/src/main.tsx"></script>

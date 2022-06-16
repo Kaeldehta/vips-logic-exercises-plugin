@@ -1,9 +1,11 @@
 import { Index } from "solid-js";
 import { FitchProofTask } from "../../schemas/edit";
-import { TASK } from "../../utils";
+import FormulaRender from "../FormulaRender";
+
+declare const TASK: FitchProofTask;
 
 const FitchProofTaskRender = () => {
-  const { consequence, statements } = TASK as FitchProofTask;
+  const { consequence, statements } = TASK;
 
   return (
     <div class="flex gap-1 justify-start mb-8">
@@ -11,7 +13,7 @@ const FitchProofTaskRender = () => {
       <Index each={statements}>
         {(statement, index) => (
           <b class="flex">
-            {statement().statement}
+            <FormulaRender value={statement().statement} />
             {index < statements.length - 1 && ","}
           </b>
         )}
@@ -20,7 +22,9 @@ const FitchProofTaskRender = () => {
         {"\u22A2"}
         <sub>FC</sub>
       </b>
-      <b class="flex">{consequence}</b>
+      <b class="flex">
+        <FormulaRender value={consequence} />
+      </b>
     </div>
   );
 };

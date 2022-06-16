@@ -2,7 +2,7 @@ import { FitchProofType } from "../../schemas/solve";
 import Border from "./Border";
 import IconButton from "../IconButton";
 import useFitchProofStoreContext from "../../contexts/fitch";
-import { batch, Index, Show } from "solid-js";
+import { batch, createMemo, Index, Show } from "solid-js";
 import { produce } from "solid-js/store";
 import ArrowRightCircle from "../icons/ArrowRightCircle";
 import ArrowDownCircle from "../icons/ArrowDownCircle";
@@ -17,7 +17,13 @@ interface InserterProps {
 const Inserter = (props: InserterProps) => {
   const [store, set] = useFitchProofStoreContext();
 
-  const insert = (index: number, line: FitchProofType[number]) =>
+  const insert = ({
+    index,
+    line,
+  }: {
+    index: number;
+    line: FitchProofType[number];
+  }) =>
     batch(() => {
       set(
         produce((state) => {
@@ -32,9 +38,9 @@ const Inserter = (props: InserterProps) => {
       );
     });
 
-  const nextType = () => store[props.index + 1]?.type;
+  const nextType = createMemo(() => store[props.index + 1]?.type);
 
-  const nextIndentation = () => store[props.index + 1]?.indentation;
+  const nextIndentation = createMemo(() => store[props.index + 1]?.indentation);
 
   const indentationDelta = () =>
     nextType()
@@ -60,40 +66,52 @@ const Inserter = (props: InserterProps) => {
               <Show when={props.type !== "prem" || nextType() !== "prem"}>
                 <IconButton
                   title="Add Assumption"
-                  onClick={() =>
-                    insert(props.index + 1, {
-                      type: "ass",
-                      indentation: newIndentation + 1,
-                      formula: "",
-                    })
-                  }
+                  onClick={[
+                    insert,
+                    {
+                      index: props.index + 1,
+                      line: {
+                        type: "ass",
+                        indentation: newIndentation + 1,
+                        formula: "",
+                      },
+                    },
+                  ]}
                 >
                   <ArrowRightCircle />
                 </IconButton>
                 <IconButton
                   title="Add Rule Line"
-                  onClick={() =>
-                    insert(props.index + 1, {
-                      type: "rule",
-                      indentation: newIndentation,
-                      formula: "",
-                      rule: "" as never,
-                      from: [],
-                    })
-                  }
+                  onClick={[
+                    insert,
+                    {
+                      index: props.index + 1,
+                      line: {
+                        type: "rule",
+                        indentation: newIndentation,
+                        formula: "",
+                        rule: "" as never,
+                        from: [],
+                      },
+                    },
+                  ]}
                 >
                   <ArrowDownCircle />
                 </IconButton>
                 <Show when={newIndentation > 0}>
                   <IconButton
                     title="Add Absurdity"
-                    onClick={() =>
-                      insert(props.index + 1, {
-                        type: "abs",
-                        indentation: newIndentation,
-                        from: [-1, -1],
-                      })
-                    }
+                    onClick={[
+                      insert,
+                      {
+                        index: props.index + 1,
+                        line: {
+                          type: "abs",
+                          indentation: newIndentation,
+                          from: [-1, -1],
+                        },
+                      },
+                    ]}
                   >
                     {"\u22A5"}
                   </IconButton>
@@ -102,13 +120,17 @@ const Inserter = (props: InserterProps) => {
               <Show when={props.type === "prem"}>
                 <IconButton
                   title="Add Premise"
-                  onClick={() =>
-                    insert(props.index + 1, {
-                      type: "prem",
-                      indentation: 0,
-                      formula: "",
-                    })
-                  }
+                  onClick={[
+                    insert,
+                    {
+                      index: props.index + 1,
+                      line: {
+                        type: "prem",
+                        indentation: 0,
+                        formula: "",
+                      },
+                    },
+                  ]}
                 >
                   <PlusCircle />
                 </IconButton>

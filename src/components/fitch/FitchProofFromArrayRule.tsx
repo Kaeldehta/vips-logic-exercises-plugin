@@ -2,7 +2,7 @@ import useFitchProofStoreContext from "../../contexts/fitch";
 import fitchRuleOptions from "../../rules/fitch";
 import { FitchRuleType } from "../../schemas/solve";
 import FitchProofFromSelect from "./FitchProofFromSelect";
-import { Index } from "solid-js";
+import { Index, JSX } from "solid-js";
 
 interface FromArrayProps {
   index: number;
@@ -13,12 +13,7 @@ interface FromArrayProps {
 const FromArrayRule = (props: FromArrayProps) => {
   const [, set] = useFitchProofStoreContext();
 
-  const onChange = (
-    e: Event & {
-      currentTarget: HTMLSelectElement;
-      target: Element;
-    }
-  ) => {
+  const onChange: JSX.EventHandlerUnion<HTMLSelectElement, Event> = (e) => {
     const rule = e.currentTarget.value as keyof typeof fitchRuleOptions;
     set(props.index, {
       rule,

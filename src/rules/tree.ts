@@ -1,4 +1,4 @@
-import { TASK } from "../utils";
+import { TaskType } from "../schemas/edit";
 
 const propRules = ["NC", "ND", "D", "C", "MC", "NMC", "NB", "B", "DN"] as const;
 const predRules = [
@@ -11,6 +11,8 @@ const predRules = [
   "NIS",
 ] as const;
 
-const treeRulesOptions = TASK?.predicate ? predRules : propRules;
+const treeRulesOptions = (TASK as TaskType | undefined)?.predicate
+  ? predRules
+  : propRules;
 
 export default treeRulesOptions;

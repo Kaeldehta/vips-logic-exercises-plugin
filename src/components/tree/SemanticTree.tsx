@@ -7,16 +7,15 @@ import SemanticTreeLine from "./SemanticTreeLine";
 const SemanticTree = () => {
   const [store, set] = useSemanticTreeStoreContext();
 
+  const start = () => set([{ type: "ass", formula: "" }]);
+
   return (
     <>
       <div class="flex flex-col gap-1 justify-start items-center">
         <Show
           when={store.length}
           fallback={
-            <button
-              type="button"
-              onClick={() => set([{ type: "ass", formula: "" }])}
-            >
+            <button type="button" onClick={start}>
               Start
             </button>
           }

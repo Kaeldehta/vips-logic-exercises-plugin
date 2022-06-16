@@ -1,4 +1,4 @@
-import { TASK } from "../utils";
+import { TaskType } from "../schemas/edit";
 
 const propRules = [
   "b-intro",
@@ -22,7 +22,9 @@ const predRules = [
   "id-elim",
 ] as const;
 
-export const fitchRules = TASK?.predicate ? predRules : propRules;
+export const fitchRules = (TASK as TaskType | undefined)?.predicate
+  ? predRules
+  : propRules;
 
 const propRulesOptions: Record<
   typeof propRules[number],
@@ -101,6 +103,8 @@ const predRulesOptions: Record<
   },
 };
 
-const fitchRuleOptions = TASK?.predicate ? predRulesOptions : propRulesOptions;
+const fitchRuleOptions = (TASK as TaskType | undefined)?.predicate
+  ? predRulesOptions
+  : propRulesOptions;
 
 export default fitchRuleOptions;

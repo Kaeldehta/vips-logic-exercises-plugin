@@ -2,9 +2,26 @@ import Formula from "./Formula";
 import { For } from "solid-js";
 import useTaskStoreContext from "../contexts/edit";
 import { produce } from "solid-js/store";
+import MinusCircle from "./icons/MinusCircle";
+import IconButton from "./IconButton";
+import PlusCircle from "./icons/PlusCircle";
 
 const Statements = () => {
   const [store, set] = useTaskStoreContext();
+
+  const removeStatement = (index: number) =>
+    set(
+      produce((state) => {
+        state.statements.splice(index, 1);
+      })
+    );
+
+  const addStatement = () =>
+    set(
+      produce((state) => {
+        state.statements.push({ statement: "" });
+      })
+    );
 
   return (
     <>
@@ -15,33 +32,15 @@ const Statements = () => {
               value={statement.statement}
               setValue={(v) => set("statements", index(), { statement: v })}
             />
-            <button
-              type="button"
-              onClick={() =>
-                set(
-                  produce((state) => {
-                    state.statements.splice(index(), 1);
-                  })
-                )
-              }
-            >
-              -
-            </button>
+            <IconButton show={true} onClick={[removeStatement, index()]}>
+              <MinusCircle />
+            </IconButton>
           </div>
         )}
       </For>
-      <button
-        type="button"
-        onClick={() =>
-          set(
-            produce((state) => {
-              state.statements.push({ statement: "" });
-            })
-          )
-        }
-      >
-        +
-      </button>
+      <IconButton show={true} onClick={addStatement}>
+        <PlusCircle />
+      </IconButton>
     </>
   );
 };

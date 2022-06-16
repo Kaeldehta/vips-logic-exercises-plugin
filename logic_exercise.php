@@ -5,7 +5,7 @@ class logic_exercise extends Exercise
 
     public function responseFromRequest($request)
     {
-        return json_decode($request["react_values"]);
+        return json_decode($request["react_values"], true);
     }
 
     public function initFromRequest($request)
