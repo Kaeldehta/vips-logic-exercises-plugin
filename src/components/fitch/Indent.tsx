@@ -17,18 +17,25 @@ const Indent = (props: IndentProps) => {
   const lastPremise = () => props.type === "prem" && nextType() !== "prem";
 
   return (
-    <Index each={Array(props.indentation + 1).fill(0)}>
-      {(_, index) => (
-        <Switch fallback={<Border />}>
-          <Match when={lastPremise()}>
-            <LastPremiseBorder />
-          </Match>
-          <Match when={props.type === "ass" && index == props.indentation}>
-            <AssumptionBorder />
-          </Match>
-        </Switch>
-      )}
-    </Index>
+    <>
+      <input
+        type="hidden"
+        value={props.indentation}
+        name={`response[${props.index}][indentation]`}
+      />
+      <Index each={Array(props.indentation + 1).fill(0)}>
+        {(_, index) => (
+          <Switch fallback={<Border />}>
+            <Match when={lastPremise()}>
+              <LastPremiseBorder />
+            </Match>
+            <Match when={props.type === "ass" && index == props.indentation}>
+              <AssumptionBorder />
+            </Match>
+          </Switch>
+        )}
+      </Index>
+    </>
   );
 };
 

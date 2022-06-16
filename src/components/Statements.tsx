@@ -29,6 +29,7 @@ const Statements = () => {
         {(statement, index) => (
           <div class="flex items-center">
             <Formula
+              name={`task[statements][${index()}]`}
               value={statement.statement}
               setValue={(v) => set("statements", index(), { statement: v })}
             />

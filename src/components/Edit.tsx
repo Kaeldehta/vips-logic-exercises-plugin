@@ -3,7 +3,7 @@ import { taskSchema } from "../schemas/edit";
 import FitchProofEdit from "./fitch/FitchProofEdit";
 import SemanticTreeEdit from "./tree/SemanticTreeEdit";
 import { Switch, Match } from "solid-js";
-import Submitter from "./Submitter";
+import Validator from "./Validator";
 
 const Edit = () => {
   const [store, set] = useTaskStoreContext();
@@ -40,7 +40,8 @@ const Edit = () => {
           <SemanticTreeEdit />
         </Match>
       </Switch>
-      <Submitter values={store} schema={taskSchema} />
+      <input type="hidden" name="task[type]" value={store.type} />
+      <Validator values={store} schema={taskSchema} />
     </div>
   );
 };

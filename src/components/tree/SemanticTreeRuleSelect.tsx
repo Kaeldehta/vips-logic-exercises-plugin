@@ -17,7 +17,12 @@ const SemanticTreeRuleSelect = (props: SemanticTreeRuleSelectProps) => {
   };
 
   return (
-    <select value={props.rule} onChange={onChange} class="w-28">
+    <select
+      name={`response[${props.index}][rule]`}
+      value={props.rule}
+      onChange={onChange}
+      class="w-28"
+    >
       <option hidden></option>
       <Index each={treeRuleOptions}>
         {(value) => <option value={value()}>{value()}</option>}

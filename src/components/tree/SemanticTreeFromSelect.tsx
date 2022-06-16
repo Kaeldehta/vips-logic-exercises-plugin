@@ -4,6 +4,7 @@ import useSemanticTreeStoreContext from "../../contexts/tree";
 interface SemanticTreeFromSelectProps {
   value: number;
   setValue: (newValue: number) => void;
+  name: string;
 }
 
 const SemanticTreeFromSelect = (props: SemanticTreeFromSelectProps) => {
@@ -11,6 +12,7 @@ const SemanticTreeFromSelect = (props: SemanticTreeFromSelectProps) => {
 
   return (
     <select
+      name={props.name}
       value={props.value}
       class="w-20"
       onChange={(e) => {

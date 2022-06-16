@@ -1,7 +1,7 @@
 import { Show } from "solid-js";
 import useSemanticTreeStoreContext from "../../contexts/tree";
 import { semanticTreeSchema } from "../../schemas/solve";
-import Submitter from "../Submitter";
+import Validator from "../Validator";
 import SemanticTreeLine from "./SemanticTreeLine";
 
 const SemanticTree = () => {
@@ -23,7 +23,7 @@ const SemanticTree = () => {
           <SemanticTreeLine index={0} line={store[0]} end={store.length - 1} />
         </Show>
       </div>
-      <Submitter values={store} schema={semanticTreeSchema} />
+      <Validator values={store} schema={semanticTreeSchema} />
     </>
   );
 };

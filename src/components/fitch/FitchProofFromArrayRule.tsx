@@ -23,7 +23,12 @@ const FromArrayRule = (props: FromArrayProps) => {
 
   return (
     <>
-      <select value={props.rule} onChange={onChange} class="w-32">
+      <select
+        name={`response[${props.index}][rule]`}
+        value={props.rule}
+        onChange={onChange}
+        class="w-32"
+      >
         <option hidden></option>
         <Index each={Object.entries(fitchRuleOptions)}>
           {(value) => <option value={value()[0]}>{value()[1].label}</option>}
@@ -32,6 +37,7 @@ const FromArrayRule = (props: FromArrayProps) => {
       <Index each={props.from}>
         {(from, index) => (
           <FitchProofFromSelect
+            name={`response[${props.index}][from][${index}]`}
             index={props.index}
             value={from()}
             setValue={(v) =>

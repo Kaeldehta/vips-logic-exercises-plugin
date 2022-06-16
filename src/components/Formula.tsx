@@ -9,6 +9,7 @@ const predicateLogicChars = /^[abcFGHxyzue=]$/;
 interface FormulaProps {
   value: string;
   setValue: (newValue: string) => void;
+  name: string;
 }
 
 const allowPred = VIEW === "edit" || (TASK as TaskType | undefined)?.predicate;
@@ -38,6 +39,7 @@ const Formula = (props: FormulaProps) => {
       onKeyPress={onKeyPress}
       onKeyDown={onKeyDown}
     >
+      <input type="hidden" value={props.value} name={props.name} />
       <FormulaRender value={props.value} />
     </div>
   );

@@ -5,16 +5,15 @@ class logic_exercise extends Exercise
 
     public function responseFromRequest($request)
     {
-        return json_decode($request["react_values"], true);
+        // throw new Exception("Test");
+        return $request["response"];
     }
 
     public function initFromRequest($request)
     {
         parent::initFromRequest($request);
 
-        $answer = json_decode($request["react_values"]);
-
-        $this->task["answers"][0] = $answer;
+        $this->task["answers"][0] = $request["task"];
     }
 
     public function evaluateItems($solution)

@@ -2,12 +2,12 @@ import { onCleanup, onMount } from "solid-js";
 import { ZodSchema } from "zod";
 import { ELEMENT } from "../utils";
 
-interface SubmitterProps<T> {
+interface ValidatorProps<T> {
   values: T;
   schema: ZodSchema<T>;
 }
 
-const Submitter = <T,>(props: SubmitterProps<T>) => {
+const Validator = <T,>(props: ValidatorProps<T>) => {
   const form = Array.from(document.forms).find((form) =>
     form.contains(ELEMENT)
   );
@@ -29,13 +29,7 @@ const Submitter = <T,>(props: SubmitterProps<T>) => {
     form?.removeEventListener("submit", callback);
   });
 
-  return (
-    <input
-      type="hidden"
-      name="react_values"
-      value={JSON.stringify(props.values)}
-    />
-  );
+  return null;
 };
 
-export default Submitter;
+export default Validator;

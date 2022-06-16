@@ -2,7 +2,7 @@
 </div>
 
 <script>
-  const RESPONSE = <? if ($response) :?> <?= json_encode($response) ?> <? else: ?> undefined  <? endif ?>;
+  const RESPONSE = <? if ($response) :?> <?= json_encode($response, JSON_NUMERIC_CHECK) ?> <? else: ?> undefined  <? endif ?>;
   const TASK = <? if ($exercise->task["answers"][0]) : ?><?= json_encode($exercise->task["answers"][0]) ?> <? else: ?> undefined <? endif ?>;
   const VIEW = "<?= $reactView ?>";
 </script>

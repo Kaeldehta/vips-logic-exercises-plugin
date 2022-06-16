@@ -2,8 +2,8 @@ import useFitchProofStoreContext from "../../contexts/fitch";
 import FitchProofLine from "./FitchProofLine";
 import Inserter from "./Inserter";
 import { For } from "solid-js";
-import Submitter from "../Submitter";
 import { fitchProofSchema } from "../../schemas/solve";
+import Validator from "../Validator";
 
 const FitchProof = () => {
   const [store, set] = useFitchProofStoreContext();
@@ -32,7 +32,7 @@ const FitchProof = () => {
           </div>
         )}
       </For>
-      <Submitter values={store} schema={fitchProofSchema} />
+      <Validator values={store} schema={fitchProofSchema} />
     </>
   );
 };

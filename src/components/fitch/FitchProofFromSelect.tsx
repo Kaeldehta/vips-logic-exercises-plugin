@@ -5,6 +5,7 @@ interface FitchProofFromSelectProps {
   index: number;
   value: number;
   setValue: (newValue: number) => void;
+  name: string;
 }
 
 const FitchProofFromSelect = (props: FitchProofFromSelectProps) => {
@@ -18,7 +19,12 @@ const FitchProofFromSelect = (props: FitchProofFromSelectProps) => {
   };
 
   return (
-    <select value={props.value} class="w-20" onChange={onChange}>
+    <select
+      name={props.name}
+      value={props.value}
+      class="w-20"
+      onChange={onChange}
+    >
       <option hidden value={-1} />
       <Index each={options()}>
         {(_, index) => <option value={index}>{index + 1}</option>}

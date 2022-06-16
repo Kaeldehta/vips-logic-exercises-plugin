@@ -62,6 +62,11 @@ const FitchProofLine = (props: FitchProofLineProps) => {
   return (
     <div class="h-16 min-w-fit flex justify-start gap-2 items-center">
       <div class="shrink-0 flex items-center w-12">{props.index + 1}</div>
+      <input
+        type="hidden"
+        value={props.line.type}
+        name={`response[${props.index}][type]`}
+      />
       <Indent
         index={props.index}
         indentation={props.line.indentation}
@@ -69,6 +74,7 @@ const FitchProofLine = (props: FitchProofLineProps) => {
       />
       {props.line.type !== "abs" ? (
         <Formula
+          name={`response[${props.index}][formula]`}
           value={props.line.formula}
           setValue={(formula) => set(props.index, { formula })}
         />
@@ -87,6 +93,7 @@ const FitchProofLine = (props: FitchProofLineProps) => {
       {props.line.type === "abs" && (
         <>
           <FitchProofFromSelect
+            name={`response[${props.index}][from][0]`}
             index={props.index}
             value={props.line.from[0]}
             setValue={(from) =>
@@ -94,6 +101,7 @@ const FitchProofLine = (props: FitchProofLineProps) => {
             }
           />
           <FitchProofFromSelect
+            name={`response[${props.index}][from][1]`}
             index={props.index}
             value={props.line.from[1]}
             setValue={(from) =>
@@ -106,6 +114,7 @@ const FitchProofLine = (props: FitchProofLineProps) => {
         <input
           class="h-12 border-gray-100 border border-solid px-1"
           value={props.line.annotation}
+          name={`response[${props.index}][annotation]`}
           onInput={(e) =>
             set(
               props.index,
