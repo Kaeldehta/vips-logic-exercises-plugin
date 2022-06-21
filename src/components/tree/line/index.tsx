@@ -7,17 +7,26 @@ export interface TreeLineProps {
   line: SemanticTreeType[number];
 }
 
-const components = Object.fromEntries(
-  ["rule", "ass", "abs"].map((type) => [
-    type,
-    lazy(
-      () =>
-        import(`./${type}.${VIEW}.tsx`) as Promise<{
-          default: Component<TreeLineProps>;
-        }>
-    ),
-  ])
-);
+const components = {
+  rule: lazy(
+    () =>
+      import(`./rule.${VIEW}.tsx`) as Promise<{
+        default: Component<TreeLineProps>;
+      }>
+  ),
+  ass: lazy(
+    () =>
+      import(`./ass.${VIEW}.tsx`) as Promise<{
+        default: Component<TreeLineProps>;
+      }>
+  ),
+  abs: lazy(
+    () =>
+      import(`./abs.${VIEW}.tsx`) as Promise<{
+        default: Component<TreeLineProps>;
+      }>
+  ),
+};
 
 const Additional = lazy(
   () =>

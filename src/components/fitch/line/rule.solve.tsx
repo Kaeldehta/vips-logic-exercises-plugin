@@ -1,16 +1,11 @@
-import useFitchProofStoreContext from "../../contexts/fitch";
-import fitchRuleOptions from "../../rules/fitch";
-import { FitchRuleType } from "../../schemas/solve";
-import FitchProofFromSelect from "./FitchProofFromSelect";
+import useFitchProofStoreContext from "../../../contexts/fitch";
+import { FitchRuleType } from "../../../schemas/solve";
 import { Index, JSX } from "solid-js";
+import fitchRuleOptions from "../../../rules/fitch";
+import FitchProofFromSelect from "../FitchProofFromSelect";
+import Formula from "../../Formula";
 
-interface FromArrayProps {
-  index: number;
-  rule: FitchRuleType["rule"];
-  from: FitchRuleType["from"];
-}
-
-const FromArrayRule = (props: FromArrayProps) => {
+const FitchLineRuleSolve = (props: { line: FitchRuleType; index: number }) => {
   const [, set] = useFitchProofStoreContext();
 
   const onChange: JSX.EventHandlerUnion<HTMLSelectElement, Event> = (e) => {
@@ -23,9 +18,14 @@ const FromArrayRule = (props: FromArrayProps) => {
 
   return (
     <>
+      <Formula
+        name={`response[${props.index}][formula]`}
+        value={props.line.formula}
+        setValue={(formula) => set(props.index, { formula })}
+      />
       <select
         name={`response[${props.index}][rule]`}
-        value={props.rule}
+        value={props.line.rule}
         onChange={onChange}
         class="w-32"
       >
@@ -34,7 +34,7 @@ const FromArrayRule = (props: FromArrayProps) => {
           {(value) => <option value={value()[0]}>{value()[1].label}</option>}
         </Index>
       </select>
-      <Index each={props.from}>
+      <Index each={props.line.from}>
         {(from, index) => (
           <FitchProofFromSelect
             name={`response[${props.index}][from][${index}]`}
@@ -50,4 +50,4 @@ const FromArrayRule = (props: FromArrayProps) => {
   );
 };
 
-export default FromArrayRule;
+export default FitchLineRuleSolve;

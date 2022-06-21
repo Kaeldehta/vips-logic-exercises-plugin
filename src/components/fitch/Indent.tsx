@@ -18,11 +18,6 @@ const Indent = (props: IndentProps) => {
 
   return (
     <>
-      <input
-        type="hidden"
-        value={props.indentation}
-        name={`response[${props.index}][indentation]`}
-      />
       <Index each={Array(props.indentation + 1).fill(0)}>
         {(_, index) => (
           <Switch fallback={<Border />}>
