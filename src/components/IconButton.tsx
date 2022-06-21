@@ -10,7 +10,9 @@ const IconButton: Component<IconButtonProps> = (props) => {
       {...props}
       tabIndex={-1}
       type="button"
-      class={`items-center justify-center w-10 h-10 ${props.class ?? ""}`}
+      class={`items-center justify-center hover:bg-gray-200 rounded-md w-10 h-10 ${
+        props.class ?? ""
+      }`}
       classList={{
         "group-hover:flex hidden": !props.show,
         flex: props.show,

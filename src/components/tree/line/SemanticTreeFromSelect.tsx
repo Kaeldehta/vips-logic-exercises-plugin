@@ -1,13 +1,13 @@
 import { Index } from "solid-js";
-import useSemanticTreeStoreContext from "../../contexts/tree";
+import useSemanticTreeStoreContext from "../../../contexts/tree";
 
-interface SemanticTreeFromSelectProps {
+interface TreeFromSelectProps {
   value: number;
   setValue: (newValue: number) => void;
   name: string;
 }
 
-const SemanticTreeFromSelect = (props: SemanticTreeFromSelectProps) => {
+const TreeFromSelect = (props: TreeFromSelectProps) => {
   const [proof] = useSemanticTreeStoreContext();
 
   return (
@@ -28,4 +28,4 @@ const SemanticTreeFromSelect = (props: SemanticTreeFromSelectProps) => {
   );
 };
 
-export default SemanticTreeFromSelect;
+export default TreeFromSelect;

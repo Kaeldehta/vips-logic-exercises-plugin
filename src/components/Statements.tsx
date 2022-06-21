@@ -16,12 +16,17 @@ const Statements = () => {
       })
     );
 
-  const addStatement = () =>
-    set(
-      produce((state) => {
-        state.statements.push({ statement: "" });
-      })
-    );
+  const addStatement = () => {
+    if (!store.statements) {
+      set("statements", [{ statement: "" }]);
+    } else {
+      set(
+        produce((state) => {
+          state.statements.push({ statement: "" });
+        })
+      );
+    }
+  };
 
   return (
     <>
@@ -29,7 +34,7 @@ const Statements = () => {
         {(statement, index) => (
           <div class="flex items-center">
             <Formula
-              name={`task[statements][${index()}]`}
+              name={`task[statements][${index()}][statement]`}
               value={statement.statement}
               setValue={(v) => set("statements", index(), { statement: v })}
             />

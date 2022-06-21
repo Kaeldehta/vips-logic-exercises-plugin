@@ -8,13 +8,8 @@ import { ELEMENT } from "./utils";
 if (!ELEMENT) throw new Error("Could not find Root element");
 
 const factory = () => {
-  if (VIEW === "edit") {
-    return import("./views/edit");
-  }
-  if (!TASK) {
-    throw new Error("Could not determine task");
-  }
-  return import(`./views/${VIEW}/${(TASK as TaskType).type}.tsx`) as Promise<{
+  const viewName = VIEW === "edit" ? "edit" : (TASK as TaskType).type;
+  return import(`./views/${viewName}.tsx`) as Promise<{
     default: () => Element;
   }>;
 };

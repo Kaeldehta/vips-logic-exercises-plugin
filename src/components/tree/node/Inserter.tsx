@@ -1,10 +1,10 @@
 import { batch, Show } from "solid-js";
 import { produce } from "solid-js/store";
-import useSemanticTreeStoreContext from "../../contexts/tree";
-import { SemanticTreeType } from "../../schemas/solve";
-import IconButton from "../IconButton";
-import ArrowDownCircle from "../icons/ArrowDownCircle";
-import PlusCircle from "../icons/PlusCircle";
+import useSemanticTreeStoreContext from "../../../contexts/tree";
+import { SemanticTreeType } from "../../../schemas/solve";
+import IconButton from "../../IconButton";
+import ArrowDownCircle from "../../icons/ArrowDownCircle";
+import PlusCircle from "../../icons/PlusCircle";
 
 interface InserterProps {
   index: number;
