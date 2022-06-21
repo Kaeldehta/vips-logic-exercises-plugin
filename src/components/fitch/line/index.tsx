@@ -2,6 +2,7 @@ import { Component, lazy, ParentComponent } from "solid-js";
 import { Dynamic } from "solid-js/web";
 import { FitchProofType } from "../../../schemas/solve";
 import Indent from "../Indent";
+import PostIndent from "./PostIndent";
 
 export interface FitchLineProps {
   index: number;
@@ -12,25 +13,25 @@ const components = {
   rule: lazy(
     () =>
       import(`./rule.${VIEW}.tsx`) as Promise<{
-        default: Component<FitchLineProps>;
+        default: ParentComponent<FitchLineProps>;
       }>
   ),
   ass: lazy(
     () =>
       import(`./ass.${VIEW}.tsx`) as Promise<{
-        default: Component<FitchLineProps>;
+        default: ParentComponent<FitchLineProps>;
       }>
   ),
   abs: lazy(
     () =>
       import(`./abs.${VIEW}.tsx`) as Promise<{
-        default: Component<FitchLineProps>;
+        default: ParentComponent<FitchLineProps>;
       }>
   ),
   prem: lazy(
     () =>
       import(`./prem.${VIEW}.tsx`) as Promise<{
-        default: Component<FitchLineProps>;
+        default: ParentComponent<FitchLineProps>;
       }>
   ),
 };
@@ -69,7 +70,9 @@ const FitchLine = (props: FitchLineProps) => {
           indentation={props.line.indentation}
           type={props.line.type}
         />
-        <Dynamic component={components[props.line.type]} {...props} />
+        <Dynamic component={components[props.line.type]} {...props}>
+          <PostIndent indentation={props.line.indentation} />
+        </Dynamic>
         <Annotation annotation={props.line.annotation} index={props.index} />
         <Additional {...props} />
       </div>

@@ -1,11 +1,13 @@
 import useFitchProofStoreContext from "../../../contexts/fitch";
 import { FitchRuleType } from "../../../schemas/solve";
-import { Index, JSX } from "solid-js";
+import { Index, JSX, ParentProps } from "solid-js";
 import fitchRuleOptions from "../../../rules/fitch";
 import FitchProofFromSelect from "../FitchProofFromSelect";
 import Formula from "../../Formula";
 
-const FitchLineRuleSolve = (props: { line: FitchRuleType; index: number }) => {
+const FitchLineRuleSolve = (
+  props: ParentProps<{ line: FitchRuleType; index: number }>
+) => {
   const [, set] = useFitchProofStoreContext();
 
   const onChange: JSX.EventHandlerUnion<HTMLSelectElement, Event> = (e) => {
@@ -23,6 +25,7 @@ const FitchLineRuleSolve = (props: { line: FitchRuleType; index: number }) => {
         value={props.line.formula}
         setValue={(formula) => set(props.index, { formula })}
       />
+      {props.children}
       <select
         name={`response[${props.index}][rule]`}
         value={props.line.rule}

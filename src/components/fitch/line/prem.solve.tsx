@@ -1,11 +1,14 @@
+import { ParentProps } from "solid-js";
 import useFitchProofStoreContext from "../../../contexts/fitch";
 import { FitchPremiseType } from "../../../schemas/solve";
 import Formula from "../../Formula";
 
-const FitchLinePremSolve = (props: {
-  line: FitchPremiseType;
-  index: number;
-}) => {
+const FitchLinePremSolve = (
+  props: ParentProps<{
+    line: FitchPremiseType;
+    index: number;
+  }>
+) => {
   const [, set] = useFitchProofStoreContext();
 
   return (
@@ -15,6 +18,7 @@ const FitchLinePremSolve = (props: {
         value={props.line.formula}
         setValue={(formula) => set(props.index, { formula })}
       />
+      {props.children}
       <span>Prem.</span>
     </>
   );

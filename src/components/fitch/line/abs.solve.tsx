@@ -1,16 +1,20 @@
+import { ParentProps } from "solid-js";
 import useFitchProofStoreContext from "../../../contexts/fitch";
 import { FitchAbsurdityType } from "../../../schemas/solve";
 import FitchProofFromSelect from "../FitchProofFromSelect";
 
-const FitchLineAbsSolve = (props: {
-  line: FitchAbsurdityType;
-  index: number;
-}) => {
+const FitchLineAbsSolve = (
+  props: ParentProps<{
+    line: FitchAbsurdityType;
+    index: number;
+  }>
+) => {
   const [, set] = useFitchProofStoreContext();
 
   return (
     <>
       <span class="w-52 ">{"\u22A5"}</span>
+      {props.children}
       <FitchProofFromSelect
         name={`response[${props.index}][from][0]`}
         index={props.index}

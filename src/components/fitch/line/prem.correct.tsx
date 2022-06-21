@@ -1,9 +1,9 @@
 import { ParentProps } from "solid-js";
-import { FitchAssumptionType } from "../../../schemas/solve";
+import { FitchPremiseType } from "../../../schemas/solve";
 import FormulaRender from "../../FormulaRender";
 
-const FitchLineAssCorrect = (
-  props: ParentProps<{ line: FitchAssumptionType }>
+const FitchLinePremCorrect = (
+  props: ParentProps<{ line: FitchPremiseType }>
 ) => {
   return (
     <>
@@ -11,9 +11,9 @@ const FitchLineAssCorrect = (
         <FormulaRender value={props.line.formula} />
       </div>
       {props.children}
-      <span>Ass</span>
+      <span>Prem.</span>
     </>
   );
 };
 
-export default FitchLineAssCorrect;
+export default FitchLinePremCorrect;

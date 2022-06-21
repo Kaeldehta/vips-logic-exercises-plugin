@@ -12,7 +12,7 @@ const FitchLineAnnotationSolve = (props: {
 
   return (
     <Show
-      when={props.annotation}
+      when={props.annotation !== undefined}
       fallback={
         <IconButton
           title="Annotate"
