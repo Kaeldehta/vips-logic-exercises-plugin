@@ -17,14 +17,9 @@ interface InserterProps {
 const Inserter = (props: InserterProps) => {
   const [store, set] = useFitchProofStoreContext();
 
-  const insert = ({
-    index,
-    line,
-  }: {
-    index: number;
-    line: FitchProofType[number];
-  }) =>
+  const insert = (line: FitchProofType[number]) =>
     batch(() => {
+      const index = props.index + 1;
       set(
         produce((state) => {
           state.splice(index, 0, line);
@@ -36,6 +31,36 @@ const Inserter = (props: InserterProps) => {
         (from: number) => from >= index,
         (from: number) => from + 1
       );
+    });
+
+  const insertAbs = (indentation: number) =>
+    insert({
+      type: "abs",
+      indentation,
+      from: [-1, -1],
+    });
+
+  const insertPrem = () =>
+    insert({
+      type: "prem",
+      indentation: 0,
+      formula: "",
+    });
+
+  const insertRule = (indentation: number) =>
+    insert({
+      type: "rule",
+      indentation,
+      formula: "",
+      rule: "" as never,
+      from: [],
+    });
+
+  const insertAss = (indentation: number) =>
+    insert({
+      type: "ass",
+      indentation,
+      formula: "",
     });
 
   const nextType = createMemo(() => store[props.index + 1]?.type);
@@ -66,72 +91,27 @@ const Inserter = (props: InserterProps) => {
               <Show when={props.type !== "prem" || nextType() !== "prem"}>
                 <IconButton
                   title="Add Assumption"
-                  onClick={[
-                    insert,
-                    {
-                      index: props.index + 1,
-                      line: {
-                        type: "ass",
-                        indentation: newIndentation + 1,
-                        formula: "",
-                      },
-                    },
-                  ]}
+                  onClick={[insertAss, newIndentation + 1]}
                 >
                   <ArrowRightCircle />
                 </IconButton>
                 <IconButton
                   title="Add Rule Line"
-                  onClick={[
-                    insert,
-                    {
-                      index: props.index + 1,
-                      line: {
-                        type: "rule",
-                        indentation: newIndentation,
-                        formula: "",
-                        rule: "" as never,
-                        from: [],
-                      },
-                    },
-                  ]}
+                  onClick={[insertRule, newIndentation]}
                 >
                   <ArrowDownCircle />
                 </IconButton>
                 <Show when={newIndentation > 0}>
                   <IconButton
                     title="Add Absurdity"
-                    onClick={[
-                      insert,
-                      {
-                        index: props.index + 1,
-                        line: {
-                          type: "abs",
-                          indentation: newIndentation,
-                          from: [-1, -1],
-                        },
-                      },
-                    ]}
+                    onClick={[insertAbs, newIndentation]}
                   >
                     {"\u22A5"}
                   </IconButton>
                 </Show>
               </Show>
               <Show when={props.type === "prem"}>
-                <IconButton
-                  title="Add Premise"
-                  onClick={[
-                    insert,
-                    {
-                      index: props.index + 1,
-                      line: {
-                        type: "prem",
-                        indentation: 0,
-                        formula: "",
-                      },
-                    },
-                  ]}
-                >
+                <IconButton title="Add Premise" onClick={insertPrem}>
                   <PlusCircle />
                 </IconButton>
               </Show>

@@ -1,4 +1,4 @@
-import { lazy, ParentComponent, Show, splitProps } from "solid-js";
+import { lazy, ParentComponent, Show } from "solid-js";
 import useSemanticTreeStoreContext from "../../../contexts/tree";
 import { SemanticTreeType } from "../../../schemas/solve";
 import TreeLine from "../line";
@@ -17,14 +17,12 @@ const TreeLineWrapper = lazy(
 );
 
 const TreeNode = (props: TreeNodeProps) => {
-  const [, others] = splitProps(props, ["end"]);
-
   const [tree] = useSemanticTreeStoreContext();
 
   return (
     <>
       <TreeLineWrapper {...props}>
-        <TreeLine {...others} />
+        <TreeLine {...props} />
       </TreeLineWrapper>
       <Show when={props.line.type !== "abs"}>
         <Show

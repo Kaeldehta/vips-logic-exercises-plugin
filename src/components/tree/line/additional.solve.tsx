@@ -1,33 +1,54 @@
 import { batch, Show } from "solid-js";
 import { produce } from "solid-js/store";
-import { TreeLineProps } from ".";
 import useSemanticTreeStoreContext from "../../../contexts/tree";
 import IconButton from "../../IconButton";
 import MinusCircle from "../../icons/MinusCircle";
+import { TreeNodeProps } from "../node";
 
-const TreeLineSolveAdditional = (props: TreeLineProps) => {
-  const [, set] = useSemanticTreeStoreContext();
-
-  const updateRight = (index: number, amount = 1) => {
-    set(
-      (state) => !!state.right && state.right > index,
-      "right" as never,
-      (right: number) => right - amount
-    );
-  };
+const TreeLineSolveAdditional = (props: TreeNodeProps) => {
+  const [tree, set] = useSemanticTreeStoreContext();
 
   const removeHandler = () =>
     batch(() => {
-      // const rightChild = store.find((a) => a.right == props.index);
-      // const leftChild = !rightChild && !!store[props.index - 1]?.right;
+      const parentWhereIsRight = tree.findIndex(
+        ({ right }) => right === props.index
+      );
 
-      if (!props.line.right) {
-        updateRight(props.index);
-        set(
-          produce((state) => {
-            state.splice(props.index, 1);
-          })
-        );
+      const parentIndex =
+        parentWhereIsRight === -1 ? props.index - 1 : parentWhereIsRight;
+
+      const parentsRight = tree[parentIndex]?.right;
+
+      const offset =
+        !props.line.right || (parentIndex > -1 && !parentsRight)
+          ? 1
+          : props.end - props.index + 1;
+
+      set(
+        (state) => !!state.right && state.right > props.index,
+        "right" as never,
+        (right: number) => right - offset
+      );
+
+      set(
+        (line) => line.type === "rule" || line.type == "abs",
+        "from" as never,
+        (from: number) => from >= props.index,
+        (from: number) => from - offset
+      );
+
+      set(
+        produce((state) => {
+          state.splice(props.index, offset);
+        })
+      );
+
+      if (parentIndex > -1) {
+        if (offset > 1 || props.end === props.index) {
+          set(parentIndex, "right", undefined);
+        } else if (props.line.right && !parentsRight) {
+          set(parentIndex, "right", props.line.right - 1);
+        }
       }
     });
 

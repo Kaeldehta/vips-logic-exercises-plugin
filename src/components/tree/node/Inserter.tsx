@@ -15,39 +15,50 @@ interface InserterProps {
 const Inserter = (props: InserterProps) => {
   const [, set] = useSemanticTreeStoreContext();
 
-  const insert = ({
-    index,
-    line,
-  }: {
-    index: number;
-    line: SemanticTreeType[number];
-  }) =>
+  const insert = (line: SemanticTreeType[number]) =>
     batch(() => {
+      const index = props.index + 1;
       set(
         produce((state) => {
           state.splice(index, 0, line);
         })
       );
+      updateRightAndFrom(index);
       if (props.right) {
-        updateRight(index + 1);
         set(props.index, { right: undefined });
         set(props.index + 1, { right: props.right + 1 });
-      } else {
-        updateRight(index);
       }
     });
 
-  const updateRight = (index: number, amount = 1) => {
+  const insertRule = () =>
+    insert({
+      type: "rule",
+      formula: "",
+      from: [-1],
+      rule: "" as never,
+    });
+
+  const insertAss = () => insert({ type: "ass", formula: "" });
+
+  const insertAbs = () => insert({ type: "abs", from: [-1, -1] });
+
+  const updateRightAndFrom = (index: number, amount = 1) => {
     set(
       (state) => !!state.right && state.right >= index,
       "right" as never,
       (right: number) => right + amount
     );
+    set(
+      (line) => line.type === "rule" || line.type == "abs",
+      "from" as never,
+      (from: number) => from >= index,
+      (from: number) => from + amount
+    );
   };
 
   const branch = () =>
     batch(() => {
-      updateRight(props.index + 1, 2);
+      updateRightAndFrom(props.index + 1, 2);
       set(
         produce((state) => {
           state.splice(
@@ -69,38 +80,13 @@ const Inserter = (props: InserterProps) => {
   return (
     <div class="group h-16 group w-40 flex justify-center gap-2 items-center">
       <Show when={props.index === props.end}>
-        <IconButton
-          onClick={[
-            insert,
-            { index: props.index + 1, line: { type: "abs", from: [-1, -1] } },
-          ]}
-        >
-          {"\u22A5"}
-        </IconButton>
+        <IconButton onClick={insertAbs}>{"\u22A5"}</IconButton>
         <IconButton onClick={branch}>B</IconButton>
       </Show>
-      <IconButton
-        onClick={[
-          insert,
-          { index: props.index + 1, line: { type: "ass", formula: "" } },
-        ]}
-      >
+      <IconButton onClick={insertAss}>
         <PlusCircle />
       </IconButton>
-      <IconButton
-        onClick={[
-          insert,
-          {
-            index: props.index + 1,
-            line: {
-              type: "rule",
-              formula: "",
-              from: [-1],
-              rule: "" as never,
-            },
-          },
-        ]}
-      >
+      <IconButton onClick={insertRule}>
         <ArrowDownCircle />
       </IconButton>
     </div>

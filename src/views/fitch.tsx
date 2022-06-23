@@ -1,3 +1,9 @@
 import Fitch from "../components/fitch";
+import FitchProofTaskRender from "../components/fitch/FitchProofTaskRender";
 
-export default () => <Fitch />;
+export default () => (
+  <>
+    <FitchProofTaskRender />
+    <Fitch />
+  </>
+);
