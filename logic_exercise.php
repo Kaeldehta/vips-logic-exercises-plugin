@@ -12,7 +12,29 @@ class logic_exercise extends Exercise
     {
         parent::initFromRequest($request);
 
-        $this->task["answers"][0] = $request["task"];
+        $task = $request["task"];
+
+
+        if($task["type"] == "tree" | $task["type"] == "fitch") {
+
+            function containsPredicate($element) {
+                return preg_match("/[abcFGHxyzue=]/", $element);
+            }
+
+            $predicate = false;
+
+            foreach ($task["statements"] as $value) {
+                if(containsPredicate($value["statement"])) {
+                    $predicate = true;
+                    break;
+                }
+            }
+
+            $task["predicate"] = $predicate || containsPredicate($task["consequence"]);
+        }
+
+
+        $this->task["answers"][0] = $task;
     }
 
     public function evaluateItems($solution)
