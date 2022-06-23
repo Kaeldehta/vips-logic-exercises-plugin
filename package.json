@@ -35,8 +35,7 @@
     "tailwindcss": "^3.0.24",
     "ts-node": "^10.8.1",
     "typescript": "^4.7.3",
-    "vite": "^2.9.12",
-    "vite-plugin-eslint": "^1.6.1",
+    "vite": "^3.0.0-beta.1",
     "vite-plugin-solid": "^2.2.6"
   },
   "dependencies": {
@@ -70,8 +69,8 @@
               "files": [
                 "templates/index.php"
               ],
-              "from": "src=\".*\"",
-              "to": "src=\"<?= PluginEngine::getPlugin(\"LogicExercises\")->getPluginURL() . \"/dist/\" . json_decode(file_get_contents(realpath(__DIR__ . \"/../manifest.json\")), true)[\"src/main.tsx\"][\"file\"] ?>\"",
+              "from": "<script type=\"module\".*</script>",
+              "to": "<link rel=\"stylesheet\" href=\"<?= $basePath . \"/\" . $cssEntry ?>\"/><script type=\"module\" src=\"<?= $basePath . \"/\" . $jsEntry ?>\"></script>",
               "results": [
                 {
                   "file": "templates/index.php",

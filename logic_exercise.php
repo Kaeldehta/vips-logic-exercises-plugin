@@ -5,7 +5,6 @@ class logic_exercise extends Exercise
 
     public function responseFromRequest($request)
     {
-        // throw new Exception("Test");
         return $request["response"];
     }
 
@@ -27,6 +26,16 @@ class logic_exercise extends Exercise
         $template = $templatefactory->open('index');
         $template->reactView = $view;
         $template->exercise = $this;
+        $template->basePath = PluginEngine::getPlugin("LogicExercises")->getPluginURL();
+
+        $manifestPath = __DIR__ . '/manifest.json';
+
+        if(file_exists($manifestPath)) {
+            $manifest = json_decode(file_get_contents($manifestPath), true);
+            $template->jsEntry = $manifest["src/main.tsx"]["file"];
+            $template->cssEntry = $manifest["src/main.tsx"]["css"][0];
+        }
+
         return $template;
     }
 
