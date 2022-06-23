@@ -12,5 +12,10 @@
     "noEmit": true,
     "isolatedModules": true
   },
-  "include": ["src", "vite.config.ts", "createArchive.ts"]
+  "include": ["src", "vite.config.ts", "createArchive.ts"],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
 }
