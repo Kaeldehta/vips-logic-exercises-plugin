@@ -67,7 +67,7 @@ const treeRule = z.object({
   formula,
   type: z.literal("rule"),
   right,
-  rule: z.enum(treeRulesOptions),
+  rule: z.enum(treeRulesOptions).or(z.literal("")),
   from: from.length(1),
 });
 

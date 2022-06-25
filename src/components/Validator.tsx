@@ -17,7 +17,7 @@ const Validator = <T,>(props: ValidatorProps<T>) => {
 
     if (!result.success) {
       e.preventDefault();
-      alert(result.error.message);
+      console.log(result.error.formErrors.fieldErrors);
     }
   };
 

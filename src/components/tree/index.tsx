@@ -1,4 +1,4 @@
-import { Component, createEffect, lazy, Show } from "solid-js";
+import { Component, lazy, Show } from "solid-js";
 import useSemanticTreeStoreContext from "../../contexts/tree";
 import TreeNode from "./node";
 
@@ -12,10 +12,6 @@ const Additional = lazy(
 
 const Tree = () => {
   const [tree] = useSemanticTreeStoreContext();
-
-  createEffect(() => {
-    console.log(JSON.parse(JSON.stringify(tree)));
-  });
 
   return (
     <>
