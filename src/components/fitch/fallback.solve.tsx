@@ -5,7 +5,7 @@ const FitchFallbackSolve = () => {
 
   return (
     <button
-      onClick={() => set([{ type: "prem", indentation: 0, formula: "" }])}
+      onClick={() => set([{ type: "prem", indentation: 0, formula: [] }])}
       type="button"
     >
       Add

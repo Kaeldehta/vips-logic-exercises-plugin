@@ -49,7 +49,7 @@ export const fitchProofSchema = z
   .array(
     z.discriminatedUnion("type", [fitchAbs, fitchPrem, fitchRule, fitchAss])
   )
-  .min(1);
+  .default([]);
 
 export type FitchProofType = z.infer<typeof fitchProofSchema>;
 
@@ -83,6 +83,6 @@ export type TreeAbsurdityType = z.infer<typeof treeAbs>;
 
 export const semanticTreeSchema = z
   .array(z.discriminatedUnion("type", [treeAss, treeRule, treeAbs]))
-  .min(1);
+  .default([]);
 
 export type SemanticTreeType = z.infer<typeof semanticTreeSchema>;

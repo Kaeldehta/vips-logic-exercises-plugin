@@ -44,14 +44,14 @@ const Inserter = (props: InserterProps) => {
     insert({
       type: "prem",
       indentation: 0,
-      formula: "",
+      formula: [],
     });
 
   const insertRule = (indentation: number) =>
     insert({
       type: "rule",
       indentation,
-      formula: "",
+      formula: [],
       rule: "" as never,
       from: [],
     });
@@ -60,7 +60,7 @@ const Inserter = (props: InserterProps) => {
     insert({
       type: "ass",
       indentation,
-      formula: "",
+      formula: [],
     });
 
   const nextType = createMemo(() => store[props.index + 1]?.type);

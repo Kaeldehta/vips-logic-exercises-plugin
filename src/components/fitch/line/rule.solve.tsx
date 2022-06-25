@@ -3,7 +3,7 @@ import { FitchRuleType } from "../../../schemas/solve";
 import { Index, JSX, ParentProps } from "solid-js";
 import fitchRuleOptions from "../../../rules/fitch";
 import FitchProofFromSelect from "../FitchProofFromSelect";
-import Formula from "../../Formula";
+import FitchFormula from "./FitchFormula";
 
 const FitchLineRuleSolve = (
   props: ParentProps<{ line: FitchRuleType; index: number }>
@@ -20,11 +20,7 @@ const FitchLineRuleSolve = (
 
   return (
     <>
-      <Formula
-        name={`response[${props.index}][formula]`}
-        value={props.line.formula}
-        setValue={(formula) => set(props.index, { formula })}
-      />
+      <FitchFormula value={props.line.formula} index={props.index} />
       {props.children}
       <select
         name={`response[${props.index}][rule]`}

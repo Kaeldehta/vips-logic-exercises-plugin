@@ -1,7 +1,6 @@
 import { ParentProps } from "solid-js";
-import useFitchProofStoreContext from "../../../contexts/fitch";
 import { FitchAssumptionType } from "../../../schemas/solve";
-import Formula from "../../Formula";
+import FitchFormula from "./FitchFormula";
 
 const FitchLineAssSolve = (
   props: ParentProps<{
@@ -9,15 +8,9 @@ const FitchLineAssSolve = (
     index: number;
   }>
 ) => {
-  const [, set] = useFitchProofStoreContext();
-
   return (
     <>
-      <Formula
-        name={`response[${props.index}][formula]`}
-        value={props.line.formula}
-        setValue={(formula) => set(props.index, { formula })}
-      />
+      <FitchFormula value={props.line.formula} index={props.index} />
       {props.children}
       <span>Ass.</span>
     </>

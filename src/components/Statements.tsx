@@ -18,11 +18,11 @@ const Statements = () => {
 
   const addStatement = () => {
     if (!store.statements) {
-      set("statements", [{ statement: "" }]);
+      set("statements", [{ statement: [] }]);
     } else {
       set(
         produce((state) => {
-          state.statements.push({ statement: "" });
+          state.statements.push({ statement: [] });
         })
       );
     }
@@ -36,7 +36,7 @@ const Statements = () => {
             <Formula
               name={`task[statements][${index()}][statement]`}
               value={statement.statement}
-              setValue={(v) => set("statements", index(), { statement: v })}
+              setValue={(v) => set("statements", index(), "statement", v)}
             />
             <IconButton show={true} onClick={[removeStatement, index()]}>
               <MinusCircle />

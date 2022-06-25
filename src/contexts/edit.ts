@@ -1,8 +1,10 @@
 import { createContext, useContext } from "solid-js";
 import storeFactory from "../storeFactory";
-import { TaskType } from "../schemas/edit";
+import { taskSchema } from "../schemas/edit";
 
-const TaskStoreContext = createContext(storeFactory(TASK as TaskType));
+const TaskStoreContext = createContext(
+  storeFactory(TASK ? taskSchema.parse(TASK) : TASK)
+);
 
 const useTaskStoreContext = () => useContext(TaskStoreContext);
 

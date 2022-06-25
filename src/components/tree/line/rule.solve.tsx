@@ -2,8 +2,8 @@ import { Index, JSX } from "solid-js";
 import useSemanticTreeStoreContext from "../../../contexts/tree";
 import { TreeRuleType } from "../../../schemas/solve";
 import treeRuleOptions from "../../../rules/tree";
-import Formula from "../../Formula";
 import TreeFromSelect from "./SemanticTreeFromSelect";
+import TreeFormula from "./TreeFormula";
 
 interface TreeLineSolveRuleProps {
   line: TreeRuleType;
@@ -20,11 +20,7 @@ const TreeLineSolveRule = (props: TreeLineSolveRuleProps) => {
 
   return (
     <>
-      <Formula
-        name={`response[${props.index}][formula]`}
-        value={props.line.formula}
-        setValue={(v) => set(props.index, "formula" as never, v as never)}
-      />
+      <TreeFormula value={props.line.formula} index={props.index} />
       <select
         name={`response[${props.index}][rule]`}
         value={props.line.rule}

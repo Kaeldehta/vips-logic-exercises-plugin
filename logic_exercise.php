@@ -18,7 +18,12 @@ class logic_exercise extends Exercise
         if($task["type"] == "tree" | $task["type"] == "fitch") {
 
             function containsPredicate($element) {
-                return preg_match("/[abcFGHxyzue=]/", $element);
+                foreach($element as $key => $value) {
+                    if(preg_match("/[abcFGHxyzue=]/", $value)) {
+                        return true;
+                    }
+                }
+                return false;
             }
 
             $predicate = false;

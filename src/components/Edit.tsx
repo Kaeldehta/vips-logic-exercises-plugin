@@ -16,7 +16,7 @@ const Edit = () => {
             <button
               type="button"
               onClick={() =>
-                set({ type: "tree", statements: [], consequence: "" })
+                set({ type: "tree", statements: [], consequence: [] })
               }
             >
               Semantic Tree
@@ -25,7 +25,7 @@ const Edit = () => {
               class="bg-gray-300 hover:bg-gray-200 rounded px-1 py-1"
               type="button"
               onClick={() =>
-                set({ type: "fitch", statements: [], consequence: "" })
+                set({ type: "fitch", statements: [], consequence: [] })
               }
             >
               Fitch Proof
