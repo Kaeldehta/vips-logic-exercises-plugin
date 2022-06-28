@@ -12,8 +12,9 @@ const Edit = () => {
     <div>
       <Switch
         fallback={
-          <>
+          <div class="flex items-center gap-2">
             <button
+              class="bg-gray-300 hover:bg-gray-200 rounded px-1 py-1"
               type="button"
               onClick={() =>
                 set({ type: "tree", statements: [], consequence: [] })
@@ -30,18 +31,18 @@ const Edit = () => {
             >
               Fitch Proof
             </button>
-          </>
+          </div>
         }
       >
-        <Match when={store.type === "fitch"}>
+        <Match when={store?.type === "fitch"}>
           <FitchProofEdit />
         </Match>
-        <Match when={store.type === "tree"}>
+        <Match when={store?.type === "tree"}>
           <SemanticTreeEdit />
         </Match>
       </Switch>
-      <input type="hidden" name="task[type]" value={store.type} />
-      <Validator values={store} schema={taskSchema} />
+      <input type="hidden" name="task[type]" value={store?.type} />
+      <Validator values={store ?? {}} schema={taskSchema} />
     </div>
   );
 };
