@@ -14,7 +14,7 @@ const FitchProofEdit = () => {
       </div>
       <Formula
         name="task[consequence]"
-        value={store.consequence}
+        value={store?.consequence ?? []}
         setValue={(v) => set("consequence", v)}
       />
     </div>

@@ -1,21 +1,29 @@
 import { batch, createSignal, For, JSX } from "solid-js";
 import { produce } from "solid-js/store";
-import { FormulaType } from "../schemas/common";
-import { TaskType } from "../schemas/edit";
+import { formulaRegex, FormulaType } from "../schemas/common";
 import FormulaRender from "./FormulaRender";
 
-const propositionalLogicChars = /^[pqriklno()]$/;
-
-const predicateLogicChars = /^[abcFGHxyzue=]$/;
+const width = [
+  "w-4",
+  "w-12",
+  "w-20",
+  "w-24",
+  "w-28",
+  "w-36",
+  "w-40",
+  "w-48",
+  "w-52",
+  "w-56",
+];
 
 interface FormulaProps {
   value: FormulaType;
   setValue: (produce: (state: string[]) => string[]) => void;
   name: string;
+  max?: number;
+  match?: RegExp;
+  width?: string;
 }
-
-const allowPred = VIEW === "edit" || (TASK as TaskType | undefined)?.predicate;
-
 type EventHandler = JSX.EventHandlerUnion<HTMLDivElement, KeyboardEvent>;
 
 const Formula = (props: FormulaProps) => {
@@ -23,10 +31,18 @@ const Formula = (props: FormulaProps) => {
 
   const onKeyPress: EventHandler = (e) => {
     const value = e.key;
-    if (
-      value.match(propositionalLogicChars) ||
-      (allowPred && e.key.match(predicateLogicChars))
-    ) {
+    const last = props.value[cursor() - 1] ?? "";
+
+    if (value.match(/[1-9]/)) {
+      if (last.match(/^[xyzpqrabc]|[FGH][1-9]?$/))
+        props.setValue(
+          produce<FormulaType>((state) => {
+            state[cursor() - 1] += value;
+          })
+        );
+    } else if (value.match(props.match ?? formulaRegex)) {
+      if (props.max && props.value.length >= props.max) return;
+
       batch(() => {
         props.setValue(
           produce<FormulaType>((state) => {
@@ -35,15 +51,6 @@ const Formula = (props: FormulaProps) => {
         );
         setCursor((cursor) => cursor + 1);
       });
-    } else {
-      const last = props.value[cursor() - 1] ?? "";
-      if (value.match(/[1-9]/) && last.match(/^[xyzpqrabc]|[FGH][1-9]?$/)) {
-        props.setValue(
-          produce<FormulaType>((state) => {
-            state[cursor() - 1] += value;
-          })
-        );
-      }
     }
   };
 
@@ -84,7 +91,9 @@ const Formula = (props: FormulaProps) => {
         )}
       </For>
       <div
-        class="select-none group shrink-0 w-52 min-w-fit h-12 px-2 py-1 border border-solid flex items-center justify-start cursor-text "
+        class={`select-none group shrink-0 ${
+          props.max ? width[props.max] : "w-52"
+        } min-w-fit h-12 px-2 py-1 border border-solid flex items-center justify-start cursor-text`}
         tabIndex={0}
         onKeyPress={onKeyPress}
         onKeyDown={onKeyDown}

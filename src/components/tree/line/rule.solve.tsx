@@ -15,14 +15,14 @@ const TreeLineSolveRule = (props: TreeLineSolveRuleProps) => {
 
   const onChange: JSX.EventHandlerUnion<HTMLSelectElement, Event> = (e) => {
     const rule = e.currentTarget.value as TreeRuleType["rule"];
-    set(props.index, { rule });
+    set("nodes", props.index, { rule });
   };
 
   return (
     <>
       <TreeFormula value={props.line.formula} index={props.index} />
       <select
-        name={`response[${props.index}][rule]`}
+        name={`response[nodes][${props.index}][rule]`}
         value={props.line.rule}
         onChange={onChange}
         class="w-28"
@@ -33,9 +33,11 @@ const TreeLineSolveRule = (props: TreeLineSolveRuleProps) => {
         </Index>
       </select>
       <TreeFromSelect
-        name={`response[${props.index}][from][0]`}
+        name={`response[nodes][${props.index}][from][0]`}
         value={props.line.from[0]}
-        setValue={(from) => set(props.index, "from" as never, 0, from as never)}
+        setValue={(from) =>
+          set("nodes", props.index, "from" as never, 0, from as never)
+        }
       />
     </>
   );

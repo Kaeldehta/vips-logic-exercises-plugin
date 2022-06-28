@@ -10,14 +10,14 @@ const TreeLineSolveAdditional = (props: TreeNodeProps) => {
 
   const removeHandler = () =>
     batch(() => {
-      const parentWhereIsRight = tree.findIndex(
+      const parentWhereIsRight = tree.nodes.findIndex(
         ({ right }) => right === props.index
       );
 
       const parentIndex =
         parentWhereIsRight === -1 ? props.index - 1 : parentWhereIsRight;
 
-      const parentsRight = tree[parentIndex]?.right;
+      const parentsRight = tree.nodes[parentIndex]?.right;
 
       const offset =
         !props.line.right || (parentIndex > -1 && !parentsRight)
@@ -25,12 +25,14 @@ const TreeLineSolveAdditional = (props: TreeNodeProps) => {
           : props.end - props.index + 1;
 
       set(
+        "nodes",
         (state) => !!state.right && state.right > props.index,
         "right" as never,
         (right: number) => right - offset
       );
 
       set(
+        "nodes",
         (line) => line.type === "rule" || line.type == "abs",
         "from" as never,
         (from: number) => from >= props.index,
@@ -39,15 +41,15 @@ const TreeLineSolveAdditional = (props: TreeNodeProps) => {
 
       set(
         produce((state) => {
-          state.splice(props.index, offset);
+          state.nodes.splice(props.index, offset);
         })
       );
 
       if (parentIndex > -1) {
         if (offset > 1 || props.end === props.index) {
-          set(parentIndex, "right", undefined);
+          set("nodes", parentIndex, "right", undefined);
         } else if (props.line.right && !parentsRight) {
-          set(parentIndex, "right", props.line.right - 1);
+          set("nodes", parentIndex, "right", props.line.right - 1);
         }
       }
     });
@@ -57,13 +59,13 @@ const TreeLineSolveAdditional = (props: TreeNodeProps) => {
       <input
         type="hidden"
         value={props.line.type}
-        name={`response[${props.index}][type]`}
+        name={`response[nodes][${props.index}][type]`}
       />
       <Show when={props.line.right}>
         <input
           type="hidden"
           value={props.line.right}
-          name={`response[${props.index}][right]`}
+          name={`response[nodes][${props.index}][right]`}
         />
       </Show>
       <span class="w-12 ml-auto">

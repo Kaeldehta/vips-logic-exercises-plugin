@@ -7,9 +7,11 @@ const TreeFormula = (props: { value: FormulaType; index: number }) => {
 
   return (
     <Formula
-      name={`response[${props.index}][formula]`}
+      name={`response[nodes][${props.index}][formula]`}
       value={props.value}
-      setValue={(v) => set(props.index, "formula" as never, v as never)}
+      setValue={(v) =>
+        set("nodes", props.index, "formula" as never, v as never)
+      }
     />
   );
 };

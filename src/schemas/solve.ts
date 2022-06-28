@@ -81,8 +81,36 @@ const treeAbs = z.object({
 
 export type TreeAbsurdityType = z.infer<typeof treeAbs>;
 
+const propositionalModel = z.object({
+  constant: z.array(z.string().regex(/[pqr][1-9]?/)).length(1),
+  value: z.enum(["true", "false"]),
+  type: z.literal("propositional"),
+});
+
+export type PropositionalModelType = z.infer<typeof propositionalModel>;
+
+const predicateModel = z.object({
+  predicate: z.array(z.string().regex(/[FGH][1-9][1-9]?/)).length(1),
+  entries: z.array(z.array(z.string().regex(/[abc][1-9]?/))),
+  type: z.literal("predicate"),
+});
+
+export type PredicateModelType = z.infer<typeof predicateModel>;
+
+const counterModelType = (TASK as { predicate?: boolean } | undefined)
+  ?.predicate
+  ? z.discriminatedUnion("type", [propositionalModel, predicateModel])
+  : propositionalModel;
+
+export type CounterModelEntryType = z.infer<typeof counterModelType>;
+
 export const semanticTreeSchema = z
-  .array(z.discriminatedUnion("type", [treeAss, treeRule, treeAbs]))
-  .default([]);
+  .object({
+    nodes: z
+      .array(z.discriminatedUnion("type", [treeAss, treeRule, treeAbs]))
+      .default([]),
+    countermodel: z.array(counterModelType).optional(),
+  })
+  .default({ nodes: [] });
 
 export type SemanticTreeType = z.infer<typeof semanticTreeSchema>;

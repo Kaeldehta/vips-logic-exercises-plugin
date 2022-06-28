@@ -8,7 +8,7 @@ interface TreeFromSelectProps {
 }
 
 const TreeFromSelect = (props: TreeFromSelectProps) => {
-  const [proof] = useSemanticTreeStoreContext();
+  const [tree] = useSemanticTreeStoreContext();
 
   return (
     <select
@@ -21,7 +21,7 @@ const TreeFromSelect = (props: TreeFromSelectProps) => {
       }}
     >
       <option hidden value={-1} />
-      <Index each={proof}>
+      <Index each={tree.nodes}>
         {(_, index) => <option value={index}>{index + 1}</option>}
       </Index>
     </select>

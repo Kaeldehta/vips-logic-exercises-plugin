@@ -1,5 +1,6 @@
 import { Component, lazy, Show } from "solid-js";
 import useSemanticTreeStoreContext from "../../contexts/tree";
+import TreeCounterModel from "./countermodel";
 import TreeNode from "./node";
 
 const TreeFallback = lazy(
@@ -16,11 +17,16 @@ const Tree = () => {
   return (
     <>
       <div class="flex flex-col gap-1 justify-start items-center">
-        <Show when={!!tree.length} fallback={<TreeFallback />}>
-          <TreeNode line={tree[0]} index={0} end={tree.length - 1} />
+        <Show when={!!tree.nodes.length} fallback={<TreeFallback />}>
+          <TreeNode
+            line={tree.nodes[0]}
+            index={0}
+            end={tree.nodes.length - 1}
+          />
         </Show>
       </div>
       <Additional />
+      <TreeCounterModel />
     </>
   );
 };

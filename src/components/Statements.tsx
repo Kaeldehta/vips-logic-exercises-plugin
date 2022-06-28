@@ -12,17 +12,17 @@ const Statements = () => {
   const removeStatement = (index: number) =>
     set(
       produce((state) => {
-        state.statements.splice(index, 1);
+        state?.statements.splice(index, 1);
       })
     );
 
   const addStatement = () => {
-    if (!store.statements) {
+    if (!store?.statements) {
       set("statements", [{ statement: [] }]);
     } else {
       set(
         produce((state) => {
-          state.statements.push({ statement: [] });
+          state?.statements.push({ statement: [] });
         })
       );
     }
@@ -30,7 +30,7 @@ const Statements = () => {
 
   return (
     <>
-      <For each={store.statements}>
+      <For each={store?.statements}>
         {(statement, index) => (
           <div class="flex items-center">
             <Formula

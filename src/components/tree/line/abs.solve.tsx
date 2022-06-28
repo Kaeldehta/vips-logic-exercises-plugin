@@ -15,10 +15,10 @@ const TreeLineSolveAbs = (props: {
       <Index each={props.line.from}>
         {(from, index) => (
           <TreeFromSelect
-            name={`response[${props.index}][from][${index}]`}
+            name={`response[nodes][${props.index}][from][${index}]`}
             value={from()}
             setValue={(from) =>
-              set(props.index, "from" as never, index, from as never)
+              set("nodes", props.index, "from" as never, index, from as never)
             }
           />
         )}

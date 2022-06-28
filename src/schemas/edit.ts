@@ -21,9 +21,10 @@ const semanticTreeTask = z.object({
   predicate,
 });
 
-export const taskSchema = z.discriminatedUnion("type", [
-  semanticTreeTask,
-  fitchProofTask,
-]);
+export type TreeTask = z.infer<typeof semanticTreeTask>;
+
+export const taskSchema = z
+  .discriminatedUnion("type", [semanticTreeTask, fitchProofTask])
+  .optional();
 
 export type TaskType = z.infer<typeof taskSchema>;

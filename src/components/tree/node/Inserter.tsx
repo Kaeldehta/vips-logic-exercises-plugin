@@ -15,40 +15,42 @@ interface InserterProps {
 const Inserter = (props: InserterProps) => {
   const [, set] = useSemanticTreeStoreContext();
 
-  const insert = (line: SemanticTreeType[number]) =>
+  const insert = (line: SemanticTreeType["nodes"][number]) =>
     batch(() => {
       const index = props.index + 1;
       set(
         produce((state) => {
-          state.splice(index, 0, line);
+          state.nodes.splice(index, 0, line);
         })
       );
       updateRightAndFrom(index);
       if (props.right) {
-        set(props.index, { right: undefined });
-        set(props.index + 1, { right: props.right + 1 });
+        set("nodes", props.index, { right: undefined });
+        set("nodes", props.index + 1, { right: props.right + 1 });
       }
     });
 
   const insertRule = () =>
     insert({
       type: "rule",
-      formula: "",
+      formula: [],
       from: [-1],
       rule: "" as never,
     });
 
-  const insertAss = () => insert({ type: "ass", formula: "" });
+  const insertAss = () => insert({ type: "ass", formula: [] });
 
   const insertAbs = () => insert({ type: "abs", from: [-1, -1] });
 
   const updateRightAndFrom = (index: number, amount = 1) => {
     set(
+      "nodes",
       (state) => !!state.right && state.right >= index,
       "right" as never,
       (right: number) => right + amount
     );
     set(
+      "nodes",
       (line) => line.type === "rule" || line.type == "abs",
       "from" as never,
       (from: number) => from >= index,
@@ -61,18 +63,18 @@ const Inserter = (props: InserterProps) => {
       updateRightAndFrom(props.index + 1, 2);
       set(
         produce((state) => {
-          state.splice(
+          state.nodes.splice(
             props.index + 1,
             0,
             {
               type: "rule",
-              formula: "",
+              formula: [],
               from: [-1],
               rule: "" as never,
             },
-            { type: "rule", formula: "", from: [-1], rule: "" as never }
+            { type: "rule", formula: [], from: [-1], rule: "" as never }
           );
-          state[props.index].right = props.index + 2;
+          state.nodes[props.index].right = props.index + 2;
         })
       );
     });
