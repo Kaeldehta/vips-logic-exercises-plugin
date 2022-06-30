@@ -5,7 +5,7 @@ const predicate = z.boolean().optional();
 
 const statements = z.array(z.object({ statement: formula })).default([]);
 
-const fitchProofTask = z.object({
+export const fitchProofTask = z.object({
   type: z.literal("fitch"),
   consequence: formula,
   statements,
@@ -14,7 +14,7 @@ const fitchProofTask = z.object({
 
 export type FitchProofTask = z.infer<typeof fitchProofTask>;
 
-const semanticTreeTask = z.object({
+export const semanticTreeTask = z.object({
   type: z.literal("tree"),
   consequence: formula,
   statements,

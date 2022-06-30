@@ -2,13 +2,20 @@ import "vite/modulepreload-polyfill";
 import { render } from "solid-js/web";
 import "./index.css";
 import { lazy } from "solid-js";
-import { TaskType } from "./schemas/edit";
+import { taskSchema } from "./schemas/edit";
 import { ELEMENT } from "./utils";
 
 if (!ELEMENT) throw new Error("Could not find Root element");
 
 const factory = () => {
-  const viewName = VIEW === "edit" ? "edit" : (TASK as TaskType).type;
+  const task = taskSchema.parse(TASK);
+  let viewName = "edit";
+  if (VIEW !== "edit") {
+    if (!task) {
+      throw new Error("Task is not defined");
+    }
+    viewName = task.type;
+  }
   return import(`./views/${viewName}.tsx`) as Promise<{
     default: () => Element;
   }>;

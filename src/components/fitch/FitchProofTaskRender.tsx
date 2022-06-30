@@ -1,9 +1,11 @@
 import { Index } from "solid-js";
-import { FitchProofTask } from "../../schemas/edit";
+import { fitchProofTask } from "../../schemas/edit";
 import FormulaRender from "../FormulaRender";
 
+const task = fitchProofTask.parse(TASK);
+
 const FitchProofTaskRender = () => {
-  const { consequence, statements } = TASK as FitchProofTask;
+  const { consequence, statements } = task;
 
   return (
     <div class="flex gap-1 justify-start mb-8">
