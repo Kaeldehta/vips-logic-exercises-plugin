@@ -1,13 +1,13 @@
 import { Index } from "solid-js";
-import useSemanticTreeStoreContext from "../../../contexts/tree";
-import { TreeAbsurdityType } from "../../../schemas/solve";
+import useStoreContext from "../../../context";
+import { SemanticTreeType, TreeAbsurdityType } from "../../../schemas/tree";
 import TreeFromSelect from "./SemanticTreeFromSelect";
 
 const TreeLineSolveAbs = (props: {
   line: TreeAbsurdityType;
   index: number;
 }) => {
-  const [, set] = useSemanticTreeStoreContext();
+  const [, set] = useStoreContext<SemanticTreeType>();
 
   return (
     <>

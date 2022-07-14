@@ -1,7 +1,7 @@
 import { batch, Show } from "solid-js";
 import { produce } from "solid-js/store";
-import useSemanticTreeStoreContext from "../../../contexts/tree";
-import { SemanticTreeType } from "../../../schemas/solve";
+import useStoreContext from "../../../context";
+import { SemanticTreeType } from "../../../schemas/tree";
 import IconButton from "../../IconButton";
 import ArrowDownCircle from "../../icons/ArrowDownCircle";
 import PlusCircle from "../../icons/PlusCircle";
@@ -13,7 +13,7 @@ interface InserterProps {
 }
 
 const Inserter = (props: InserterProps) => {
-  const [, set] = useSemanticTreeStoreContext();
+  const [, set] = useStoreContext<SemanticTreeType>();
 
   const insert = (line: SemanticTreeType["nodes"][number]) =>
     batch(() => {

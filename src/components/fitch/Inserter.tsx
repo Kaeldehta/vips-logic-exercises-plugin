@@ -1,12 +1,12 @@
-import { FitchProofType } from "../../schemas/solve";
+import { FitchProofType } from "../../schemas/fitch";
 import Border from "./Border";
 import IconButton from "../IconButton";
-import useFitchProofStoreContext from "../../contexts/fitch";
 import { batch, createMemo, Index, Show } from "solid-js";
 import { produce } from "solid-js/store";
 import ArrowRightCircle from "../icons/ArrowRightCircle";
 import ArrowDownCircle from "../icons/ArrowDownCircle";
 import PlusCircle from "../icons/PlusCircle";
+import useStoreContext from "../../context";
 
 interface InserterProps {
   index: number;
@@ -15,7 +15,7 @@ interface InserterProps {
 }
 
 const Inserter = (props: InserterProps) => {
-  const [store, set] = useFitchProofStoreContext();
+  const [store, set] = useStoreContext<FitchProofType>();
 
   const insert = (line: FitchProofType[number]) =>
     batch(() => {

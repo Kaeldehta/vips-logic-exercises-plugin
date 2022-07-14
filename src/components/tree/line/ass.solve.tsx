@@ -1,4 +1,4 @@
-import { TreeAssumptionType } from "../../../schemas/solve";
+import { TreeAssumptionType } from "../../../schemas/tree";
 import TreeFormula from "./TreeFormula";
 
 const TreeLineSolveAss = (props: {

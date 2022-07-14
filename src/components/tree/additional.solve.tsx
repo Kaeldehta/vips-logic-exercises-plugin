@@ -1,9 +1,9 @@
-import useSemanticTreeStoreContext from "../../contexts/tree";
-import { semanticTreeSchema } from "../../schemas/solve";
+import useStoreContext from "../../context";
+import semanticTreeSchema, { SemanticTreeType } from "../../schemas/tree";
 import Validator from "../Validator";
 
 const TreeAdditionalSolve = () => {
-  const [tree] = useSemanticTreeStoreContext();
+  const [tree] = useStoreContext<SemanticTreeType>();
 
   return <Validator values={tree} schema={semanticTreeSchema} />;
 };

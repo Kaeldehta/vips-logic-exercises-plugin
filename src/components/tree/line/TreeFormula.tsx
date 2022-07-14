@@ -1,9 +1,10 @@
-import useSemanticTreeStoreContext from "../../../contexts/tree";
+import useStoreContext from "../../../context";
 import { FormulaType } from "../../../schemas/common";
+import { SemanticTreeType } from "../../../schemas/tree";
 import Formula from "../../Formula";
 
 const TreeFormula = (props: { value: FormulaType; index: number }) => {
-  const [, set] = useSemanticTreeStoreContext();
+  const [, set] = useStoreContext<SemanticTreeType>();
 
   return (
     <Formula

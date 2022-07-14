@@ -1,9 +1,10 @@
-import useTaskStoreContext from "../../contexts/edit";
+import useStoreContext from "../../context";
+import { FitchProofTask } from "../../schemas/edit";
 import Formula from "../Formula";
 import Statements from "../Statements";
 
 const FitchProofEdit = () => {
-  const [store, set] = useTaskStoreContext();
+  const [store, set] = useStoreContext<FitchProofTask>();
 
   return (
     <div class="flex flex-row items-center gap-1">
@@ -14,7 +15,7 @@ const FitchProofEdit = () => {
       </div>
       <Formula
         name="task[consequence]"
-        value={store?.consequence ?? []}
+        value={store.consequence ?? []}
         setValue={(v) => set("consequence", v)}
       />
     </div>

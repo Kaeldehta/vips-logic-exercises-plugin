@@ -1,6 +1,6 @@
 import { ParentProps } from "solid-js";
-import useFitchProofStoreContext from "../../../contexts/fitch";
-import { FitchAbsurdityType } from "../../../schemas/solve";
+import useStoreContext from "../../../context";
+import { FitchAbsurdityType, FitchProofType } from "../../../schemas/fitch";
 import FitchProofFromSelect from "../FitchProofFromSelect";
 
 const FitchLineAbsSolve = (
@@ -9,7 +9,7 @@ const FitchLineAbsSolve = (
     index: number;
   }>
 ) => {
-  const [, set] = useFitchProofStoreContext();
+  const [, set] = useStoreContext<FitchProofType>();
 
   return (
     <>

@@ -1,6 +1,6 @@
 import { lazy, ParentComponent, Show } from "solid-js";
-import useSemanticTreeStoreContext from "../../../contexts/tree";
-import { SemanticTreeType } from "../../../schemas/solve";
+import useStoreContext from "../../../context";
+import { SemanticTreeType } from "../../../schemas/tree";
 import TreeLine from "../line";
 
 export interface TreeNodeProps {
@@ -17,7 +17,7 @@ const TreeLineWrapper = lazy(
 );
 
 const TreeNode = (props: TreeNodeProps) => {
-  const [tree] = useSemanticTreeStoreContext();
+  const [tree] = useStoreContext<SemanticTreeType>();
 
   return (
     <>

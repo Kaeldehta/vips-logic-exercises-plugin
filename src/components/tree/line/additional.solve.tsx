@@ -1,12 +1,13 @@
 import { batch, Show } from "solid-js";
 import { produce } from "solid-js/store";
-import useSemanticTreeStoreContext from "../../../contexts/tree";
+import useStoreContext from "../../../context";
+import { SemanticTreeType } from "../../../schemas/tree";
 import IconButton from "../../IconButton";
 import MinusCircle from "../../icons/MinusCircle";
 import { TreeNodeProps } from "../node";
 
 const TreeLineSolveAdditional = (props: TreeNodeProps) => {
-  const [tree, set] = useSemanticTreeStoreContext();
+  const [tree, set] = useStoreContext<SemanticTreeType>();
 
   const removeHandler = () =>
     batch(() => {

@@ -1,5 +1,6 @@
 import { Index, JSX } from "solid-js";
-import useFitchProofStoreContext from "../../contexts/fitch";
+import useStoreContext from "../../context";
+import { FitchProofType } from "../../schemas/fitch";
 
 interface FitchProofFromSelectProps {
   index: number;
@@ -9,7 +10,7 @@ interface FitchProofFromSelectProps {
 }
 
 const FitchProofFromSelect = (props: FitchProofFromSelectProps) => {
-  const [proof] = useFitchProofStoreContext();
+  const [proof] = useStoreContext<FitchProofType>();
 
   const options = () => proof.filter((_, i) => i < props.index);
 

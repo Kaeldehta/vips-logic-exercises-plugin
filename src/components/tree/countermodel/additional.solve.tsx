@@ -1,11 +1,11 @@
 import { Show } from "solid-js";
 import { produce } from "solid-js/store";
-import useSemanticTreeStoreContext from "../../../contexts/tree";
-import { TaskType } from "../../../schemas/edit";
-import { CounterModelEntryType } from "../../../schemas/solve";
+import useStoreContext from "../../../context";
+import { TreeTask } from "../../../schemas/edit";
+import { CounterModelEntryType, SemanticTreeType } from "../../../schemas/tree";
 
 const TreeCounterModelAdditionalSolve = () => {
-  const [, set] = useSemanticTreeStoreContext();
+  const [, set] = useStoreContext<SemanticTreeType>();
 
   const removeCounterModel = () => set("countermodel", undefined);
 
@@ -25,7 +25,7 @@ const TreeCounterModelAdditionalSolve = () => {
 
   return (
     <div class="flex gap-2 justify-start">
-      <Show when={(TASK as TaskType | undefined)?.predicate}>
+      <Show when={(TASK as TreeTask).predicate}>
         <button
           onClick={addPredicatEntry}
           type="button"

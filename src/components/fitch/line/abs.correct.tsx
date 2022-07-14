@@ -1,5 +1,5 @@
 import { ParentProps } from "solid-js";
-import { FitchAbsurdityType } from "../../../schemas/solve";
+import { FitchAbsurdityType } from "../../../schemas/fitch";
 
 const FitchLineAbsCorrect = (
   props: ParentProps<{ line: FitchAbsurdityType }>

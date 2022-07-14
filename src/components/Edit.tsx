@@ -1,12 +1,12 @@
-import useTaskStoreContext from "../contexts/edit";
-import { taskSchema } from "../schemas/edit";
+import { taskSchema, TaskType } from "../schemas/edit";
 import FitchProofEdit from "./fitch/FitchProofEdit";
 import SemanticTreeEdit from "./tree/SemanticTreeEdit";
 import { Switch, Match } from "solid-js";
 import Validator from "./Validator";
+import useStoreContext from "../context";
 
 const Edit = () => {
-  const [store, set] = useTaskStoreContext();
+  const [store, set] = useStoreContext<TaskType>();
 
   return (
     <div>
@@ -34,15 +34,15 @@ const Edit = () => {
           </div>
         }
       >
-        <Match when={store?.type === "fitch"}>
+        <Match when={store.type === "fitch"}>
           <FitchProofEdit />
         </Match>
-        <Match when={store?.type === "tree"}>
+        <Match when={store.type === "tree"}>
           <SemanticTreeEdit />
         </Match>
       </Switch>
-      <input type="hidden" name="task[type]" value={store?.type} />
-      <Validator values={store ?? {}} schema={taskSchema} />
+      <input type="hidden" name="task[type]" value={store.type} />
+      <Validator values={store} schema={taskSchema} />
     </div>
   );
 };

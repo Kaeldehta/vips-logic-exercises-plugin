@@ -1,9 +1,10 @@
-import useFitchProofStoreContext from "../../contexts/fitch";
-import { fitchProofSchema } from "../../schemas/solve";
+import useStoreContext from "../../context";
+import { FitchProofType } from "../../schemas/fitch";
+import fitchProofSchema from "../../schemas/fitch";
 import Validator from "../Validator";
 
 const FitchAdditionalSolve = () => {
-  const [store] = useFitchProofStoreContext();
+  const [store] = useStoreContext<FitchProofType>();
 
   return <Validator values={store} schema={fitchProofSchema} />;
 };

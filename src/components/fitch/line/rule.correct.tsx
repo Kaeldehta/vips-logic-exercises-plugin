@@ -1,5 +1,5 @@
 import { For, ParentProps } from "solid-js";
-import { FitchRuleType } from "../../../schemas/solve";
+import { FitchRuleType } from "../../../schemas/fitch";
 import FormulaRender from "../../FormulaRender";
 import fitchProofOptions from "../../../rules/fitch";
 

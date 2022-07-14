@@ -1,14 +1,14 @@
-import useFitchProofStoreContext from "../../../contexts/fitch";
-import { FitchRuleType } from "../../../schemas/solve";
+import { FitchProofType, FitchRuleType } from "../../../schemas/fitch";
 import { Index, JSX, ParentProps } from "solid-js";
 import fitchRuleOptions from "../../../rules/fitch";
 import FitchProofFromSelect from "../FitchProofFromSelect";
 import FitchFormula from "./FitchFormula";
+import useStoreContext from "../../../context";
 
 const FitchLineRuleSolve = (
   props: ParentProps<{ line: FitchRuleType; index: number }>
 ) => {
-  const [, set] = useFitchProofStoreContext();
+  const [, set] = useStoreContext<FitchProofType>();
 
   const onChange: JSX.EventHandlerUnion<HTMLSelectElement, Event> = (e) => {
     const rule = e.currentTarget.value as keyof typeof fitchRuleOptions;

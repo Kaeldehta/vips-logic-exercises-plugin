@@ -1,9 +1,10 @@
-import useTaskStoreContext from "../../contexts/edit";
+import useStoreContext from "../../context";
+import { TreeTask } from "../../schemas/edit";
 import Formula from "../Formula";
 import Statements from "../Statements";
 
 const SemanticTreeEdit = () => {
-  const [store, set] = useTaskStoreContext();
+  const [store, set] = useStoreContext<TreeTask>();
 
   return (
     <div class="flex flex-row items-center gap-1">
@@ -11,7 +12,7 @@ const SemanticTreeEdit = () => {
       {"\u22A8"}
       <Formula
         name="task[consequence]"
-        value={store?.consequence ?? []}
+        value={store.consequence}
         setValue={(v) => set("consequence", v)}
       />
     </div>

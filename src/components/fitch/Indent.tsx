@@ -1,7 +1,7 @@
-import useFitchProofStoreContext from "../../contexts/fitch";
-import { FitchProofType } from "../../schemas/solve";
+import { FitchProofType } from "../../schemas/fitch";
 import Border, { AssumptionBorder, LastPremiseBorder } from "./Border";
 import { Index, Switch, Match } from "solid-js";
+import useStoreContext from "../../context";
 
 interface IndentProps {
   index: number;
@@ -10,7 +10,7 @@ interface IndentProps {
 }
 
 const Indent = (props: IndentProps) => {
-  const [store] = useFitchProofStoreContext();
+  const [store] = useStoreContext<FitchProofType>();
 
   const nextType = () => store[props.index + 1]?.type;
 

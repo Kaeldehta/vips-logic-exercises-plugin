@@ -1,18 +1,18 @@
-import useSemanticTreeStoreContext from "../../../../contexts/tree";
-import { PredicateModelType } from "../../../../schemas/solve";
+import { PredicateModelType, SemanticTreeType } from "../../../../schemas/tree";
 import { createMemo, For, Show } from "solid-js";
 import { TreeCounterModelEntryProps } from ".";
 import IconButton from "../../../IconButton";
 import PlusCircle from "../../../icons/PlusCircle";
 import { produce } from "solid-js/store";
 import Formula from "../../../Formula";
+import useStoreContext from "../../../../context";
 
 interface PredicateProps extends TreeCounterModelEntryProps {
   entry: PredicateModelType;
 }
 
 const TreeCounterModelPredicateSolve = (props: PredicateProps) => {
-  const [, set] = useSemanticTreeStoreContext();
+  const [, set] = useStoreContext<SemanticTreeType>();
 
   const arity = createMemo(() => parseInt(props.entry.predicate[0]?.[1]));
 

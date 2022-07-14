@@ -1,9 +1,9 @@
 import { Index, JSX } from "solid-js";
-import useSemanticTreeStoreContext from "../../../contexts/tree";
-import { TreeRuleType } from "../../../schemas/solve";
+import { SemanticTreeType, TreeRuleType } from "../../../schemas/tree";
 import treeRuleOptions from "../../../rules/tree";
 import TreeFromSelect from "./SemanticTreeFromSelect";
 import TreeFormula from "./TreeFormula";
+import useStoreContext from "../../../context";
 
 interface TreeLineSolveRuleProps {
   line: TreeRuleType;
@@ -11,7 +11,7 @@ interface TreeLineSolveRuleProps {
 }
 
 const TreeLineSolveRule = (props: TreeLineSolveRuleProps) => {
-  const [, set] = useSemanticTreeStoreContext();
+  const [, set] = useStoreContext<SemanticTreeType>();
 
   const onChange: JSX.EventHandlerUnion<HTMLSelectElement, Event> = (e) => {
     const rule = e.currentTarget.value as TreeRuleType["rule"];

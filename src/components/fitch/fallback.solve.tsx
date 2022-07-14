@@ -1,7 +1,8 @@
-import useFitchProofStoreContext from "../../contexts/fitch";
+import useStoreContext from "../../context";
+import { FitchProofType } from "../../schemas/fitch";
 
 const FitchFallbackSolve = () => {
-  const [, set] = useFitchProofStoreContext();
+  const [, set] = useStoreContext<FitchProofType>();
 
   return (
     <button

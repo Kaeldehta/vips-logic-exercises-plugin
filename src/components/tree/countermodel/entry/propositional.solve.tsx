@@ -1,6 +1,9 @@
 import { TreeCounterModelEntryProps } from ".";
-import useSemanticTreeStoreContext from "../../../../contexts/tree";
-import { PropositionalModelType } from "../../../../schemas/solve";
+import useStoreContext from "../../../../context";
+import {
+  PropositionalModelType,
+  SemanticTreeType,
+} from "../../../../schemas/tree";
 import Formula from "../../../Formula";
 
 interface PropositionalProps extends TreeCounterModelEntryProps {
@@ -8,7 +11,7 @@ interface PropositionalProps extends TreeCounterModelEntryProps {
 }
 
 const TreeCounterModelPropositionalSolve = (props: PropositionalProps) => {
-  const [, set] = useSemanticTreeStoreContext();
+  const [, set] = useStoreContext<SemanticTreeType>();
 
   return (
     <>

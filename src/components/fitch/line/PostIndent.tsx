@@ -1,8 +1,9 @@
 import { Index } from "solid-js";
-import useFitchProofStoreContext from "../../../contexts/fitch";
+import useStoreContext from "../../../context";
+import { FitchProofType } from "../../../schemas/fitch";
 
 const PostIndent = (props: { indentation: number }) => {
-  const [proof] = useFitchProofStoreContext();
+  const [proof] = useStoreContext<FitchProofType>();
 
   const maxIndent = () =>
     Math.max(...proof.map(({ indentation }) => indentation));

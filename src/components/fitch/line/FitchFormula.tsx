@@ -1,9 +1,10 @@
-import useFitchProofStoreContext from "../../../contexts/fitch";
+import useStoreContext from "../../../context";
 import { FormulaType } from "../../../schemas/common";
+import { FitchProofType } from "../../../schemas/fitch";
 import Formula from "../../Formula";
 
 const FitchFormula = (props: { value: FormulaType; index: number }) => {
-  const [, set] = useFitchProofStoreContext();
+  const [, set] = useStoreContext<FitchProofType>();
 
   return (
     <Formula

@@ -1,6 +1,6 @@
 import { Show } from "solid-js";
-import useFitchProofStoreContext from "../../../contexts/fitch";
-import { FitchProofType } from "../../../schemas/solve";
+import useStoreContext from "../../../context";
+import { FitchProofType } from "../../../schemas/fitch";
 import IconButton from "../../IconButton";
 import Tag from "../../icons/Tag";
 
@@ -8,7 +8,7 @@ const FitchLineAnnotationSolve = (props: {
   annotation: FitchProofType[number]["annotation"];
   index: number;
 }) => {
-  const [, set] = useFitchProofStoreContext();
+  const [, set] = useStoreContext<FitchProofType>();
 
   return (
     <Show

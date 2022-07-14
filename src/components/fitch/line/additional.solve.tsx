@@ -1,12 +1,13 @@
 import { batch } from "solid-js";
 import { produce } from "solid-js/store";
 import { FitchLineProps } from ".";
-import useFitchProofStoreContext from "../../../contexts/fitch";
+import useStoreContext from "../../../context";
+import { FitchProofType } from "../../../schemas/fitch";
 import IconButton from "../../IconButton";
 import MinusCircle from "../../icons/MinusCircle";
 
 const FitchLineAdditionalSolve = (props: FitchLineProps) => {
-  const [store, set] = useFitchProofStoreContext();
+  const [store, set] = useStoreContext<FitchProofType>();
 
   const remove = () => {
     const line = props.line;

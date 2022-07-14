@@ -1,28 +1,29 @@
 import Formula from "./Formula";
 import { For } from "solid-js";
-import useTaskStoreContext from "../contexts/edit";
 import { produce } from "solid-js/store";
 import MinusCircle from "./icons/MinusCircle";
 import IconButton from "./IconButton";
 import PlusCircle from "./icons/PlusCircle";
+import useStoreContext from "../context";
+import { FitchProofTask, TreeTask } from "../schemas/edit";
 
 const Statements = () => {
-  const [store, set] = useTaskStoreContext();
+  const [store, set] = useStoreContext<FitchProofTask | TreeTask>();
 
   const removeStatement = (index: number) =>
     set(
       produce((state) => {
-        state?.statements.splice(index, 1);
+        state.statements.splice(index, 1);
       })
     );
 
   const addStatement = () => {
-    if (!store?.statements) {
+    if (!store.statements) {
       set("statements", [{ statement: [] }]);
     } else {
       set(
         produce((state) => {
-          state?.statements.push({ statement: [] });
+          state.statements.push({ statement: [] });
         })
       );
     }
@@ -30,7 +31,7 @@ const Statements = () => {
 
   return (
     <>
-      <For each={store?.statements}>
+      <For each={store.statements}>
         {(statement, index) => (
           <div class="flex items-center">
             <Formula

@@ -1,5 +1,5 @@
 import { Component, lazy, Match, Switch } from "solid-js";
-import { CounterModelEntryType } from "../../../../schemas/solve";
+import { CounterModelEntryType } from "../../../../schemas/tree";
 
 export interface TreeCounterModelEntryProps {
   entry: CounterModelEntryType;

@@ -1,5 +1,6 @@
 import { Component, For, lazy, Show } from "solid-js";
-import useSemanticTreeStoreContext from "../../../contexts/tree";
+import useStoreContext from "../../../context";
+import { SemanticTreeType } from "../../../schemas/tree";
 import TreeCounterModelEntry from "./entry";
 
 const Fallback = lazy(
@@ -11,7 +12,7 @@ const Additional = lazy(
 );
 
 const TreeCounterModel = () => {
-  const [tree] = useSemanticTreeStoreContext();
+  const [tree] = useStoreContext<SemanticTreeType>();
 
   return (
     <div class="mt-20">

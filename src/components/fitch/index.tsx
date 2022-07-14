@@ -1,5 +1,6 @@
 import { Component, For, lazy } from "solid-js";
-import useFitchProofStoreContext from "../../contexts/fitch";
+import useStoreContext from "../../context";
+import { FitchProofType } from "../../schemas/fitch";
 import FitchLine from "./line";
 
 const Fallback = lazy(
@@ -14,7 +15,7 @@ const Additional = lazy(
 );
 
 const Fitch = () => {
-  const [fitch] = useFitchProofStoreContext();
+  const [fitch] = useStoreContext<FitchProofType>();
 
   return (
     <>

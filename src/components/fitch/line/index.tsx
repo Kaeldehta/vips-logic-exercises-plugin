@@ -1,6 +1,6 @@
 import { Component, lazy, ParentComponent } from "solid-js";
 import { Dynamic } from "solid-js/web";
-import { FitchProofType } from "../../../schemas/solve";
+import { FitchProofType } from "../../../schemas/fitch";
 import Indent from "../Indent";
 import PostIndent from "./PostIndent";
 

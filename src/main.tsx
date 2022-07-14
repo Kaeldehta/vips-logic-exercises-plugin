@@ -1,26 +1,46 @@
 import "vite/modulepreload-polyfill";
 import { render } from "solid-js/web";
 import "./index.css";
-import { lazy } from "solid-js";
-import { taskSchema } from "./schemas/edit";
+import { Component, lazy } from "solid-js";
 import { ELEMENT } from "./utils";
+import { Schema } from "zod";
+import { StoreContext } from "./context";
+import storeFactory from "./storeFactory";
 
-if (!ELEMENT) throw new Error("Could not find Root element");
+const run = async () => {
+  if (!ELEMENT) throw new Error("Could not find Root element");
 
-const factory = () => {
-  const task = taskSchema.parse(TASK);
   let viewName = "edit";
   if (VIEW !== "edit") {
-    if (!task) {
+    if (!TASK_TYPE) {
       throw new Error("Task is not defined");
     }
-    viewName = task.type;
+    viewName = TASK_TYPE;
   }
-  return import(`./views/${viewName}.tsx`) as Promise<{
-    default: () => Element;
-  }>;
+
+  const { default: schema } = (await import(`./schemas/${viewName}.ts`)) as {
+    default: Schema;
+  };
+
+  const ViewComponent = lazy(
+    () => import(`./views/${viewName}.tsx`) as Promise<{ default: Component }>
+  );
+
+  const store = storeFactory(VIEW === "edit" ? TASK : RESPONSE, schema);
+
+  const code = () => (
+    <StoreContext.Provider value={store}>
+      <ViewComponent />
+    </StoreContext.Provider>
+  );
+
+  render(code, ELEMENT);
 };
 
-const ViewComponent = lazy(factory);
-
-render(ViewComponent, ELEMENT);
+run()
+  .then(() => {
+    console.log("App is ready");
+  })
+  .catch((err) => {
+    console.error(err);
+  });

@@ -1,4 +1,4 @@
-import { TaskType } from "../schemas/edit";
+import { FitchProofTask } from "../schemas/edit";
 
 const propRules = [
   "b-intro",
@@ -22,7 +22,7 @@ const predRules = [
   "id-elim",
 ] as const;
 
-export const fitchRules = (TASK as TaskType | undefined)?.predicate
+export const fitchRules = (TASK as FitchProofTask).predicate
   ? predRules
   : propRules;
 
@@ -103,7 +103,7 @@ const predRulesOptions: Record<
   },
 };
 
-const fitchRuleOptions = (TASK as TaskType | undefined)?.predicate
+const fitchRuleOptions = (TASK as FitchProofTask).predicate
   ? predRulesOptions
   : propRulesOptions;
 

@@ -1,5 +1,5 @@
 import { ParentProps } from "solid-js";
-import { FitchAssumptionType } from "../../../schemas/solve";
+import { FitchAssumptionType } from "../../../schemas/fitch";
 import FitchFormula from "./FitchFormula";
 
 const FitchLineAssSolve = (

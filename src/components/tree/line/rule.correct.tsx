@@ -1,4 +1,4 @@
-import { TreeRuleType } from "../../../schemas/solve";
+import { TreeRuleType } from "../../../schemas/tree";
 import FormulaRender from "../../FormulaRender";
 
 const TreeLineCorrectRule = (props: { line: TreeRuleType }) => {

@@ -1,7 +1,8 @@
-import useSemanticTreeStoreContext from "../../contexts/tree";
+import useStoreContext from "../../context";
+import { SemanticTreeType } from "../../schemas/tree";
 
 const TreeFallbackSolve = () => {
-  const [, set] = useSemanticTreeStoreContext();
+  const [, set] = useStoreContext<SemanticTreeType>();
 
   const start = () => set({ nodes: [{ type: "ass", formula: [] }] });
 

@@ -1,4 +1,4 @@
-import { FitchProofType } from "../../../schemas/solve";
+import { FitchProofType } from "../../../schemas/fitch";
 
 const FitchLineAnnotationCorrect = (props: {
   annotation: FitchProofType[number]["annotation"];
