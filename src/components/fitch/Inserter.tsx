@@ -1,7 +1,7 @@
 import { FitchProofType } from "../../schemas/fitch";
 import Border from "./Border";
 import IconButton from "../IconButton";
-import { batch, createMemo, Index, Show } from "solid-js";
+import { batch, createMemo, createUniqueId, Index, Show } from "solid-js";
 import { produce } from "solid-js/store";
 import ArrowRightCircle from "../icons/ArrowRightCircle";
 import ArrowDownCircle from "../icons/ArrowDownCircle";
@@ -29,12 +29,13 @@ const Inserter = (props: InserterProps) => {
         (line) => line.type === "rule" || line.type == "abs",
         "from" as never,
         (from: number) => from >= index,
-        (from: number) => from + 1
+        (from: number) => (from + 1) as never
       );
     });
 
   const insertAbs = (indentation: number) =>
     insert({
+      id: createUniqueId(),
       type: "abs",
       indentation,
       from: [-1, -1],
@@ -42,6 +43,7 @@ const Inserter = (props: InserterProps) => {
 
   const insertPrem = () =>
     insert({
+      id: createUniqueId(),
       type: "prem",
       indentation: 0,
       formula: [],
@@ -49,6 +51,7 @@ const Inserter = (props: InserterProps) => {
 
   const insertRule = (indentation: number) =>
     insert({
+      id: createUniqueId(),
       type: "rule",
       indentation,
       formula: [],
@@ -58,6 +61,7 @@ const Inserter = (props: InserterProps) => {
 
   const insertAss = (indentation: number) =>
     insert({
+      id: createUniqueId(),
       type: "ass",
       indentation,
       formula: [],

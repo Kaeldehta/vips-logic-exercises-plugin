@@ -3,6 +3,7 @@ import { produce } from "solid-js/store";
 import useStoreContext from "../../../context";
 import { TreeTask } from "../../../schemas/edit";
 import { CounterModelEntryType, SemanticTreeType } from "../../../schemas/tree";
+import TextButton from "../../TextButton";
 
 const TreeCounterModelAdditionalSolve = () => {
   const [, set] = useStoreContext<SemanticTreeType>();
@@ -17,7 +18,7 @@ const TreeCounterModelAdditionalSolve = () => {
       })
     );
 
-  const addPredicatEntry = () =>
+  const addPredicateEntry = () =>
     addModelEntry({ type: "predicate", entries: [], predicate: [] });
 
   const addPropositionalEntry = () =>
@@ -26,28 +27,12 @@ const TreeCounterModelAdditionalSolve = () => {
   return (
     <div class="flex gap-2 justify-start">
       <Show when={(TASK as TreeTask).predicate}>
-        <button
-          onClick={addPredicatEntry}
-          type="button"
-          class="bg-gray-100 rounded px-1 py-1 border-black border hover:bg-gray-200"
-        >
-          Predicate
-        </button>
+        <TextButton onClick={addPredicateEntry}>Predicate</TextButton>
       </Show>
-      <button
-        onClick={addPropositionalEntry}
-        type="button"
-        class="bg-gray-100 rounded px-1 py-1 border-black border hover:bg-gray-200"
-      >
+      <TextButton onClick={addPropositionalEntry}>
         Propositional constant
-      </button>
-      <button
-        onClick={removeCounterModel}
-        type="button"
-        class="bg-gray-100 rounded px-1 py-1 border-black border hover:bg-gray-200"
-      >
-        Remove counter model
-      </button>
+      </TextButton>
+      <TextButton onClick={removeCounterModel}>Remove counter model</TextButton>
     </div>
   );
 };

@@ -21,6 +21,15 @@ const TreeLineSolveRule = (props: TreeLineSolveRuleProps) => {
   return (
     <>
       <TreeFormula value={props.line.formula} index={props.index} />
+      from
+      <TreeFromSelect
+        name={`response[nodes][${props.index}][from][0]`}
+        value={props.line.from[0]}
+        setValue={(from) =>
+          set("nodes", props.index, "from" as never, 0, from as never)
+        }
+      />
+      by
       <select
         name={`response[nodes][${props.index}][rule]`}
         value={props.line.rule}
@@ -32,13 +41,6 @@ const TreeLineSolveRule = (props: TreeLineSolveRuleProps) => {
           {(value) => <option value={value()}>{value()}</option>}
         </Index>
       </select>
-      <TreeFromSelect
-        name={`response[nodes][${props.index}][from][0]`}
-        value={props.line.from[0]}
-        setValue={(from) =>
-          set("nodes", props.index, "from" as never, 0, from as never)
-        }
-      />
     </>
   );
 };

@@ -39,6 +39,9 @@ const TreeNode = (props: TreeNodeProps) => {
         >
           <div class="flex gap-8">
             <div class="flex flex-col gap-1 justify-start items-center">
+              {/* <svg>
+                <line></line>
+              </svg> */}
               <TreeNode
                 index={props.index + 1}
                 line={tree.nodes[props.index + 1]}

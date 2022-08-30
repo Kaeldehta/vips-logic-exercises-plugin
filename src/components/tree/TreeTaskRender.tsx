@@ -1,10 +1,10 @@
 import { Index, Show } from "solid-js";
-import { fitchProofTask } from "../../schemas/edit";
+import { semanticTreeTask } from "../../schemas/edit";
 import FormulaRender from "../FormulaRender";
 
-const task = fitchProofTask.parse(TASK);
+const task = semanticTreeTask.parse(TASK);
 
-const FitchProofTaskRender = () => {
+const TreeTaskRender = () => {
   const { consequence, statements, predicate } = task;
 
   return (
@@ -18,11 +18,12 @@ const FitchProofTaskRender = () => {
         )}
       </Index>
       <b>
-        {"\u22A2"}
-        <sub>
-          FC<Show when={predicate}>P</Show>
-        </sub>
+        {"\u22A8"}
+        <Show when={predicate}>
+          <sub>P</sub>
+        </Show>
       </b>
+
       <b class="flex">
         <FormulaRender value={consequence} />
       </b>
@@ -30,4 +31,4 @@ const FitchProofTaskRender = () => {
   );
 };
 
-export default FitchProofTaskRender;
+export default TreeTaskRender;

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import treeRulesOptions from "../rules/tree";
-import { formula, from } from "./common";
+import { formula, from, id } from "./common";
 
 const right = z.number().optional();
 
@@ -56,7 +56,7 @@ export type CounterModelEntryType = z.infer<typeof counterModelType>;
 const semanticTreeSchema = z
   .object({
     nodes: z
-      .array(z.discriminatedUnion("type", [treeAss, treeRule, treeAbs]))
+      .array(z.discriminatedUnion("type", [treeAss, treeRule, treeAbs]).and(id))
       .default([]),
     countermodel: z.array(counterModelType).optional(),
   })

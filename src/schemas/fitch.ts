@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { fitchRules } from "../rules/fitch";
-import { formula, from } from "./common";
+import { formula, from, id } from "./common";
 
 const indentation = z.number().min(0);
 
@@ -46,7 +46,9 @@ export type FitchRuleType = z.infer<typeof fitchRule>;
 
 const fitchProofSchema = z
   .array(
-    z.discriminatedUnion("type", [fitchAbs, fitchPrem, fitchRule, fitchAss])
+    z
+      .discriminatedUnion("type", [fitchAbs, fitchPrem, fitchRule, fitchAss])
+      .and(id)
   )
   .default([]);
 

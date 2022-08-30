@@ -32,7 +32,7 @@ const Additional = lazy(
 
 const TreeLine = (props: TreeNodeProps) => {
   return (
-    <div class="h-16 w-[30.5rem] group flex justify-start gap-2 items-center">
+    <div class="h-16 w-[35rem] group flex justify-start gap-2 items-center">
       <span>{props.index + 1}</span>
       <Dynamic component={components[props.line.type]} {...props} />
       <Additional {...props} />
