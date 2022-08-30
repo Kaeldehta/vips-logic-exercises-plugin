@@ -1,9 +1,9 @@
-import { defineConfig, PluginOption } from "vite";
+import { defineConfig } from "vite";
 import solidPlugin from "vite-plugin-solid";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [solidPlugin() as PluginOption],
+  plugins: [solidPlugin()],
   server: {
     port: 3000,
   },
@@ -15,8 +15,8 @@ export default defineConfig({
     manifest: true,
   },
   experimental: {
-    buildAdvancedBaseOptions: {
-      runtime: (url: string) => `window.__toCompleteUrl(${url})`,
-    },
+    renderBuiltUrl: (filename: string) => ({
+      runtime: `window.__toCompleteUrl(${filename})`,
+    }),
   },
 });
