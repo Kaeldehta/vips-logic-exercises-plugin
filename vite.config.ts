@@ -13,10 +13,11 @@ export default defineConfig({
     },
     target: "esnext",
     manifest: true,
+    polyfillModulePreload: false,
   },
   experimental: {
-    renderBuiltUrl: (filename: string) => ({
-      runtime: `window.__toCompleteUrl(${filename})`,
-    }),
+    buildAdvancedBaseOptions: {
+      runtime: (filename: string) => `window.__toCompleteUrl(${filename})`,
+    },
   },
 });

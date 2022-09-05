@@ -1,4 +1,3 @@
-import "vite/modulepreload-polyfill";
 import { render } from "solid-js/web";
 import "./index.css";
 import { Component, lazy } from "solid-js";
