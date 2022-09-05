@@ -37,8 +37,8 @@ const fitchRule = z.object({
   type: z.literal("rule"),
   indentation,
   formula,
-  rule: z.enum(fitchRules),
-  from,
+  rule: z.enum(fitchRules).or(z.literal("")),
+  from: from.default([]),
   annotation,
 });
 

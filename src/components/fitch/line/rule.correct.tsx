@@ -1,4 +1,4 @@
-import { For, ParentProps } from "solid-js";
+import { For, ParentProps, Show } from "solid-js";
 import { FitchRuleType } from "../../../schemas/fitch";
 import FormulaRender from "../../FormulaRender";
 import fitchProofOptions from "../../../rules/fitch";
@@ -12,11 +12,13 @@ const FitchLineRuleCorrect = (props: ParentProps<{ line: FitchRuleType }>) => {
       </div>
       {props.children}
       <span>
-        {
-          fitchProofOptions[props.line.rule as keyof typeof fitchProofOptions]
-            .label
-        }
-        {", "}
+        <Show when={props.line.rule !== ""}>
+          {
+            fitchProofOptions[props.line.rule as keyof typeof fitchProofOptions]
+              .label
+          }
+          {", "}
+        </Show>
         <For each={props.line.from}>
           {(from, index) => (
             <>
