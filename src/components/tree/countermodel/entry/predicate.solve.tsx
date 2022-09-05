@@ -23,7 +23,7 @@ const TreeCounterModelPredicateSolve = (props: PredicateProps) => {
       "entries" as never,
       produce<Array<string[]>>((state) => {
         state.push([]);
-      })
+      }) as never
     );
 
   return (
@@ -32,7 +32,7 @@ const TreeCounterModelPredicateSolve = (props: PredicateProps) => {
         value={props.entry.predicate}
         name={`response[countermodel][${props.index}][predicate]`}
         setValue={(value) =>
-          set("countermodel", props.index, "predicate" as never, value)
+          set("countermodel", props.index, "predicate" as never, value as never)
         }
         match={/[FGH]/}
         max={1}
@@ -54,7 +54,7 @@ const TreeCounterModelPredicateSolve = (props: PredicateProps) => {
                     props.index,
                     "entries" as never,
                     index(),
-                    value
+                    value as never
                   )
                 }
                 match={/[abc]/}

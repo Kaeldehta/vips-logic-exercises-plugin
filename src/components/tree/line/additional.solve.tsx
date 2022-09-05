@@ -28,8 +28,8 @@ const TreeLineSolveAdditional = (props: TreeNodeProps) => {
       set(
         "nodes",
         (state) => !!state.right && state.right > props.index,
-        "right" as never,
-        (right: number) => right - offset
+        "right",
+        (right) => (right ?? 0) - offset
       );
 
       set(
@@ -37,7 +37,7 @@ const TreeLineSolveAdditional = (props: TreeNodeProps) => {
         (line) => line.type === "rule" || line.type == "abs",
         "from" as never,
         (from: number) => from >= props.index,
-        (from: number) => from - offset
+        (from) => (from - offset) as never
       );
 
       set(

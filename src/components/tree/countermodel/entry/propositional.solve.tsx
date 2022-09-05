@@ -20,7 +20,7 @@ const TreeCounterModelPropositionalSolve = (props: PropositionalProps) => {
         match={/[pqr]/}
         value={props.entry.constant}
         setValue={(v) =>
-          set("countermodel", props.index, "constant" as never, v)
+          set("countermodel", props.index, "constant" as never, v as never)
         }
         name={`response[countermodel][${props.index}][constant]`}
       />
