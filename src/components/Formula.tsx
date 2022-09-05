@@ -1,83 +1,108 @@
-import { ActionCreator, Selector } from "@reduxjs/toolkit";
-import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useTypedSelector } from "../hooks";
-import { Store } from "../types";
+import { batch, createSignal, For, JSX } from "solid-js";
+import { produce } from "solid-js/store";
+import { formulaRegex, FormulaType } from "../schemas/common";
+import FormulaRender from "./FormulaRender";
 
-const propositionalLogicChars = /[pqr12345789iklno\(\)]/
-
-const predicateLogicChars = /[abcFGHxyzue]/;
-
-const finalPattern = "[\(\)pqr\u2192\u2194\u2227\u2228\u00AC\u2081\u2082\u2083\u2084\u2085\u2086\u2087\u2088\u2089]+"
-
-const finalPatternPred = "[\(\)pqrabcFGHxyz\u2192\u2194\u2227\u2228\u00AC\u2081\u2082\u2083\u2084\u2085\u2086\u2087\u2088\u2089∀\u2203]+"
+const width = [
+  "w-4",
+  "w-12",
+  "w-20",
+  "w-24",
+  "w-28",
+  "w-36",
+  "w-40",
+  "w-48",
+  "w-52",
+  "w-56",
+];
 
 interface FormulaProps {
-    selector: Selector<Store, string>
-    actionCreator: ActionCreator<any>,
-    allowPred?: true
+  value: FormulaType;
+  setValue: (produce: (state: string[]) => string[]) => void;
+  name: string;
+  max?: number;
+  match?: RegExp;
+  width?: string;
 }
+type EventHandler = JSX.EventHandlerUnion<HTMLDivElement, KeyboardEvent>;
 
-const Formula = ({selector, actionCreator, allowPred: propsAllowPred}: FormulaProps) => {
+const Formula = (props: FormulaProps) => {
+  const [cursor, setCursor] = createSignal(props.value.length);
 
-    const value = useTypedSelector(selector);
+  const onKeyPress: EventHandler = (e) => {
+    const value = e.key;
+    const last = props.value[cursor() - 1] ?? "";
 
-    const allowPred = useTypedSelector(state => propsAllowPred?? state.answer.predicateLogic);
+    if (value.match(/[1-9]/)) {
+      if (last.match(/^[xyzpqrabc]|[FGH][1-9]?$/))
+        props.setValue(
+          produce<FormulaType>((state) => {
+            state[cursor() - 1] += value;
+          })
+        );
+    } else if (value.match(props.match ?? formulaRegex)) {
+      if (props.max && props.value.length >= props.max) return;
 
-    const [cursor, setCursor] = useState(value.length);
-
-    const ref = useRef<HTMLInputElement>(null);
-
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        if(!ref.current) return;
-        if(ref.current.selectionStart != cursor) {
-            ref.current.setSelectionRange(cursor, cursor);
-        }
-    }, [cursor, ref.current, value]);
-
-    const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-        setCursor(e.target.selectionStart!);
-
-        let newFormula = e.target.value.replace(/i/g, "\u2192");
-        newFormula = newFormula.replace(/o/g, "\u2194");
-        newFormula = newFormula.replace(/k/g, "\u2227");
-        newFormula = newFormula.replace(/l/g, "\u2228");
-        newFormula = newFormula.replace(/n/g, "\u00AC");
-        newFormula = newFormula.replace(/1/g, "\u2081");
-        newFormula = newFormula.replace(/2/g, "\u2082");
-        newFormula = newFormula.replace(/3/g, "\u2083");
-        newFormula = newFormula.replace(/4/g, "\u2084");
-        newFormula = newFormula.replace(/5/g, "\u2085");
-        newFormula = newFormula.replace(/6/g, "\u2086");
-        newFormula = newFormula.replace(/7/g, "\u2087");
-        newFormula = newFormula.replace(/8/g, "\u2088");
-        newFormula = newFormula.replace(/9/g, "\u2089");
-        if(allowPred) {
-            newFormula = newFormula.replace(/u/g, "∀");
-            newFormula = newFormula.replace(/e/g, "\u2203");
-        }
-        dispatch(actionCreator(newFormula));
+      batch(() => {
+        props.setValue(
+          produce<FormulaType>((state) => {
+            state.splice(cursor(), 0, value);
+          })
+        );
+        setCursor((cursor) => cursor + 1);
+      });
     }
+  };
 
-    const handleKeyPress: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
-        
-        if((e.key == "c" || e.key == "v" || e.key == "x") && (e.ctrlKey || e.metaKey)) return;
-        
-        if(!e.key.match(propositionalLogicChars) && (!allowPred || !e.key.match(predicateLogicChars))) {
-            e.preventDefault();
-        }
+  const onKeyDown: EventHandler = (e) => {
+    if (e.key === "Backspace") {
+      if (cursor() > 0) {
+        batch(() => {
+          props.setValue(
+            produce<FormulaType>((state) => {
+              state.splice(cursor() - 1, 1);
+            })
+          );
+          setCursor((cursor) => cursor - 1);
+        });
+      }
+    } else if (e.key === "ArrowLeft" && cursor() > 0) {
+      e.preventDefault();
+      setCursor((cursor) => cursor - 1);
+    } else if (e.key === "ArrowRight" && cursor() < props.value.length) {
+      e.preventDefault();
+      setCursor((cursor) => cursor + 1);
     }
+  };
 
-    return <input 
-        pattern={allowPred ? finalPatternPred : finalPattern}
-        onKeyPress={handleKeyPress} 
-        ref={ref}
-        onChange={handleChange} 
-        className="w-52 h-12 px-2 py-1" 
-        value={value}
-    />
-}
+  const onClick: JSX.EventHandlerUnion<HTMLDivElement, MouseEvent> = (e) => {
+    const offsets = Array.from(e.currentTarget.children).map((el) =>
+      Math.abs((el as HTMLElement).offsetLeft - e.x)
+    );
+
+    setCursor(offsets.indexOf(Math.min(...offsets)));
+  };
+
+  return (
+    <>
+      <For each={props.value}>
+        {(c, index) => (
+          <input type="hidden" value={c} name={props.name + `[${index()}]`} />
+        )}
+      </For>
+      <div
+        class={`select-none group shrink-0 ${
+          props.max ? width[props.max] : "w-52"
+        } min-w-fit h-12 px-2 py-1 border border-solid flex items-center justify-start cursor-text`}
+        tabIndex={0}
+        onKeyPress={onKeyPress}
+        onKeyDown={onKeyDown}
+        onClick={onClick}
+      >
+        <FormulaRender cursor={cursor()} value={props.value} />
+      </div>
+    </>
+  );
+};
 
 export default Formula;

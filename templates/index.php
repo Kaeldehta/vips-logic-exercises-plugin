@@ -1,5 +1,14 @@
-<div id="exercise-container" class="tailwind" data-type=<?= $exercise->type ?> data-view=<?= $reactView ?> <? if ($exercise->task["answers"][0]) : ?> data-answer=<?= json_encode($exercise->task["answers"][0]) ?><? endif ?> <? if ($response) : ?> data-response=<?= json_encode($response) ?><? endif ?>>
+<div id="exercise-container" class="tailwind">
 </div>
 
-<script src="<?= PluginEngine::getPlugin("LogicExercises")->getPluginURL() . "/dist/index.js" ?>"></script>
-</link>
+<script>
+  const RESPONSE = <? if ($response) :?> <?= json_encode($response, JSON_NUMERIC_CHECK) ?> <? else: ?> undefined  <? endif ?>;
+  const TASK = <? if ($exercise->task["answers"][0]) : ?><?= json_encode($exercise->task["answers"][0]) ?> <? else: ?> undefined <? endif ?>;
+  const VIEW = "<?= $reactView ?>";
+  const TASK_TYPE = <? if ($exercise->task["answers"][0]) : ?>"<?= $exercise->task["answers"][0]["type"] ?>" <? else: ?> undefined <? endif ?>;
+  window.__toCompleteUrl = function(filename) {
+    return "<?= $basePath ?>" + "/" + filename;
+  }
+</script>
+
+<script type="module" src="http://localhost:3000/src/main.tsx"></script>

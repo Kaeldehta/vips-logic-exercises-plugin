@@ -1,35 +1,45 @@
 {
-  "private": true,
+  "name": "vips-logic-exercises-plugin",
+  "version": "0.0.0",
+  "description": "",
   "scripts": {
-    "start": "NODE_ENV=development webpack --watch",
-    "build": "NODE_ENV=production webpack"
+    "start": "vite --host",
+    "dev": "vite --host",
+    "build": "vite build && ts-node createArchive.ts",
+    "serve": "vite preview",
+    "lint": "eslint .",
+    "format": "prettier --write ."
   },
-  "dependencies": {
-    "@reduxjs/toolkit": "^1.7.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-icons": "^4.3.1",
-    "react-redux": "^7.2.6",
-    "react-select": "^5.2.2"
-  },
+  "license": "MIT",
   "devDependencies": {
     "@google/semantic-release-replace-plugin": "^1.1.0",
     "@semantic-release/exec": "^6.0.3",
-    "@types/react": "^17.0.4",
-    "@types/react-dom": "^17.0.3",
-    "autoprefixer": "^10.4.2",
-    "babel-loader": "^8.2.3",
-    "babel-preset-react-app": "^10.0.1",
+    "@types/archiver": "^5.3.1",
+    "@types/fs-extra": "^9.0.13",
+    "@types/lodash": "^4.14.182",
+    "@typescript-eslint/eslint-plugin": "^5.28.0",
+    "@typescript-eslint/parser": "^5.28.0",
+    "archiver": "^5.3.1",
+    "autoprefixer": "^10.4.7",
     "commitizen": "^4.2.4",
-    "css-loader": "^6.6.0",
     "cz-conventional-changelog": "^3.3.0",
-    "postcss": "^8.4.6",
-    "postcss-loader": "^6.2.1",
-    "semantic-release": "^19.0.2",
-    "style-loader": "^3.3.1",
-    "tailwindcss": "^3.0.23",
-    "webpack": "^5.69.1",
-    "webpack-cli": "^4.9.2"
+    "eslint": "^8.17.0",
+    "eslint-config-prettier": "^8.5.0",
+    "fast-glob": "^3.2.11",
+    "fs-extra": "^10.1.0",
+    "postcss-nested": "^5.0.6",
+    "prettier": "2.7.0",
+    "semantic-release": "^19.0.5",
+    "tailwindcss": "^3.1.8",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.2",
+    "vite": "^3.0.9",
+    "vite-plugin-solid": "^2.3.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "solid-js": "^1.5.2",
+    "zod": "^3.18.0"
   },
   "release": {
     "plugins": [
@@ -53,6 +63,22 @@
                 }
               ],
               "countMatches": true
+            },
+            {
+              "files": [
+                "templates/index.php"
+              ],
+              "from": "<script type=\"module\".*</script>",
+              "to": "<link rel=\"stylesheet\" href=\"<?= $basePath . \"/\" . $cssEntry ?>\"/><script type=\"module\" src=\"<?= $basePath . \"/\" . $jsEntry ?>\"></script>",
+              "results": [
+                {
+                  "file": "templates/index.php",
+                  "hasChanged": true,
+                  "numMatches": 1,
+                  "numReplacements": 1
+                }
+              ],
+              "countMatches": true
             }
           ]
         }
@@ -61,7 +87,7 @@
       [
         "@semantic-release/exec",
         {
-          "prepareCmd": "npm run build && zip -r package.zip dist templates plugin.manifest *.php"
+          "prepareCmd": "npm run build"
         }
       ],
       [
