@@ -1,9 +1,10 @@
 import { FitchProofType, FitchRuleType } from "../../../schemas/fitch";
-import { Index, JSX, ParentProps } from "solid-js";
+import { Index, JSX, ParentProps, Show } from "solid-js";
 import fitchRuleOptions from "../../../rules/fitch";
 import FitchProofFromSelect from "../FitchProofFromSelect";
 import FitchFormula from "./FitchFormula";
 import useStoreContext from "../../../context";
+import FromSeparators from "./FromSeparators";
 
 const FitchLineRuleSolve = (
   props: ParentProps<{ line: FitchRuleType; index: number }>
@@ -33,16 +34,20 @@ const FitchLineRuleSolve = (
           {(value) => <option value={value()[0]}>{value()[1].label}</option>}
         </Index>
       </select>
+      <Show when={props.line.rule}>{","}</Show>
       <Index each={props.line.from}>
         {(from, index) => (
-          <FitchProofFromSelect
-            name={`response[${props.index}][from][${index}]`}
-            index={props.index}
-            value={from()}
-            setValue={(v) =>
-              set(props.index, "from" as never, index, v as never)
-            }
-          />
+          <>
+            <FitchProofFromSelect
+              name={`response[${props.index}][from][${index}]`}
+              index={props.index}
+              value={from()}
+              setValue={(v) =>
+                set(props.index, "from" as never, index, v as never)
+              }
+            />
+            <FromSeparators index={index} rule={props.line.rule} />
+          </>
         )}
       </Index>
     </>

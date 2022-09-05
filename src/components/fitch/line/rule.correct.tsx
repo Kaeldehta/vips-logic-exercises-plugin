@@ -2,6 +2,7 @@ import { For, ParentProps } from "solid-js";
 import { FitchRuleType } from "../../../schemas/fitch";
 import FormulaRender from "../../FormulaRender";
 import fitchProofOptions from "../../../rules/fitch";
+import FromSeparators from "./FromSeparators";
 
 const FitchLineRuleCorrect = (props: ParentProps<{ line: FitchRuleType }>) => {
   return (
@@ -10,15 +11,23 @@ const FitchLineRuleCorrect = (props: ParentProps<{ line: FitchRuleType }>) => {
         <FormulaRender value={props.line.formula} />
       </div>
       {props.children}
-      <span class="w-32">
+      <span>
         {
           fitchProofOptions[props.line.rule as keyof typeof fitchProofOptions]
             .label
         }
+        {", "}
+        <For each={props.line.from}>
+          {(from, index) => (
+            <>
+              {"("}
+              {from + 1}
+              {")"}
+              <FromSeparators index={index()} rule={props.line.rule} />
+            </>
+          )}
+        </For>
       </span>
-      <For each={props.line.from}>
-        {(from) => <span class="w-20">{from + 1}</span>}
-      </For>
     </>
   );
 };
