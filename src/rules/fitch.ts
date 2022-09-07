@@ -44,7 +44,7 @@ const propRulesOptions: Record<
   },
   "b-elim": {
     label: "\u2194-Elim",
-    count: 2,
+    count: 1,
   },
   "c-intro": {
     label: "\u2227-Intro",
