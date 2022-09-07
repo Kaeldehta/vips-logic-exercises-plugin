@@ -14,10 +14,15 @@ const FromSeparators = (props: {
       }
     >
       <Switch fallback=", ">
-        <Match when={props.rule === "raa" || props.rule === "i-intro"}>
+        <Match when={props.rule === "raa"}>{" - "}</Match>
+        <Match when={props.rule === "e-elim" && props.index > 0}>{" - "}</Match>
+        <Match
+          when={
+            props.rule === "d-elim" && (props.index === 1 || props.index === 3)
+          }
+        >
           {" - "}
         </Match>
-        <Match when={props.rule === "e-elim" && props.index > 0}>{" - "}</Match>
       </Switch>
     </Show>
   );

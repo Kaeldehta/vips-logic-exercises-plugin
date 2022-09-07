@@ -17,7 +17,7 @@ const FitchLineRuleCorrect = (props: ParentProps<{ line: FitchRuleType }>) => {
             fitchProofOptions[props.line.rule as keyof typeof fitchProofOptions]
               .label
           }
-          {", "}
+          <Show when={props.line.from.length > 0}>{", "}</Show>
         </Show>
         <For each={props.line.from}>
           {(from, index) => (

@@ -34,7 +34,7 @@ const FitchLineRuleSolve = (
           {(value) => <option value={value()[0]}>{value()[1].label}</option>}
         </Index>
       </select>
-      <Show when={props.line.rule}>{","}</Show>
+      <Show when={props.line.rule && props.line.from.length > 0}>{","}</Show>
       <Index each={props.line.from}>
         {(from, index) => (
           <>
