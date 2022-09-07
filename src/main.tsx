@@ -7,6 +7,8 @@ import { Schema } from "zod";
 import { StoreContext } from "./context";
 import storeFactory from "./storeFactory";
 
+// This is the entry point of the application
+
 const run = async () => {
   if (!ELEMENT) throw new Error("Could not find Root element");
 
