@@ -11,23 +11,35 @@ const TreeLineSolveAdditional = (props: TreeNodeProps) => {
 
   const removeHandler = () =>
     batch(() => {
+      const index = props.index;
+
+      const right = props.line.right;
+
+      const end = props.end;
+
       const parentWhereIsRight = tree.nodes.findIndex(
-        ({ right }) => right === props.index
+        ({ right }) => right === index
       );
 
       const parentIndex =
-        parentWhereIsRight === -1 ? props.index - 1 : parentWhereIsRight;
+        parentWhereIsRight === -1 ? index - 1 : parentWhereIsRight;
 
       const parentsRight = tree.nodes[parentIndex]?.right;
 
       const offset =
-        !props.line.right || (parentIndex > -1 && !parentsRight)
-          ? 1
-          : props.end - props.index + 1;
+        !right || (parentIndex > -1 && !parentsRight) ? 1 : end - index + 1;
+
+      if (parentIndex > -1) {
+        if (offset > 1 || end === index) {
+          set("nodes", parentIndex, "right", undefined);
+        } else if (right && !parentsRight) {
+          set("nodes", parentIndex, "right", right);
+        }
+      }
 
       set(
         "nodes",
-        (state) => !!state.right && state.right > props.index,
+        (state) => !!state.right && state.right > index,
         "right",
         (right) => (right ?? 0) - offset
       );
@@ -36,23 +48,15 @@ const TreeLineSolveAdditional = (props: TreeNodeProps) => {
         "nodes",
         (line) => line.type === "rule" || line.type == "abs",
         "from" as never,
-        (from: number) => from >= props.index,
+        (from: number) => from >= index,
         (from) => (from - offset) as never
       );
 
       set(
         produce((state) => {
-          state.nodes.splice(props.index, offset);
+          state.nodes.splice(index, offset);
         })
       );
-
-      if (parentIndex > -1) {
-        if (offset > 1 || props.end === props.index) {
-          set("nodes", parentIndex, "right", undefined);
-        } else if (props.line.right && !parentsRight) {
-          set("nodes", parentIndex, "right", props.line.right - 1);
-        }
-      }
     });
 
   return (
