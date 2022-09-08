@@ -30,7 +30,7 @@
     "postcss-nested": "^5.0.6",
     "prettier": "2.7.0",
     "semantic-release": "^19.0.5",
-    "semantic-release-studip-webhook": "^1.0.1",
+    "semantic-release-studip-webhook": "^1.1.0",
     "tailwindcss": "^3.1.8",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.2",
@@ -100,7 +100,12 @@
           }
         }
       ],
-      "semantic-release-studip-webhook"
+      [
+        "semantic-release-studip-webhook",
+        {
+          "url": "Hello"
+        }
+      ]
     ]
   },
   "config": {
