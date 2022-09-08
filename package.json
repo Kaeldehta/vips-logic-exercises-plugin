@@ -100,12 +100,7 @@
           }
         }
       ],
-      [
-        "semantic-release-studip-webhook",
-        {
-          "url": "https://develop.studip.de/studip/plugins.php/pluginmarket/update/release/d98980a75da0748b90906e23d37bf069?s=2c38002aa7c307837e49473812b4e0f5"
-        }
-      ]
+      "semantic-release-studip-webhook"
     ]
   },
   "config": {
