@@ -20,5 +20,6 @@ jobs:
         run: npm ci
       - name: Release
         env:
+          STUDIP_SECRET: ${{ secrets.MARKETPLACE_SECRET }}
           GITHUB_TOKEN: ${{ secrets.PAT }}
         run: npx semantic-release
