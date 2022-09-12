@@ -17,16 +17,20 @@ const Inserter = (props: InserterProps) => {
 
   const insert = (line: SemanticTreeType["nodes"][number]) =>
     batch(() => {
-      const index = props.index + 1;
+      const index = props.index;
+
+      const right = props.right;
+
       set(
         produce((state) => {
-          state.nodes.splice(index, 0, line);
+          state.nodes.splice(index + 1, 0, line);
         })
       );
-      updateRightAndFrom(index);
-      if (props.right) {
-        set("nodes", props.index, { right: undefined });
-        set("nodes", props.index + 1, { right: props.right + 1 });
+
+      updateRightAndFrom(index + 1);
+      if (right) {
+        set("nodes", index, { right: undefined });
+        set("nodes", index + 1, { right: right + 1 });
       }
     });
 
