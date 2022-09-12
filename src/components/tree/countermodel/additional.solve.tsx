@@ -6,7 +6,7 @@ import { CounterModelEntryType, SemanticTreeType } from "../../../schemas/tree";
 import TextButton from "../../TextButton";
 
 const TreeCounterModelAdditionalSolve = () => {
-  const [, set] = useStoreContext<SemanticTreeType>();
+  const [tree, set] = useStoreContext<SemanticTreeType>();
 
   const removeCounterModel = () => set("countermodel", undefined);
 
@@ -19,7 +19,13 @@ const TreeCounterModelAdditionalSolve = () => {
     );
 
   const addPredicateEntry = () =>
-    addModelEntry({ type: "predicate", entries: [], predicate: [] });
+    addModelEntry({
+      type: "predicate",
+      entries: [],
+      predicate: [],
+    });
+
+  const addDomain = () => addModelEntry({ type: "domain", entries: [] });
 
   const addPropositionalEntry = () =>
     addModelEntry({ type: "propositional", value: "false", constant: [] });
@@ -27,6 +33,9 @@ const TreeCounterModelAdditionalSolve = () => {
   return (
     <div class="flex gap-2 justify-start">
       <Show when={(TASK as TreeTask).predicate}>
+        <Show when={!tree.countermodel?.some(({ type }) => type === "domain")}>
+          <TextButton onClick={addDomain}>Domain</TextButton>
+        </Show>
         <TextButton onClick={addPredicateEntry}>Predicate</TextButton>
       </Show>
       <TextButton onClick={addPropositionalEntry}>

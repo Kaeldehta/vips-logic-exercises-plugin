@@ -27,6 +27,13 @@ const PredicateModel = lazy(
     }>
 );
 
+const DomainModel = lazy(
+  () =>
+    import(`./domain.${VIEW}.tsx`) as Promise<{
+      default: Component<TreeCounterModelEntryProps>;
+    }>
+);
+
 const TreeCounterModelEntry = (props: TreeCounterModelEntryProps) => {
   return (
     <div class="flex justify-start w-full gap-2 items-center">
@@ -36,6 +43,9 @@ const TreeCounterModelEntry = (props: TreeCounterModelEntryProps) => {
         </Match>
         <Match when={props.entry.type === "propositional"}>
           <PropositionalModel {...props} />
+        </Match>
+        <Match when={props.entry.type === "domain"}>
+          <DomainModel {...props} />
         </Match>
       </Switch>
       <Additional {...props} />

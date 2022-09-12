@@ -40,15 +40,26 @@ export type PropositionalModelType = z.infer<typeof propositionalModel>;
 
 const predicateModel = z.object({
   predicate: z.array(z.string().regex(/[FGH][1-9][1-9]?/)).length(1),
-  entries: z.array(z.array(z.string().regex(/[abc][1-9]?/))),
+  entries: z.array(z.array(z.string().regex(/[abc][1-9]?/))).default([]),
   type: z.literal("predicate"),
 });
 
 export type PredicateModelType = z.infer<typeof predicateModel>;
 
+const domainModel = z.object({
+  type: z.literal("domain"),
+  entries: z.array(z.array(z.string().regex(/[abc][1-9]?/))).default([]),
+});
+
+export type DomainModelType = z.infer<typeof domainModel>;
+
 const counterModelType = (TASK as { predicate?: boolean } | undefined)
   ?.predicate
-  ? z.discriminatedUnion("type", [propositionalModel, predicateModel])
+  ? z.discriminatedUnion("type", [
+      propositionalModel,
+      predicateModel,
+      domainModel,
+    ])
   : propositionalModel;
 
 export type CounterModelEntryType = z.infer<typeof counterModelType>;
