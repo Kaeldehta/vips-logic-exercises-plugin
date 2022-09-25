@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { lazy, ParentComponent, Show } from "solid-js";
 import useStoreContext from "../../../context";
 import { SemanticTreeType } from "../../../schemas/tree";
@@ -39,21 +40,15 @@ const TreeNode = (props: TreeNodeProps) => {
         >
           <div class="flex gap-8">
             <div class="flex flex-col gap-1 justify-start items-center">
-              {/* <svg>
-                <line></line>
-              </svg> */}
               <TreeNode
                 index={props.index + 1}
                 line={tree.nodes[props.index + 1]}
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 end={props.line.right! - 1}
               />
             </div>
             <div class="flex flex-col gap-1 justify-start items-center">
               <TreeNode
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 index={props.line.right!}
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 line={tree.nodes[props.line.right!]}
                 end={props.end}
               />
