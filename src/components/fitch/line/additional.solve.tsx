@@ -31,16 +31,16 @@ const FitchLineAdditionalSolve = (props: FitchLineProps) => {
     }
     batch(() => {
       set(
-        (state) => state.type === "rule" || state.type === "abs",
+        (state) => state.type === "rule",
         "from" as never,
         (from) => from >= props.index && from < props.index + deleteCount,
         -1 as never
       );
       set(
-        (state) => state.type === "rule" || state.type === "abs",
+        (state) => state.type === "rule",
         "from" as never,
         (from) => from >= props.index + deleteCount,
-        (from) => from - deleteCount
+        (from) => from - deleteCount as never
       );
       set(
         produce((state) => {

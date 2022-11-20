@@ -6,15 +6,6 @@ const indentation = z.number().min(0);
 
 const annotation = z.string().optional();
 
-const fitchAbs = z.object({
-  type: z.literal("abs"),
-  indentation,
-  from: from.length(2),
-  annotation,
-});
-
-export type FitchAbsurdityType = z.infer<typeof fitchAbs>;
-
 const fitchPrem = z.object({
   type: z.literal("prem"),
   indentation: z.literal(0),
@@ -47,7 +38,7 @@ export type FitchRuleType = z.infer<typeof fitchRule>;
 const fitchProofSchema = z
   .array(
     z
-      .discriminatedUnion("type", [fitchAbs, fitchPrem, fitchRule, fitchAss])
+      .discriminatedUnion("type", [fitchPrem, fitchRule, fitchAss])
       .and(id)
   )
   .default([]);

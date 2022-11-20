@@ -30,7 +30,7 @@ const Formula = (props: FormulaProps) => {
   const [cursor, setCursor] = createSignal(props.value.length);
 
   const onKeyPress: EventHandler = (e) => {
-    const value = e.key;
+    const value = e.key.match(/[fgh]/) ? e.key.toUpperCase() : e.key;
     const last = props.value[cursor() - 1] ?? "";
 
     if (value.match(/[1-9]/)) {

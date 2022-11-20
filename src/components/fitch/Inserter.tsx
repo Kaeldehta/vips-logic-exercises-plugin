@@ -26,19 +26,11 @@ const Inserter = (props: InserterProps) => {
         })
       );
       set(
-        (line) => line.type === "rule" || line.type == "abs",
+        (line) => line.type === "rule",
         "from" as never,
         (from: number) => from >= index,
         (from: number) => (from + 1) as never
       );
-    });
-
-  const insertAbs = (indentation: number) =>
-    insert({
-      id: createUniqueId(),
-      type: "abs",
-      indentation,
-      from: [-1, -1],
     });
 
   const insertPrem = () =>
@@ -105,14 +97,6 @@ const Inserter = (props: InserterProps) => {
                 >
                   <ArrowDownCircle />
                 </IconButton>
-                <Show when={newIndentation > 0}>
-                  <IconButton
-                    title="Add Absurdity"
-                    onClick={[insertAbs, newIndentation]}
-                  >
-                    {"\u22A5"}
-                  </IconButton>
-                </Show>
               </Show>
               <Show when={props.type === "prem"}>
                 <IconButton title="Add Premise" onClick={insertPrem}>

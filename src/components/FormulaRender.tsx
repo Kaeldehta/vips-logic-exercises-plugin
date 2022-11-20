@@ -49,6 +49,9 @@ const FormulaRender = (props: FormulaRenderProps) => {
               <Match when={c === "e"}>
                 <div>&exist;</div>
               </Match>
+              <Match when={c === "m"}>
+                <div>{"\u22A5"}</div>
+              </Match>
               <Match when={c.match(/[pqrxyxabc]/)}>
                 <div>
                   {c[0]}

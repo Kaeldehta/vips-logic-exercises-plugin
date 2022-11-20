@@ -11,6 +11,8 @@ const propRules = [
   "d-intro",
   "dn",
   "d-elim",
+  "dr",
+  "abs",
 ] as const;
 const predRules = [
   ...propRules,
@@ -70,6 +72,14 @@ const propRulesOptions: Record<
     label: "DN",
     count: 1,
   },
+  dr: {
+    label: "DR",
+    count: 2,
+  },
+  abs: {
+    label: "Abs.",
+    count: 2,
+  }
 };
 
 const predRulesOptions: Record<

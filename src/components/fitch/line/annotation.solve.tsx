@@ -30,10 +30,17 @@ const FitchLineAnnotationSolve = (props: {
           set(
             props.index,
             "annotation",
-            e.currentTarget.value === "" ? undefined : e.currentTarget.value
+            e.currentTarget.value
           )
         }
       />
+      <IconButton 
+        class="text-red-600"
+        title="Remove annotation"
+        onClick={() => set(props.index, "annotation", undefined)}
+      >
+        <Tag />
+      </IconButton>
     </Show>
   );
 };

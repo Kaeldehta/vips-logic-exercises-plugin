@@ -1,8 +1,8 @@
 import { createUniqueId } from "solid-js";
 import { z } from "zod";
 
-const propFormulaRegex = /[pqr][1-9]?|[iklno()]/;
-const predFormulaRegex = /[pqrFGHxyzabc][1-9]?|[iklno()ue=]/;
+const propFormulaRegex = /[pqr][1-9]?|[iklno()m]/;
+const predFormulaRegex = /[pqrFGHxyzabc][1-9]?|[iklno()mue=]/;
 
 export const id = z.object({ id: z.string().default(() => createUniqueId()) });
 
