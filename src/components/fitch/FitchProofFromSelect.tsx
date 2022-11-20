@@ -26,7 +26,7 @@ const FitchProofFromSelect = (props: FitchProofFromSelectProps) => {
       class="w-20"
       onChange={onChange}
     >
-      <option hidden value={-1} />
+      <option value={-1} />
       <Index each={options()}>
         {(_, index) => <option value={index}>{index + 1}</option>}
       </Index>

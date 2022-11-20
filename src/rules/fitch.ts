@@ -74,7 +74,7 @@ const propRulesOptions: Record<
   },
   dr: {
     label: "DR",
-    count: 2,
+    count: 3,
   },
   abs: {
     label: "Abs.",
