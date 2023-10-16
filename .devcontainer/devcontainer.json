@@ -1,10 +1,17 @@
 {
   "service": "web",
   "dockerComposeFile": "docker-compose.yml",
-  "workspaceFolder": "/usr/local/studip/public/plugins_packages/fstutzky/LogicExercises",
+  "mounts": [
+    {
+      "source": "..",
+      "target": "/var/www/studip/public/plugins_packages/fstutzky/LogicExercises",
+      "type": "volume"
+    }
+  ],
+  "workspaceFolder": "/var/www/studip/public/plugins_packages/fstutzky/LogicExercises",
   "shutdownAction": "stopCompose",
-  "postCreateCommand": ["bash", "-i", "-c", "nvm install && npm install"],
-  "postAttachCommand": ["bash", "-i", "-c", "nvm use"],
+  "postCreateCommand": ["bash", "-i", "-c", "fnm install && npm install"],
+  "postAttachCommand": ["bash", "-i", "-c", "fnm use"],
   "customizations": {
     "vscode": {
       "extensions": [

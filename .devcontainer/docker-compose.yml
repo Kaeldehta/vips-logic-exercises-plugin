@@ -1,24 +1,49 @@
+version: "3"
 services:
   db:
-    platform: linux/amd64
-    image: mysql:5.7
+    image: mariadb:10.4
+    volumes:
+      - db_data:/var/lib/mysql
+    command: mysqld --sql_mode=""
+    restart: always
     environment:
-      - MYSQL_DATABASE=studip
-      - MYSQL_USER=studip
-      - MYSQL_PASSWORD=studip
-      - MYSQL_ROOT_PASSWORD=root
-    volumes:
-      - "./sql:/docker-entrypoint-initdb.d:ro"
-      - "./my-sql.cnf:/etc/mysql/conf.d/my-sql.cnf:ro"
-    ports:
-      - "3306:3306"
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
+      MYSQL_DATABASE: studip_db
+      MYSQL_USER: studip_user
+      MYSQL_PASSWORD: studip_password
+      DEMO_DATA: 1
+      MAIL_TRANSPORT: debug
   web:
-    build: .
-    volumes:
-      - "./config_local.inc.php:/usr/local/studip/config/config_local.inc.php"
-      - "..:/usr/local/studip/public/plugins_packages/fstutzky/LogicExercises"
-    ports:
-      - "1234:80"
-      - "3000:3000"
+    build:
+      context: .
+
     depends_on:
       - db
+    volumes:
+      - web_data:/var/www/studip/data
+
+    # Use port to redirect port
+    ports:
+      - "8032:80"
+
+    restart: always
+    environment:
+      MYSQL_DATABASE: studip_db
+      MYSQL_USER: studip_user
+      MYSQL_PASSWORD: studip_password
+      MYSQL_HOST: db
+      STUDIP_MAIL_TRANSPORT: debug
+
+      # Use automigrate to migrate your instance on startup
+      AUTO_MIGRATE: 1
+
+      # Use proxy url OR autoproxy if run behind a proxy
+      # PROXY_URL: https://studip.example.com/
+      # AUTO_PROXY: 1
+
+      # Demo data for your studip instance
+      DEMO_DATA: 1
+
+volumes:
+  web_data: {}
+  db_data: {}
